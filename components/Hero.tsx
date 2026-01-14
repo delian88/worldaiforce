@@ -1,7 +1,7 @@
 
 import React, { useEffect, useState } from 'react';
-import { PODORE_LAUNCH_DATE } from '../constants';
-import { CountdownTime } from '../types';
+import { PODORE_LAUNCH_DATE } from '../constants.tsx';
+import { CountdownTime } from '../types.ts';
 import { ArrowRight, Sparkles } from 'lucide-react';
 
 const Hero: React.FC = () => {
@@ -30,7 +30,6 @@ const Hero: React.FC = () => {
 
   return (
     <section id="mission" className="relative min-h-screen flex items-center pt-20 overflow-hidden">
-      {/* Background Decor */}
       <div className="absolute top-1/4 -left-20 w-96 h-96 bg-blue-600/10 rounded-full blur-[120px] -z-10 animate-pulse"></div>
       <div className="absolute bottom-1/4 -right-20 w-96 h-96 bg-purple-600/10 rounded-full blur-[120px] -z-10 animate-pulse"></div>
 
@@ -60,7 +59,6 @@ const Hero: React.FC = () => {
           </button>
         </div>
 
-        {/* Countdown Grid */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-3xl mx-auto">
           {[
             { label: 'Days', value: timeLeft.days },

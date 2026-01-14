@@ -1,11 +1,11 @@
 
 import React from 'react';
-import Navbar from './components/Navbar';
-import Hero from './components/Hero';
-import Ecosystem from './components/Ecosystem';
-import WafAssistant from './components/WafAssistant';
-import { FEATURES } from './constants';
-import { Globe, Users, Shield, Cpu, ExternalLink } from 'lucide-react';
+import Navbar from './components/Navbar.tsx';
+import Hero from './components/Hero.tsx';
+import Ecosystem from './components/Ecosystem.tsx';
+import WafAssistant from './components/WafAssistant.tsx';
+import { FEATURES } from './constants.tsx';
+import { ExternalLink, Shield } from 'lucide-react';
 
 const App: React.FC = () => {
   return (
@@ -118,7 +118,7 @@ const App: React.FC = () => {
                   WORLD <span className="shimmer-text">AI</span> FORCE
                 </span>
               </div>
-              <p className="text-slate-500 max-w-sm leading-relaxed">
+              <p className="text-slate-500 max-sm leading-relaxed">
                 A globally integrated, multi-division ecosystem designed to democratize AI and ensure digital equity for all communities.
               </p>
             </div>

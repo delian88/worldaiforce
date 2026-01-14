@@ -7,10 +7,9 @@ import {
   Globe, 
   Cpu, 
   BookOpen, 
-  Code, 
-  Layers 
+  Code
 } from 'lucide-react';
-import { EcosystemTool } from './types';
+import { EcosystemTool } from './types.ts';
 
 export const PODORE_LAUNCH_DATE = new Date('2026-01-25T00:00:00');
 

@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { ECOSYSTEM_TOOLS } from '../constants';
+import { ECOSYSTEM_TOOLS } from '../constants.tsx';
 import * as Icons from 'lucide-react';
 
 const Ecosystem: React.FC = () => {
