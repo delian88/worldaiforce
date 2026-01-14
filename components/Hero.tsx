@@ -21,8 +21,8 @@ const Hero: React.FC = () => {
         currentIdx++;
         
         // Typing speed logic:
-        // - Natural jitter (50-120ms)
-        // - Pause after "Integration" (index 21) and "Global" (index 6) for readability
+        // - Natural jitter (45-120ms)
+        // - Pause after specific words for readability
         const char = fullText[currentIdx - 1];
         const isPausePoint = char === ' ' && (currentIdx === 7 || currentIdx === 22);
         const delay = isPausePoint ? 350 : 45 + Math.random() * 75;
@@ -95,7 +95,6 @@ const Hero: React.FC = () => {
           {/* Right Side: Visual Logo Identity */}
           <div className="lg:w-2/5 flex justify-center items-center order-1 lg:order-2">
             <div className="relative group">
-              {/* Decorative radial effects */}
               <div className="absolute inset-0 bg-blue-500/5 rounded-full blur-[100px] group-hover:bg-blue-500/10 transition-all duration-1000"></div>
               
               {/* Animated Orbital Rings */}
@@ -104,7 +103,7 @@ const Hero: React.FC = () => {
               
               {/* THE LOGO */}
               <div className="relative z-10 transition-transform duration-1000 group-hover:scale-105">
-                <Logo size={460} className="drop-shadow-[0_0_50px_rgba(59,130,246,0.15)]" />
+                <Logo size={460} className="drop-shadow-[0_0_50px_rgba(59,130,246,0.3)]" />
               </div>
             </div>
           </div>
