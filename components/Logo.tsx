@@ -39,7 +39,7 @@ const Logo: React.FC<LogoProps> = ({ className = "", size = 40 }) => {
         {/* Outer Stylized Ring */}
         <circle cx="250" cy="250" r="242" stroke="url(#ringGradient)" strokeWidth="8" strokeOpacity="0.8" />
         
-        {/* The Four Quadrants - Precise Colors from Reference */}
+        {/* The Four Quadrants */}
         <g clipPath="url(#circleMask)">
           {/* Top Left - Navy */}
           <rect x="0" y="0" width="250" height="250" fill="#0000A0" />
@@ -59,9 +59,9 @@ const Logo: React.FC<LogoProps> = ({ className = "", size = 40 }) => {
         <circle cx="250" cy="250" r="115" fill="#2563EB" fillOpacity="0.3" className="animate-pulse" />
         <circle cx="250" cy="250" r="95" fill="url(#centerGlow)" fillOpacity="0.9" />
 
-        {/* The W Mark */}
+        {/* The W Mark - Corrected Orientation */}
         <path 
-          d="M165 170H205L250 315L295 170H335L385 340H345L315 225L275 340H225L185 225L155 340H115L165 170Z" 
+          d="M120 160 L190 380 L250 280 L310 380 L380 160 H330 L280 320 L250 250 L220 320 L170 160 Z" 
           fill="white"
           fillOpacity="0.95"
           stroke="#A5F3FC"
