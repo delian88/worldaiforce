@@ -1,5 +1,5 @@
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { GoogleGenAI } from "@google/genai";
 import { 
   Image as ImageIcon, 
@@ -8,12 +8,12 @@ import {
   Wand2, 
   Loader2, 
   Sparkles, 
-  AlertCircle,
   Download,
   Key,
-  Zap,
   RefreshCw,
-  Info
+  Info,
+  ShieldCheck,
+  Globe
 } from 'lucide-react';
 
 type ToolType = 'image' | 'content' | 'video';
@@ -26,46 +26,62 @@ const WafForge: React.FC = () => {
   const [loading, setLoading] = useState(false);
   const [result, setResult] = useState<{ type: ToolType; url?: string; text?: string } | null>(null);
   const [status, setStatus] = useState('');
-  const [isQuotaExceeded, setIsQuotaExceeded] = useState(false);
+  const [hasPersonalKey, setHasPersonalKey] = useState(false);
+  const [quotaExceeded, setQuotaExceeded] = useState(false);
 
-  // Opens the AI Studio key selection dialog to bypass limits
-  const handleConnectPersonalKey = async () => {
+  useEffect(() => {
+    checkKeyStatus();
+  }, []);
+
+  const checkKeyStatus = async () => {
+    // @ts-ignore
+    if (window.aistudio && typeof window.aistudio.hasSelectedApiKey === 'function') {
+      // @ts-ignore
+      const linked = await window.aistudio.hasSelectedApiKey();
+      setHasPersonalKey(linked);
+    }
+  };
+
+  const handleSyncGrid = async () => {
     // @ts-ignore
     if (window.aistudio && typeof window.aistudio.openSelectKey === 'function') {
       try {
+        // @ts-ignore
         await window.aistudio.openSelectKey();
-        setIsQuotaExceeded(false);
-        setStatus('Neural link upgraded. High-quota transmission enabled.');
+        setHasPersonalKey(true);
+        setQuotaExceeded(false);
+        setStatus('Neural Link Synchronized. High-Bandwidth Access Granted.');
       } catch (e) {
-        console.error("Key selection failed", e);
+        console.error("Link failed", e);
       }
     }
   };
 
   const handleApiError = (error: any) => {
+    const msg = error.message || "";
     console.error("Forge Error:", error);
-    const errorMsg = error.message || "";
     
-    if (errorMsg.includes('429') || errorMsg.includes('quota') || errorMsg.includes('limit')) {
-      setIsQuotaExceeded(true);
-      return "Global quota exhausted. Link personal account for unlimited forge.";
+    if (msg.includes('429') || msg.toLowerCase().includes('quota') || msg.toLowerCase().includes('exhausted')) {
+      setQuotaExceeded(true);
+      return "Global Node Congested. Please re-sync or wait.";
     }
     
-    if (errorMsg.includes('not found')) {
-      return "Entity mismatch. Please re-link your API account.";
+    if (msg.includes('entity was not found')) {
+      setHasPersonalKey(false);
+      return "Neural Link Broken. Please Re-sync.";
     }
 
-    return `Transmission failed: ${errorMsg.slice(0, 40)}...`;
+    return `Transmission Interrupted: ${msg.slice(0, 50)}...`;
   };
 
   const forgeImage = async () => {
     setLoading(true);
-    setStatus('Transmitting vision data...');
+    setStatus('Transmitting to Visionary Node...');
     try {
       const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
       const response = await ai.models.generateContent({
         model: 'gemini-2.5-flash-image',
-        contents: { parts: [{ text: `${prompt}, cinematic lighting, photorealistic, 8k, masterwork` }] },
+        contents: { parts: [{ text: `${prompt}, cinematic lighting, photorealistic, ultra-detailed, 8k resolution, professional digital art` }] },
         config: {
           imageConfig: { aspectRatio }
         }
@@ -79,7 +95,7 @@ const WafForge: React.FC = () => {
         });
         setStatus('Vision successfully forged.');
       } else {
-        setStatus('Synthesizer returned null. Try a different prompt.');
+        setStatus('Vision node returned empty.');
       }
     } catch (error: any) {
       setStatus(handleApiError(error));
@@ -90,18 +106,18 @@ const WafForge: React.FC = () => {
 
   const forgeContent = async () => {
     setLoading(true);
-    setStatus('Decoding Lexicon...');
+    setStatus('Synthesizing Lexicon Stream...');
     try {
       const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
       const response = await ai.models.generateContent({
         model: 'gemini-3-flash-preview',
         contents: { parts: [{ text: prompt }] },
         config: {
-          systemInstruction: "You are the WAF Forge Lexicon. Generate high-impact, professional content. Use Markdown."
+          systemInstruction: "You are the WAF Lexicon Forge. Generate high-impact, professional content. Use clean Markdown formatting."
         }
       });
       setResult({ type: 'content', text: response.text });
-      setStatus('Lexicon generated.');
+      setStatus('Lexicon synthesis complete.');
     } catch (error) {
       setStatus(handleApiError(error));
     } finally {
@@ -110,19 +126,14 @@ const WafForge: React.FC = () => {
   };
 
   const forgeVideo = async () => {
-    // @ts-ignore
-    const hasKey = window.aistudio && typeof window.aistudio.hasSelectedApiKey === 'function' 
-      ? await window.aistudio.hasSelectedApiKey() 
-      : false;
-
-    if (!hasKey) {
-      setStatus('Personal Neural Link required for Motion Synthesis.');
-      setIsQuotaExceeded(true);
+    if (!hasPersonalKey) {
+      setStatus('Motion Synthesis requires a synchronized Neural Link.');
+      setQuotaExceeded(true);
       return;
     }
 
     setLoading(true);
-    setStatus('Initiating Motion Pipeline...');
+    setStatus('Initiating Temporal Motion Pipeline...');
     try {
       const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
       let operation = await ai.models.generateVideos({
@@ -131,8 +142,12 @@ const WafForge: React.FC = () => {
         config: { numberOfVideos: 1, resolution: '720p', aspectRatio: '16:9' }
       });
 
+      const calming = ["Solving temporal vectors...", "Calculating fluid dynamics...", "Rendering neural frames...", "Finalizing global illumination..."];
+      let i = 0;
       while (!operation.done) {
-        await new Promise(resolve => setTimeout(resolve, 10000));
+        setStatus(calming[i % calming.length]);
+        i++;
+        await new Promise(resolve => setTimeout(resolve, 8000));
         operation = await ai.operations.getVideosOperation({ operation: operation });
       }
 
@@ -140,7 +155,7 @@ const WafForge: React.FC = () => {
       const response = await fetch(`${downloadLink}&key=${process.env.API_KEY}`);
       const blob = await response.blob();
       setResult({ type: 'video', url: URL.createObjectURL(blob) });
-      setStatus('Motion Forge complete.');
+      setStatus('Motion sequence forged.');
     } catch (error: any) {
       setStatus(handleApiError(error));
     } finally {
@@ -163,54 +178,21 @@ const WafForge: React.FC = () => {
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-16 reveal-on-scroll">
           <div className="flex items-center justify-center gap-3 mb-4">
-            <Zap className="text-blue-500 w-5 h-5 animate-pulse" />
-            <span className="text-[10px] font-black uppercase tracking-[0.4em] text-blue-400">Advanced Transmissions</span>
+            <Globe className="text-blue-500 w-5 h-5 animate-spin-slow" />
+            <span className="text-[10px] font-black uppercase tracking-[0.4em] text-blue-400">Universal Forge Node</span>
           </div>
           <h2 className="font-display text-4xl md:text-6xl font-bold mb-6">WAF <span className="shimmer-text">Forge</span></h2>
           <p className="text-slate-400 max-w-xl mx-auto text-lg font-light">
-            Unlimited AI toolsets. Built for global innovators, accessible to everyone.
+            High-performance AI tools for creators. Universal intelligence at your command.
           </p>
         </div>
-
-        {/* Global Alert for Quota */}
-        {isQuotaExceeded && (
-          <div className="mb-12 max-w-3xl mx-auto p-8 rounded-[2rem] bg-blue-600/10 border border-blue-500/20 backdrop-blur-xl animate-in zoom-in-95 duration-500">
-            <div className="flex flex-col md:flex-row items-center gap-6 text-center md:text-left">
-              <div className="w-16 h-16 rounded-full bg-blue-600 flex items-center justify-center shrink-0 shadow-[0_0_30px_rgba(37,99,235,0.5)]">
-                <Key className="text-white w-8 h-8" />
-              </div>
-              <div className="flex-1">
-                <h4 className="text-xl font-bold text-white mb-2 uppercase tracking-tight">Personal Neural Link Required</h4>
-                <p className="text-slate-400 text-sm leading-relaxed mb-4">
-                  The global public quota has been exhausted. To continue forging without limits, link your own project account.
-                </p>
-                <div className="flex flex-wrap gap-4 items-center">
-                  <button 
-                    onClick={handleConnectPersonalKey}
-                    className="px-6 py-3 bg-blue-600 text-white text-[11px] font-black uppercase tracking-widest rounded-xl hover:bg-blue-500 transition-all shadow-xl shadow-blue-500/20"
-                  >
-                    Upgrade Neural Link
-                  </button>
-                  <a 
-                    href="https://ai.google.dev/gemini-api/docs/billing" 
-                    target="_blank" 
-                    className="text-[10px] text-slate-500 hover:text-white uppercase tracking-widest font-bold flex items-center gap-2"
-                  >
-                    <Info className="w-3 h-3" />
-                    How it works
-                  </a>
-                </div>
-              </div>
-            </div>
-          </div>
-        )}
 
         <div className="glass rounded-[3.5rem] border-white/10 p-1 relative shadow-3xl">
           <div className="flex flex-wrap items-center justify-center gap-2 p-6 border-b border-white/5 bg-white/5 rounded-t-[3.4rem]">
             {[
-              { id: 'image', icon: <ImageIcon className="w-4 h-4" />, label: 'Vision' },
-              { id: 'content', icon: <FileText className="w-4 h-4" />, label: 'Lexicon' },
-              { id: 'video', icon: <VideoIcon className="w-4 h-4" />, label: 'Motion' }
+              { id: 'image', icon: <ImageIcon className="w-4 h-4" />, label: 'Vision Node' },
+              { id: 'content', icon: <FileText className="w-4 h-4" />, label: 'Lexicon Node' },
+              { id: 'video', icon: <VideoIcon className="w-4 h-4" />, label: 'Motion Node' }
             ].map((tool) => (
               <button
                 key={tool.id}
@@ -232,19 +214,19 @@ const WafForge: React.FC = () => {
               <div className="lg:w-1/2 space-y-10">
                 <div className="space-y-4">
                   <div className="flex justify-between items-center">
-                    <label className="text-[10px] uppercase tracking-[0.4em] text-slate-500 font-black">Synthesis Input</label>
+                    <label className="text-[10px] uppercase tracking-[0.4em] text-slate-500 font-black">Transmission Input</label>
                     <div className="flex items-center gap-2 text-[10px] text-blue-500/50 font-bold uppercase tracking-widest">
                       <RefreshCw className={`w-3 h-3 ${loading ? 'animate-spin' : ''}`} />
-                      Transmitting...
+                      {loading ? 'Decrypting...' : 'Awaiting Data'}
                     </div>
                   </div>
                   <textarea
                     value={prompt}
                     onChange={(e) => setPrompt(e.target.value)}
                     placeholder={
-                      activeTool === 'image' ? "Envision something grand..." :
-                      activeTool === 'content' ? "Describe the text to synthesize..." :
-                      "Motion sequence prompt..."
+                      activeTool === 'image' ? "Envision the future... (e.g. A cybernetic garden in space)" :
+                      activeTool === 'content' ? "Synthesize a professional transmission... (e.g. A manifesto for AI equity)" :
+                      "Cinematic motion sequence details..."
                     }
                     className="w-full bg-slate-900/40 border border-white/10 rounded-[2.5rem] px-8 py-8 h-56 focus:border-blue-500/50 focus:ring-4 focus:ring-blue-500/5 outline-none transition-all text-white placeholder:text-slate-700 resize-none font-light text-lg"
                   />
@@ -252,7 +234,7 @@ const WafForge: React.FC = () => {
 
                 {activeTool === 'image' && (
                   <div className="space-y-4">
-                    <label className="text-[10px] uppercase tracking-[0.4em] text-slate-500 font-black">Geometric Ratio</label>
+                    <label className="text-[10px] uppercase tracking-[0.4em] text-slate-500 font-black">Spatial Ratio</label>
                     <div className="flex flex-wrap gap-3">
                       {(['1:1', '16:9', '9:16', '4:3', '3:4'] as AspectRatio[]).map((ratio) => (
                         <button
@@ -260,7 +242,7 @@ const WafForge: React.FC = () => {
                           onClick={() => setAspectRatio(ratio)}
                           className={`px-5 py-3 rounded-2xl text-[10px] font-black uppercase border transition-all ${
                             aspectRatio === ratio 
-                              ? 'bg-blue-600 border-blue-600 text-white shadow-lg' 
+                              ? 'bg-blue-600 border-blue-600 text-white shadow-lg scale-110' 
                               : 'bg-white/5 border-white/10 text-slate-500 hover:border-white/20'
                           }`}
                         >
@@ -274,32 +256,38 @@ const WafForge: React.FC = () => {
                 <button
                   onClick={handleForge}
                   disabled={loading || !prompt.trim()}
-                  className={`w-full py-7 rounded-[2rem] font-black uppercase tracking-[0.4em] flex items-center justify-center gap-4 transition-all text-xs
+                  className={`w-full py-8 rounded-[2rem] font-black uppercase tracking-[0.5em] flex items-center justify-center gap-4 transition-all text-[11px]
                     ${loading 
                       ? 'bg-slate-800 text-slate-500 cursor-not-allowed' 
-                      : 'bg-blue-600 text-white hover:bg-blue-500 shadow-3xl shadow-blue-500/30 active:scale-[0.98]'}`}
+                      : 'bg-blue-600 text-white hover:bg-blue-500 shadow-3xl shadow-blue-500/40 active:scale-[0.98]'}`}
                 >
-                  {loading ? <Loader2 className="w-5 h-5 animate-spin" /> : <Sparkles className="w-5 h-5" />}
-                  {loading ? 'Transmitting...' : `Forge ${activeTool}`}
+                  {loading ? <Loader2 className="w-6 h-6 animate-spin" /> : <Sparkles className="w-6 h-6" />}
+                  {loading ? 'Synthesizing...' : `Forge ${activeTool.toUpperCase()}`}
                 </button>
 
                 {status && (
-                  <div className={`flex items-center justify-center gap-3 p-4 rounded-2xl border transition-all ${status.includes('exhausted') || status.includes('failed') ? 'bg-red-500/10 border-red-500/20 text-red-400' : 'bg-blue-500/5 border-blue-500/10 text-blue-400'}`}>
-                    {status.includes('link') ? <Key className="w-4 h-4 animate-bounce" /> : <Info className="w-4 h-4" />}
-                    <p className="text-[10px] uppercase tracking-[0.2em] font-black text-center">{status}</p>
+                  <div className={`flex items-center justify-center gap-3 p-5 rounded-2xl border transition-all animate-in slide-in-from-top-2 duration-300 ${status.includes('Congested') || status.includes('Broken') || status.includes('Interrupted') ? 'bg-red-500/10 border-red-500/20 text-red-400' : 'bg-blue-500/5 border-blue-500/10 text-blue-400'}`}>
+                    <Info className="w-5 h-5" />
+                    <p className="text-[11px] uppercase tracking-[0.1em] font-black text-center leading-tight">{status}</p>
+                    {status.includes('Congested') && (
+                       <button onClick={handleSyncGrid} className="ml-2 px-3 py-1 bg-blue-600 text-white rounded-lg text-[9px] uppercase font-black hover:bg-blue-500 transition-colors">Sync</button>
+                    )}
                   </div>
                 )}
               </div>
 
               {/* Result Area */}
               <div className="lg:w-1/2">
-                <div className="h-full siren-border-outer rounded-[3rem] p-1 bg-white/5 min-h-[450px]">
+                <div className="h-full siren-border-outer rounded-[3rem] p-1 bg-white/5 min-h-[500px]">
                   {loading && <div className="siren-border-inner"></div>}
                   <div className="relative z-10 w-full h-full bg-slate-950 rounded-[2.9rem] border border-white/10 flex items-center justify-center overflow-hidden">
                     {!result && !loading && (
-                      <div className="text-center p-16 opacity-20">
-                        <Wand2 className="w-24 h-24 mx-auto mb-8 text-blue-500" />
-                        <p className="text-[11px] font-black uppercase tracking-[0.6em] text-blue-400">Void Awaiting Synthesis</p>
+                      <div className="text-center p-16 group">
+                        <div className="relative mb-8">
+                          <div className="absolute inset-0 bg-blue-500/5 blur-3xl rounded-full group-hover:bg-blue-500/10 transition-all"></div>
+                          <Wand2 className="w-24 h-24 mx-auto text-blue-900 group-hover:text-blue-600 transition-colors relative z-10" />
+                        </div>
+                        <p className="text-[11px] font-black uppercase tracking-[0.6em] text-slate-700 group-hover:text-blue-400/50 transition-colors">Awaiting Grid Transmission</p>
                       </div>
                     )}
 
@@ -309,8 +297,8 @@ const WafForge: React.FC = () => {
                           <div className="absolute inset-0 bg-blue-600/30 blur-3xl animate-pulse"></div>
                           <Loader2 className="w-20 h-20 animate-spin text-blue-600 mx-auto relative z-10" />
                         </div>
-                        <h4 className="text-2xl font-display font-bold text-white mb-2">Processing Neurons</h4>
-                        <p className="text-[10px] uppercase tracking-widest text-slate-500">{status}</p>
+                        <h4 className="text-3xl font-display font-bold text-white mb-2">Neural Forging</h4>
+                        <p className="text-[11px] uppercase tracking-[0.3em] text-slate-500 font-bold">{status}</p>
                       </div>
                     )}
 
@@ -320,8 +308,8 @@ const WafForge: React.FC = () => {
                           <div className="relative group w-full h-full flex items-center justify-center">
                             <img src={result.url} className="max-w-full max-h-[600px] object-contain shadow-3xl" alt="Forged Vision" />
                             <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-4">
-                              <a href={result.url} download="waf-forge-result.png" className="p-5 bg-blue-600 text-white rounded-3xl hover:scale-110 transition-transform shadow-2xl">
-                                <Download className="w-8 h-8" />
+                              <a href={result.url} download="waf-forge-result.png" className="p-6 bg-blue-600 text-white rounded-[2rem] hover:scale-110 transition-transform shadow-2xl">
+                                <Download className="w-10 h-10" />
                               </a>
                             </div>
                           </div>
@@ -329,12 +317,12 @@ const WafForge: React.FC = () => {
                         {result.type === 'content' && (
                           <div className="p-12 h-full overflow-y-auto custom-scrollbar">
                             <div className="flex justify-between items-center mb-8 pb-4 border-b border-white/10">
-                              <span className="text-[10px] font-black uppercase tracking-widest text-blue-400">Lexicon Protocol Output</span>
+                              <span className="text-[10px] font-black uppercase tracking-widest text-blue-400">Lexicon Transmision</span>
                               <button 
-                                onClick={() => { navigator.clipboard.writeText(result.text || ''); setStatus('Copied to clipboard'); }} 
+                                onClick={() => { navigator.clipboard.writeText(result.text || ''); setStatus('Synthesis Copied to Buffer'); }} 
                                 className="text-[10px] font-black uppercase text-slate-500 hover:text-white transition-colors"
                               >
-                                Copy Transmission
+                                Copy Buffer
                               </button>
                             </div>
                             <div className="prose prose-invert max-w-none text-slate-300 font-light leading-relaxed text-lg">
@@ -345,8 +333,8 @@ const WafForge: React.FC = () => {
                         {result.type === 'video' && (
                           <div className="relative w-full h-full flex items-center justify-center bg-black">
                             <video src={result.url} className="w-full h-full object-contain" controls autoPlay loop />
-                            <a href={result.url} download="waf-motion-forge.mp4" className="absolute top-6 right-6 p-4 bg-blue-600 text-white rounded-2xl hover:scale-110 transition-transform shadow-3xl z-20">
-                              <Download className="w-6 h-6" />
+                            <a href={result.url} download="waf-motion-forge.mp4" className="absolute top-8 right-8 p-5 bg-blue-600 text-white rounded-2xl hover:scale-110 transition-transform shadow-3xl z-20">
+                              <Download className="w-8 h-8" />
                             </a>
                           </div>
                         )}
@@ -361,6 +349,7 @@ const WafForge: React.FC = () => {
       </div>
 
       <style>{`
+        .animate-spin-slow { animation: spin 12s linear infinite; }
         .custom-scrollbar::-webkit-scrollbar { width: 4px; }
         .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
         .custom-scrollbar::-webkit-scrollbar-thumb { background: rgba(59, 130, 246, 0.2); border-radius: 10px; }
