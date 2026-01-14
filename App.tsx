@@ -6,7 +6,7 @@ import Ecosystem from './components/Ecosystem.tsx';
 import WafAssistant from './components/WafAssistant.tsx';
 import Logo from './components/Logo.tsx';
 import { FEATURES } from './constants.tsx';
-import { ExternalLink, ArrowUpRight, Mail, MapPin, Globe, CheckCircle2 } from 'lucide-react';
+import { ExternalLink, ArrowUpRight, Mail, MapPin, Globe, CheckCircle2, Phone } from 'lucide-react';
 
 const App: React.FC = () => {
   useEffect(() => {
@@ -133,11 +133,20 @@ const App: React.FC = () => {
                     </div>
                     <div className="flex items-center gap-6 group">
                       <div className="w-14 h-14 rounded-2xl glass flex items-center justify-center text-blue-400 group-hover:bg-blue-600 group-hover:text-white transition-all shadow-xl">
+                        <Phone className="w-6 h-6" />
+                      </div>
+                      <div>
+                        <div className="text-[10px] uppercase tracking-widest text-slate-500 font-black mb-1">Synaptic Line</div>
+                        <div className="text-lg font-medium">+1-240-813-0308</div>
+                      </div>
+                    </div>
+                    <div className="flex items-center gap-6 group">
+                      <div className="w-14 h-14 rounded-2xl glass flex items-center justify-center text-blue-400 group-hover:bg-blue-600 group-hover:text-white transition-all shadow-xl">
                         <MapPin className="w-6 h-6" />
                       </div>
                       <div>
-                        <div className="text-[10px] uppercase tracking-widest text-slate-500 font-black mb-1">Node HQ</div>
-                        <div className="text-lg font-medium">Global Network Node</div>
+                        <div className="text-[10px] uppercase tracking-widest text-slate-500 font-black mb-1">Global HQ</div>
+                        <div className="text-lg font-medium leading-tight">Upper Marlboro, MD, 20772 USA</div>
                       </div>
                     </div>
                   </div>
@@ -170,6 +179,10 @@ const App: React.FC = () => {
               <p className="text-slate-400 leading-relaxed mb-6 font-light">
                 Democratizing intelligence through an ethical, decentralized framework.
               </p>
+              <div className="space-y-2 mb-6 text-sm text-slate-500">
+                <p className="flex items-center gap-2"><Phone className="w-4 h-4" /> +1-240-813-0308</p>
+                <p className="flex items-center gap-2"><MapPin className="w-4 h-4" /> Upper Marlboro, MD, 20772 USA</p>
+              </div>
               <a 
                 href="https://azariahmg.com/" 
                 target="_blank" 

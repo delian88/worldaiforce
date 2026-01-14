@@ -12,90 +12,97 @@ const Logo: React.FC<LogoProps> = ({ className = "", size = 40 }) => {
       className={`relative inline-block select-none group ${className}`}
       style={{ width: size, height: size }}
     >
-      {/* Dynamic Background Glow */}
-      <div className="absolute inset-0 bg-blue-500/20 rounded-full blur-2xl -z-10 group-hover:bg-blue-400/30 transition-all duration-700 animate-pulse"></div>
+      {/* Background Glow Depth */}
+      <div className="absolute inset-0 bg-blue-500/10 rounded-full blur-[40px] -z-10 group-hover:bg-blue-400/20 transition-all duration-1000 animate-pulse"></div>
       
       <svg 
         viewBox="0 0 500 500" 
         fill="none" 
         xmlns="http://www.w3.org/2000/svg"
-        className="w-full h-full animate-brand drop-shadow-[0_0_15px_rgba(59,130,246,0.4)]"
+        className="w-full h-full animate-brand drop-shadow-[0_0_20px_rgba(59,130,246,0.3)]"
       >
         <defs>
-          <linearGradient id="outerGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+          <linearGradient id="ringGradient" x1="0%" y1="0%" x2="100%" y2="100%">
             <stop offset="0%" stopColor="#C084FC" />
+            <stop offset="50%" stopColor="#93C5FD" />
             <stop offset="100%" stopColor="#60A5FA" />
           </linearGradient>
-          <linearGradient id="centerGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-            <stop offset="0%" stopColor="#93C5FD" />
-            <stop offset="100%" stopColor="#60A5FA" />
+          <linearGradient id="centerGlow" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stopColor="#A5F3FC" />
+            <stop offset="100%" stopColor="#2563EB" />
           </linearGradient>
-          <clipPath id="circleClip">
-            <circle cx="250" cy="250" r="230" />
+          <clipPath id="circleMask">
+            <circle cx="250" cy="250" r="235" />
           </clipPath>
         </defs>
 
-        {/* Outer Ring */}
-        <circle cx="250" cy="250" r="245" stroke="url(#outerGradient)" strokeWidth="10" />
+        {/* Outer Stylized Ring */}
+        <circle cx="250" cy="250" r="242" stroke="url(#ringGradient)" strokeWidth="8" strokeOpacity="0.8" />
         
-        {/* Quadrants Container */}
-        <g clipPath="url(#circleClip)">
-          {/* Top Left - Darkest */}
-          <rect x="0" y="0" width="250" height="250" fill="#00008B" />
-          {/* Top Right - Medium Blue */}
-          <rect x="250" y="0" width="250" height="250" fill="#1E40AF" />
-          {/* Bottom Left - Lighter Blue */}
-          <rect x="0" y="250" width="250" height="250" fill="#2563EB" />
-          {/* Bottom Right - Dark Blue */}
-          <rect x="250" y="250" width="250" height="250" fill="#1E3A8A" />
+        {/* The Four Quadrants - Precise Colors from Reference */}
+        <g clipPath="url(#circleMask)">
+          {/* Top Left - Navy */}
+          <rect x="0" y="0" width="250" height="250" fill="#0000A0" />
+          {/* Top Right - Royalish Blue */}
+          <rect x="250" y="0" width="250" height="250" fill="#1B80B8" />
+          {/* Bottom Left - Steel Blue */}
+          <rect x="0" y="250" width="250" height="250" fill="#3B7BC6" />
+          {/* Bottom Right - Deep Blue */}
+          <rect x="250" y="250" width="250" height="250" fill="#000095" />
         </g>
 
-        {/* Crosshair Dividers */}
-        <rect x="242" y="20" width="16" height="460" fill="#93C5FD" fillOpacity="0.6" />
-        <rect x="20" y="242" width="460" height="16" fill="#93C5FD" fillOpacity="0.6" />
+        {/* High-Tech Divider Lines */}
+        <rect x="246" y="10" width="8" height="480" fill="#A5F3FC" fillOpacity="0.5" />
+        <rect x="10" y="246" width="480" height="8" fill="#A5F3FC" fillOpacity="0.5" />
 
-        {/* Center Glow Circle */}
-        <circle cx="250" cy="250" r="110" fill="#60A5FA" fillOpacity="0.5" />
-        <circle cx="250" cy="250" r="95" fill="url(#centerGradient)" />
+        {/* Central Intelligence Core */}
+        <circle cx="250" cy="250" r="115" fill="#2563EB" fillOpacity="0.3" className="animate-pulse" />
+        <circle cx="250" cy="250" r="95" fill="url(#centerGlow)" fillOpacity="0.9" />
 
-        {/* The 'W' */}
+        {/* The W Mark */}
         <path 
-          d="M170 160H210L250 310L290 160H330L380 340H340L310 220L270 340H230L190 220L160 340H120L170 160Z" 
-          fill="white" 
-          className="animate-pulse"
-          style={{ animationDuration: '4s' }}
-        />
-        <path 
-          d="M170 160H210L250 310L290 160H330L380 340H340L310 220L270 340H230L190 220L160 340H120L170 160Z" 
-          stroke="#93C5FD" 
-          strokeWidth="4"
-        />
-
-        {/* Center Star Sparkle */}
-        <path 
-          d="M250 200L265 235L300 250L265 265L250 300L235 265L200 250L235 235L250 200Z" 
+          d="M165 170H205L250 315L295 170H335L385 340H345L315 225L275 340H225L185 225L155 340H115L165 170Z" 
           fill="white"
-          className="drop-shadow-lg"
+          fillOpacity="0.95"
+          stroke="#A5F3FC"
+          strokeWidth="2"
+        />
+
+        {/* The Sparkle Star (Center) */}
+        <path 
+          d="M250 215 L262 240 L287 250 L262 260 L250 285 L238 260 L213 250 L238 240 Z" 
+          fill="white"
         >
+          <animate 
+            attributeName="opacity" 
+            values="0.5;1;0.5" 
+            dur="2s" 
+            repeatCount="indefinite" 
+          />
           <animateTransform 
             attributeName="transform" 
             type="scale" 
-            values="1;1.2;1" 
-            dur="2s" 
+            from="1" 
+            to="1.3" 
+            dur="1s" 
+            additive="sum"
+            pivot="250 250"
             repeatCount="indefinite" 
           />
         </path>
 
-        {/* Sweep Glare Effect */}
-        <rect x="-500" y="0" width="200" height="500" fill="white" fillOpacity="0.1" transform="rotate(25)">
-          <animate 
-            attributeName="x" 
-            from="-500" 
-            to="1000" 
-            dur="4s" 
-            repeatCount="indefinite" 
-          />
-        </rect>
+        {/* Lens Flare Sweep */}
+        <g style={{ mixBlendMode: 'screen' }}>
+          <rect x="-600" y="0" width="150" height="600" fill="white" fillOpacity="0.1" transform="rotate(30)">
+            <animate 
+              attributeName="x" 
+              from="-600" 
+              to="1200" 
+              dur="6s" 
+              repeatCount="indefinite" 
+            />
+          </rect>
+        </g>
       </svg>
     </div>
   );
