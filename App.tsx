@@ -114,7 +114,7 @@ const App: React.FC = () => {
           <div className="grid grid-cols-1 md:grid-cols-4 gap-12 mb-16">
             <div className="col-span-1 md:col-span-2">
               <div className="flex items-center gap-3 mb-6">
-                <Logo size={56} className="glow-blue" />
+                <Logo size={64} className="glow-blue" />
                 <span className="font-display font-bold text-2xl tracking-tight">
                   WORLD <span className="shimmer-text">AI</span> FORCE
                 </span>
@@ -124,7 +124,6 @@ const App: React.FC = () => {
               </p>
               
               <div className="inline-flex flex-col gap-2">
-                <span className="text-[10px] uppercase tracking-[0.3em] font-bold text-slate-500">Infrastructure Partner</span>
                 <a 
                   href="https://azariahmg.com/" 
                   target="_blank" 
