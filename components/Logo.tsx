@@ -9,30 +9,31 @@ interface LogoProps {
 const Logo: React.FC<LogoProps> = ({ className = "", size = 40 }) => {
   return (
     <div 
-      className={`relative flex items-center justify-center rounded-full overflow-hidden glass border-white/10 group ${className}`}
+      className={`relative flex items-center justify-center rounded-full overflow-hidden glass border-white/20 group ${className}`}
       style={{ width: size, height: size }}
     >
-      {/* Decorative inner glow */}
-      <div className="absolute inset-0 bg-blue-500/10 group-hover:bg-blue-500/20 transition-colors duration-500"></div>
+      {/* Background glow that pulses slightly */}
+      <div className="absolute inset-0 bg-blue-500/20 animate-pulse group-hover:bg-blue-500/30 transition-colors duration-700"></div>
       
       {/* 
-        The logo image. 
-        Note: We use mix-blend-mode to help integrate the image if it has a non-transparent background.
-        We assume the logo file is named 'logo.png' in the root.
+        The official logo. 
+        Note: We use mix-blend-mode: lighten to help remove dark backgrounds, 
+        or rounded-full overflow-hidden to clip corners of square images.
       */}
       <img 
-        src="logo.png" 
-        alt="WAF Logo" 
-        className="w-full h-full object-contain relative z-10 scale-90 group-hover:scale-100 transition-transform duration-500"
+        src="https://a.jrn.me/waf-logo.png" 
+        alt="World AI Force Official Logo" 
+        className="w-[110%] h-[110%] object-contain relative z-10 transition-transform duration-700 group-hover:scale-110 [mix-blend-mode:lighten]"
         onError={(e) => {
-          // Fallback if image doesn't exist yet
           const target = e.target as HTMLImageElement;
-          target.src = "https://placehold.co/400x400/020617/60a5fa?text=WAF";
+          // If the direct link isn't ready, use a colored placeholder with the logo's vibe
+          target.src = "https://placehold.co/400x400/020617/3b82f6?text=W";
+          target.className = "w-full h-full object-contain relative z-10";
         }}
       />
       
-      {/* Shimmer overlay for the logo box itself */}
-      <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000"></div>
+      {/* Shimmer sweep effect */}
+      <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:animate-[shimmer_2s_infinite] transition-transform pointer-events-none"></div>
     </div>
   );
 };

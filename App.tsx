@@ -6,7 +6,7 @@ import Ecosystem from './components/Ecosystem.tsx';
 import WafAssistant from './components/WafAssistant.tsx';
 import Logo from './components/Logo.tsx';
 import { FEATURES } from './constants.tsx';
-import { ExternalLink } from 'lucide-react';
+import { ExternalLink, ArrowUpRight } from 'lucide-react';
 
 const App: React.FC = () => {
   return (
@@ -22,7 +22,7 @@ const App: React.FC = () => {
             <div className="grid md:grid-cols-3 gap-12">
               {FEATURES.map((feat, idx) => (
                 <div key={idx} className="flex flex-col items-center text-center group">
-                  <div className="w-16 h-16 rounded-full glass flex items-center justify-center mb-6 group-hover:scale-110 transition-transform border border-white/20 shadow-lg">
+                  <div className="w-16 h-16 rounded-full glass flex items-center justify-center mb-6 group-hover:scale-110 transition-transform border border-white/20 shadow-lg shadow-blue-500/5">
                     {feat.icon}
                   </div>
                   <h3 className="text-2xl font-display font-bold mb-4">{feat.title}</h3>
@@ -101,8 +101,8 @@ const App: React.FC = () => {
                 placeholder="Enter your email" 
                 className="px-8 py-4 bg-white/5 border border-white/10 rounded-full focus:outline-none focus:border-blue-500 min-w-[300px] text-white"
               />
-              <button className="px-10 py-4 bg-blue-600 hover:bg-blue-500 text-white font-bold rounded-full transition-all flex items-center justify-center gap-2 shadow-xl shadow-blue-500/20">
-                Join the waitlist <ExternalLink className="w-4 h-4" />
+              <button className="px-10 py-4 bg-blue-600 hover:bg-blue-500 text-white font-bold rounded-full transition-all flex items-center justify-center gap-2 shadow-xl shadow-blue-500/20 group">
+                Join the waitlist <ExternalLink className="w-4 h-4 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
               </button>
             </div>
           </div>
@@ -114,14 +114,27 @@ const App: React.FC = () => {
           <div className="grid grid-cols-1 md:grid-cols-4 gap-12 mb-16">
             <div className="col-span-1 md:col-span-2">
               <div className="flex items-center gap-3 mb-6">
-                <Logo size={48} className="glow-blue" />
+                <Logo size={56} className="glow-blue" />
                 <span className="font-display font-bold text-2xl tracking-tight">
                   WORLD <span className="shimmer-text">AI</span> FORCE
                 </span>
               </div>
-              <p className="text-slate-500 max-w-sm leading-relaxed">
+              <p className="text-slate-400 max-w-sm leading-relaxed mb-6">
                 A globally integrated, multi-division ecosystem designed to democratize AI and ensure digital equity for all communities.
               </p>
+              
+              <div className="inline-flex flex-col gap-2">
+                <span className="text-[10px] uppercase tracking-[0.3em] font-bold text-slate-500">Infrastructure Partner</span>
+                <a 
+                  href="https://azariahmg.com/" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="flex items-center gap-2 text-slate-300 hover:text-blue-400 transition-colors group"
+                >
+                  <span className="font-display font-medium">Powered by <span className="font-bold text-white">Azariah Management Group</span></span>
+                  <ArrowUpRight className="w-3 h-3 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+                </a>
+              </div>
             </div>
             <div>
               <h4 className="font-bold mb-6 text-white uppercase text-xs tracking-[0.2em]">Platform</h4>
@@ -142,13 +155,14 @@ const App: React.FC = () => {
               </ul>
             </div>
           </div>
-          <div className="pt-12 border-t border-white/10 flex flex-col md:flex-row justify-between items-center gap-6">
-            <p className="text-slate-600 text-xs">
+          
+          <div className="pt-12 border-t border-white/10 flex flex-col md:flex-row justify-between items-center gap-6 text-[11px]">
+            <p className="text-slate-600">
               &copy; 2024 - 2026 World AI Force. All rights reserved. Shaping an ethical future.
             </p>
             <div className="flex gap-6">
               {['Twitter', 'Discord', 'LinkedIn', 'GitHub'].map(social => (
-                <a key={social} href="#" className="text-slate-600 hover:text-white transition-colors text-sm">
+                <a key={social} href="#" className="text-slate-600 hover:text-white transition-colors uppercase tracking-widest font-bold">
                   {social}
                 </a>
               ))}
