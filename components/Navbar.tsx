@@ -19,7 +19,7 @@ const Navbar: React.FC = () => {
         <div className="flex items-center justify-between h-24">
           <div className="flex items-center gap-4">
             <Logo size={52} />
-            <span className="font-display font-bold text-xl tracking-tight hidden sm:inline-block">
+            <span className="font-display font-bold text-xl tracking-widest hidden sm:inline-block">
               WORLD <span className="shimmer-text">AI</span> FORCE
             </span>
           </div>
@@ -30,13 +30,13 @@ const Navbar: React.FC = () => {
                 <a
                   key={item.name}
                   href={item.href}
-                  className="text-slate-400 hover:text-white px-3 py-2 text-sm font-medium transition-all hover:scale-105"
+                  className="text-slate-400 hover:text-white px-3 py-2 text-sm font-bold uppercase tracking-widest transition-all hover:text-blue-400"
                 >
                   {item.name}
                 </a>
               ))}
-              <button className="bg-blue-600 hover:bg-blue-500 text-white px-8 py-3 rounded-full text-sm font-bold transition-all transform hover:scale-105 shadow-xl shadow-blue-500/20">
-                Join The Force
+              <button className="bg-blue-600 hover:bg-blue-500 text-white px-8 py-3 rounded-full text-sm font-black uppercase tracking-widest transition-all transform hover:scale-105 shadow-xl shadow-blue-500/20">
+                Join Network
               </button>
             </div>
           </div>
@@ -56,14 +56,14 @@ const Navbar: React.FC = () => {
             <a
               key={item.name}
               href={item.href}
-              className="block text-slate-300 hover:text-white px-3 py-3 text-lg font-medium border-b border-white/5"
+              className="block text-slate-300 hover:text-white px-3 py-3 text-lg font-bold uppercase tracking-widest border-b border-white/5"
               onClick={() => setIsOpen(false)}
             >
               {item.name}
             </a>
           ))}
-          <button className="w-full bg-blue-600 text-white py-4 rounded-2xl font-bold shadow-xl shadow-blue-500/10">
-            Join The Force
+          <button className="w-full bg-blue-600 text-white py-4 rounded-2xl font-black uppercase tracking-widest shadow-xl shadow-blue-500/10">
+            Join Network
           </button>
         </div>
       )}
