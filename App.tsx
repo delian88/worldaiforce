@@ -9,14 +9,18 @@ import LoadingScreen from './components/LoadingScreen.tsx';
 import Logo from './components/Logo.tsx';
 import { FEATURES } from './constants.tsx';
 import { playWelcomeGreeting } from './services/voiceService.ts';
-import { ExternalLink, ArrowUpRight, Mail, MapPin, Globe, CheckCircle2, Phone, Target, Eye } from 'lucide-react';
+import { Target, Eye, ShieldCheck, Globe, Zap, ArrowRight, Download, Mail, Phone, MapPin, ArrowUpRight } from 'lucide-react';
+
+type Page = 'home' | 'mission' | 'forge' | 'ecosystem' | 'about' | 'contact';
 
 const App: React.FC = () => {
   const [appReady, setAppReady] = useState(false);
+  const [currentPage, setCurrentPage] = useState<Page>('home');
 
   useEffect(() => {
     if (!appReady) return;
-
+    window.scrollTo(0, 0);
+    
     const observer = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
@@ -27,212 +31,207 @@ const App: React.FC = () => {
 
     document.querySelectorAll('.reveal-on-scroll').forEach(el => observer.observe(el));
     return () => observer.disconnect();
-  }, [appReady]);
+  }, [appReady, currentPage]);
 
   const handleInit = () => {
     setAppReady(true);
     playWelcomeGreeting();
   };
 
+  const navigate = (page: Page) => {
+    setCurrentPage(page);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
   if (!appReady) {
     return <LoadingScreen onComplete={handleInit} />;
   }
 
-  return (
-    <div className="min-h-screen relative animate-in fade-in duration-1000">
-      <Navbar />
-      
-      <main>
-        <Hero />
-        
-        {/* Core Pillars Section */}
-        <section id="ethics" className="py-32 relative overflow-hidden">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="text-center mb-20 reveal-on-scroll">
-              <h2 className="font-display text-4xl md:text-5xl font-bold mb-6">Our Ethical <span className="shimmer-text">Pillars</span></h2>
-              <p className="text-slate-400 max-w-2xl mx-auto text-lg">
-                Built on a foundation of radical inclusivity and digital sovereignty.
-              </p>
-            </div>
-            <div className="grid md:grid-cols-3 gap-8">
-              {FEATURES.map((feat, idx) => (
-                <div key={idx} className="reveal-on-scroll flex flex-col items-center text-center group p-10 rounded-[2.5rem] glass-card" style={{ transitionDelay: `${idx * 150}ms` }}>
-                  <div className="w-16 h-16 rounded-2xl bg-blue-600/10 flex items-center justify-center mb-8 border border-white/10 group-hover:scale-110 transition-transform">
-                    {feat.icon}
-                  </div>
-                  <h3 className="text-2xl font-display font-bold mb-4">{feat.title}</h3>
-                  <p className="text-slate-400 leading-relaxed text-sm">
-                    {feat.description}
-                  </p>
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        {/* New About Us Section */}
-        <section id="about-us" className="py-32 relative bg-slate-900/30">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-             <div className="grid lg:grid-cols-2 gap-16 items-center">
-                <div className="reveal-on-scroll">
-                   <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-blue-500/10 border border-blue-500/20 text-blue-400 text-[10px] font-black uppercase tracking-widest mb-6">
-                      <Target className="w-3 h-3" />
-                      Our Purpose
-                   </div>
-                   <h2 className="font-display text-4xl md:text-5xl font-bold mb-8">
-                     Democratizing the <span className="shimmer-text">Future</span>
-                   </h2>
-                   <div className="space-y-6 text-slate-400 text-lg font-light leading-relaxed">
-                      <p>
-                        At World AI Force, we believe that artificial intelligence is the most transformative tool in human history. Yet, its power is often concentrated in the hands of a few. Our mission is to break those barriers.
-                      </p>
-                      <p>
-                        We are a decentralized collective of engineers, ethicists, and visionaries dedicated to building a global infrastructure where every community—regardless of geography or economic status—has the sovereign right to access and build with AI.
-                      </p>
-                   </div>
-                </div>
-
-                <div className="grid gap-8 reveal-on-scroll">
-                   <div className="p-10 rounded-[2.5rem] glass-card border-blue-500/20">
-                      <div className="flex items-center gap-4 mb-6">
-                        <div className="p-3 bg-blue-600/20 rounded-xl text-blue-400">
-                          <Target className="w-6 h-6" />
-                        </div>
-                        <h4 className="text-2xl font-display font-bold">The Mission</h4>
+  const renderPage = () => {
+    switch (currentPage) {
+      case 'home':
+        return (
+          <>
+            <Hero onNavigate={navigate} />
+            <section className="py-24 bg-slate-950/50">
+              <div className="max-w-7xl mx-auto px-4">
+                <div className="grid md:grid-cols-3 gap-8">
+                  {FEATURES.map((feat, idx) => (
+                    <div key={idx} className="reveal-on-scroll p-10 rounded-[2.5rem] glass-card flex flex-col items-center text-center">
+                      <div className="w-16 h-16 rounded-2xl bg-blue-600/10 flex items-center justify-center mb-6 border border-white/5">
+                        {feat.icon}
                       </div>
-                      <p className="text-slate-400 leading-relaxed">
-                        To provide the tools, education, and infrastructure necessary for global AI equity. We aim to decentralize intelligence and return control to the people.
-                      </p>
-                   </div>
-
-                   <div className="p-10 rounded-[2.5rem] glass-card border-purple-500/20">
-                      <div className="flex items-center gap-4 mb-6">
-                        <div className="p-3 bg-purple-600/20 rounded-xl text-purple-400">
-                          <Eye className="w-6 h-6" />
-                        </div>
-                        <h4 className="text-2xl font-display font-bold">The Vision</h4>
-                      </div>
-                      <p className="text-slate-400 leading-relaxed">
-                        A world where AI is as fundamental as electricity—invisible, pervasive, and empowering for every individual on the planet.
-                      </p>
-                   </div>
-                </div>
-             </div>
-          </div>
-        </section>
-
-        <Ecosystem />
-
-        <WafForge />
-
-        {/* Detailed About Section */}
-        <section id="about" className="py-32 relative">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="flex flex-col lg:flex-row items-center gap-20">
-              <div className="lg:w-1/2 relative reveal-on-scroll">
-                <div className="absolute inset-0 bg-blue-600/20 rounded-[3rem] blur-3xl -z-10 animate-pulse"></div>
-                <img 
-                  src="https://images.unsplash.com/photo-1620712943543-bcc4628c6bb5?q=80&w=2000&auto=format&fit=crop" 
-                  className="rounded-[3rem] shadow-2xl border border-white/10 relative z-10 transition-all duration-1000"
-                  alt="WAF Innovation"
-                />
-                <div className="absolute -bottom-6 -right-6 glass p-8 rounded-3xl border-white/20 z-20 shadow-2xl">
-                  <div className="flex items-center gap-4">
-                    <div className="p-3 bg-blue-600 rounded-2xl animate-bounce">
-                      <Globe className="text-white w-6 h-6" />
-                    </div>
-                    <div>
-                      <div className="text-3xl font-bold text-white">120+</div>
-                      <div className="text-[10px] uppercase tracking-widest text-blue-400 font-black">Global Partners</div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              
-              <div className="lg:w-1/2 reveal-on-scroll">
-                <div className="mb-6 flex items-center gap-2 text-blue-500 font-bold tracking-[0.3em] text-xs uppercase">
-                  <span>About the Protocol</span>
-                </div>
-                <h2 className="font-display text-4xl md:text-6xl font-bold mb-8">
-                  World <span className="shimmer-text">AI</span> Force
-                </h2>
-                <p className="text-slate-400 text-lg mb-8 leading-relaxed font-light">
-                  Founded on the belief that intelligence is a universal right, WAF operates as a multi-division framework. We don't just build tools; we build the infrastructure for a more equitable digital future.
-                </p>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  {[
-                    'Community Research Labs',
-                    'Ethical Deployment Gateways',
-                    'Digital Sovereignty Advocate',
-                    'Universal Access Protocols'
-                  ].map((item, i) => (
-                    <div key={i} className="flex items-center gap-3 p-4 glass rounded-2xl border-white/5 group hover:bg-white/5 transition-colors">
-                      <CheckCircle2 className="w-5 h-5 text-blue-500 group-hover:scale-110 transition-transform" />
-                      <span className="text-sm font-medium text-slate-300">{item}</span>
+                      <h3 className="text-xl font-display font-bold mb-3">{feat.title}</h3>
+                      <p className="text-slate-400 text-sm leading-relaxed">{feat.description}</p>
                     </div>
                   ))}
                 </div>
               </div>
+            </section>
+            <div className="py-20 flex justify-center">
+               <button onClick={() => navigate('forge')} className="px-12 py-5 bg-blue-600 rounded-full font-black uppercase tracking-widest hover:bg-blue-500 transition-all shadow-3xl shadow-blue-500/20">
+                 Open WAF Forge Platform
+               </button>
             </div>
-          </div>
-        </section>
-
-        {/* Contact Section */}
-        <section id="contact" className="py-32">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="glass rounded-[3rem] border-white/10 p-10 md:p-16 relative overflow-hidden reveal-on-scroll">
-              <div className="absolute top-0 right-0 w-1/4 h-full bg-blue-600/5 -z-0 blur-[100px]"></div>
-              
-              <div className="flex flex-col lg:flex-row gap-16 relative z-10">
-                <div className="lg:w-1/2">
-                  <h2 className="font-display text-4xl font-bold mb-6">Initiate <span className="shimmer-text">Contact</span></h2>
-                  <p className="text-slate-400 mb-12 text-lg">
-                    Join our decentralized network of researchers and developers.
-                  </p>
-                  
-                  <div className="space-y-6">
-                    <div className="flex items-center gap-6 group">
-                      <div className="w-14 h-14 rounded-2xl glass flex items-center justify-center text-blue-400 group-hover:bg-blue-600 group-hover:text-white transition-all shadow-xl">
-                        <Mail className="w-6 h-6" />
-                      </div>
-                      <div>
-                        <div className="text-[10px] uppercase tracking-widest text-slate-500 font-black mb-1">Direct Channel</div>
-                        <div className="text-lg font-medium">contact@worldaiforce.com</div>
-                      </div>
-                    </div>
-                    <div className="flex items-center gap-6 group">
-                      <div className="w-14 h-14 rounded-2xl glass flex items-center justify-center text-blue-400 group-hover:bg-blue-600 group-hover:text-white transition-all shadow-xl">
-                        <Phone className="w-6 h-6" />
-                      </div>
-                      <div>
-                        <div className="text-[10px] uppercase tracking-widest text-slate-500 font-black mb-1">Synaptic Line</div>
-                        <div className="text-lg font-medium">+1-240-813-0308</div>
-                      </div>
-                    </div>
-                    <div className="flex items-center gap-6 group">
-                      <div className="w-14 h-14 rounded-2xl glass flex items-center justify-center text-blue-400 group-hover:bg-blue-600 group-hover:text-white transition-all shadow-xl">
-                        <MapPin className="w-6 h-6" />
-                      </div>
-                      <div>
-                        <div className="text-[10px] uppercase tracking-widest text-slate-500 font-black mb-1">Global HQ</div>
-                        <div className="text-lg font-medium leading-tight">Upper Marlboro, MD, 20772 USA</div>
-                      </div>
-                    </div>
+          </>
+        );
+      case 'mission':
+        return (
+          <section className="pt-40 pb-32 min-h-screen bg-slate-950">
+            <div className="max-w-4xl mx-auto px-4">
+              <div className="text-center mb-20">
+                <span className="text-blue-500 text-[10px] font-black uppercase tracking-[0.6em] mb-4 block">Charter 001</span>
+                <h1 className="text-5xl md:text-7xl font-display font-bold mb-8">The <span className="shimmer-text">Mission</span></h1>
+                <div className="h-1 w-24 bg-blue-600 mx-auto rounded-full"></div>
+              </div>
+              <div className="glass p-12 md:p-20 rounded-[4rem] border-white/10 relative overflow-hidden">
+                <div className="absolute top-0 right-0 w-64 h-64 bg-blue-600/10 blur-[100px] -z-10"></div>
+                <p className="text-2xl md:text-4xl text-white font-light leading-relaxed text-center mb-12">
+                  "To ensure equitable access to AI tools, education, economic opportunities, and global participation for underserved communities transforming AI into a force for inclusion, safety, and shared prosperity."
+                </p>
+                <div className="grid md:grid-cols-2 gap-12 mt-16">
+                  <div className="p-8 rounded-3xl bg-white/5 border border-white/10">
+                    <h3 className="text-xl font-bold mb-4 flex items-center gap-3 text-blue-400">
+                      <ShieldCheck className="w-6 h-6" /> Safety First
+                    </h3>
+                    <p className="text-slate-400 text-sm leading-relaxed">Implementing radical safety protocols to ensure AI remains a beneficial force for humanity.</p>
                   </div>
-                </div>
-
-                <div className="lg:w-1/2 space-y-4">
-                  <input type="text" placeholder="Identity / Name" className="w-full bg-white/5 border border-white/10 rounded-2xl px-6 py-4 focus:border-blue-500 outline-none transition-all placeholder:text-slate-600" />
-                  <input type="email" placeholder="Communication / Email" className="w-full bg-white/5 border border-white/10 rounded-2xl px-6 py-4 focus:border-blue-500 outline-none transition-all placeholder:text-slate-600" />
-                  <textarea placeholder="Your Transmission" rows={4} className="w-full bg-white/5 border border-white/10 rounded-2xl px-6 py-4 focus:border-blue-500 outline-none transition-all resize-none placeholder:text-slate-600"></textarea>
-                  <button className="w-full py-5 bg-blue-600 text-white font-bold rounded-2xl hover:bg-blue-500 transition-all shadow-2xl shadow-blue-500/20 active:scale-[0.98]">
-                    Transmit Securely
-                  </button>
+                  <div className="p-8 rounded-3xl bg-white/5 border border-white/10">
+                    <h3 className="text-xl font-bold mb-4 flex items-center gap-3 text-purple-400">
+                      <Globe className="w-6 h-6" /> Global Equity
+                    </h3>
+                    <p className="text-slate-400 text-sm leading-relaxed">Breaking geographical barriers through decentralized node infrastructure.</p>
+                  </div>
                 </div>
               </div>
             </div>
+          </section>
+        );
+      case 'forge':
+        return <WafForge />;
+      case 'ecosystem':
+        return (
+          <div className="pt-40 bg-slate-950 min-h-screen">
+            <div className="max-w-7xl mx-auto px-4 mb-20">
+               <div className="text-center mb-16">
+                 <h1 className="text-5xl md:text-7xl font-display font-bold mb-6">Global <span className="shimmer-text">Ecosystem</span></h1>
+                 <p className="text-slate-400 text-xl max-w-3xl mx-auto font-light">
+                   A unified set of divisions designed to advance innovation, digital inclusion, workforce readiness, and responsible AI development worldwide.
+                 </p>
+               </div>
+               
+               <div className="siren-border-outer rounded-[3rem] p-1 mb-24">
+                 <div className="siren-border-inner opacity-20"></div>
+                 <div className="relative z-10 bg-slate-900 rounded-[2.9rem] p-12 flex flex-col lg:flex-row gap-12 items-center">
+                    <div className="lg:w-1/2">
+                       <div className="inline-flex items-center gap-2 px-4 py-1 rounded-full bg-blue-500/10 border border-blue-500/20 text-blue-400 text-[10px] font-black uppercase tracking-widest mb-6">
+                         Global Central Hub
+                       </div>
+                       <h2 className="text-4xl font-display font-bold mb-6">PODORE Digital Platform</h2>
+                       <ul className="space-y-4 text-slate-400">
+                         <li className="flex items-center gap-3"><Zap className="w-4 h-4 text-blue-500" /> Multi-language interface</li>
+                         <li className="flex items-center gap-3"><Zap className="w-4 h-4 text-blue-500" /> Strong cybersecurity and data protection</li>
+                         <li className="flex items-center gap-3"><Zap className="w-4 h-4 text-blue-500" /> Accessibility-first design</li>
+                         <li className="flex items-center gap-3"><Zap className="w-4 h-4 text-blue-500" /> Built-in AI assistant</li>
+                       </ul>
+                    </div>
+                    <div className="lg:w-1/2 grid grid-cols-2 gap-4">
+                      <div className="p-8 rounded-3xl bg-white/5 border border-white/10 text-center">
+                        <div className="text-3xl font-bold text-white mb-1">100%</div>
+                        <div className="text-[10px] text-slate-500 font-black uppercase tracking-widest">Sovereign</div>
+                      </div>
+                      <div className="p-8 rounded-3xl bg-white/5 border border-white/10 text-center">
+                        <div className="text-3xl font-bold text-blue-500 mb-1">∞</div>
+                        <div className="text-[10px] text-slate-500 font-black uppercase tracking-widest">Scalable</div>
+                      </div>
+                    </div>
+                 </div>
+               </div>
+            </div>
+            <Ecosystem />
           </div>
-        </section>
+        );
+      case 'about':
+        return (
+          <section className="pt-40 pb-32 bg-slate-950">
+            <div className="max-w-7xl mx-auto px-4">
+               <div className="grid lg:grid-cols-2 gap-20 items-center">
+                  <div>
+                    <h1 className="text-5xl md:text-7xl font-display font-bold mb-8">About <span className="shimmer-text">WAF</span></h1>
+                    <div className="space-y-6 text-slate-400 text-lg font-light leading-relaxed">
+                      <p>World AI Force (WAF) is a decentralized global intelligence ecosystem. We believe the power of AI should belong to the people, not just a handful of corporations.</p>
+                      <p>Since our inception, we have focused on building "The Forge"—a platform where anyone, regardless of their hardware, can generate high-quality visual and textual content using the latest neural architectures.</p>
+                    </div>
+                    <div className="grid grid-cols-2 gap-6 mt-12">
+                      <div className="p-6 glass rounded-2xl border-white/5">
+                        <h4 className="text-3xl font-bold text-white mb-2">2026</h4>
+                        <p className="text-[10px] text-slate-500 uppercase tracking-widest font-black">PODORE Launch</p>
+                      </div>
+                      <div className="p-6 glass rounded-2xl border-white/5">
+                        <h4 className="text-3xl font-bold text-blue-500">120+</h4>
+                        <p className="text-[10px] text-slate-500 uppercase tracking-widest font-black">Nodes Active</p>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="relative">
+                    <div className="absolute inset-0 bg-blue-600/10 blur-[120px] -z-10"></div>
+                    <img src="https://images.unsplash.com/photo-1620712943543-bcc4628c6bb5?q=80&w=2000&auto=format&fit=crop" className="rounded-[3rem] border border-white/10 shadow-3xl" alt="WAF Tech" />
+                  </div>
+               </div>
+            </div>
+          </section>
+        );
+      case 'contact':
+        return (
+          <section className="pt-40 pb-32 bg-slate-950">
+            <div className="max-w-5xl mx-auto px-4">
+               <div className="glass p-12 md:p-20 rounded-[4rem] border-white/10 flex flex-col md:flex-row gap-16">
+                  <div className="md:w-1/2">
+                    <h2 className="text-4xl font-display font-bold mb-6">Synaptic <span className="shimmer-text">Contact</span></h2>
+                    <p className="text-slate-400 mb-12">Establish a secure link with the World AI Force command center.</p>
+                    <div className="space-y-8">
+                       <div className="flex items-center gap-6">
+                          <div className="w-12 h-12 rounded-xl bg-blue-600/10 flex items-center justify-center text-blue-400"><Mail /></div>
+                          <div>
+                             <div className="text-[9px] uppercase tracking-widest text-slate-500 font-black">Email</div>
+                             <div className="text-white font-bold">contact@worldaiforce.com</div>
+                          </div>
+                       </div>
+                       <div className="flex items-center gap-6">
+                          <div className="w-12 h-12 rounded-xl bg-blue-600/10 flex items-center justify-center text-blue-400"><Phone /></div>
+                          <div>
+                             <div className="text-[9px] uppercase tracking-widest text-slate-500 font-black">Synaptic Line</div>
+                             <div className="text-white font-bold">+1-240-813-0308</div>
+                          </div>
+                       </div>
+                       <div className="flex items-center gap-6">
+                          <div className="w-12 h-12 rounded-xl bg-blue-600/10 flex items-center justify-center text-blue-400"><MapPin /></div>
+                          <div>
+                             <div className="text-[9px] uppercase tracking-widest text-slate-500 font-black">Global HQ</div>
+                             <div className="text-white font-bold">Upper Marlboro, MD, USA</div>
+                          </div>
+                       </div>
+                    </div>
+                  </div>
+                  <div className="md:w-1/2 space-y-4">
+                     <input type="text" placeholder="Identity" className="w-full bg-white/5 border border-white/10 rounded-2xl p-6 outline-none focus:border-blue-500 transition-all text-white" />
+                     <input type="email" placeholder="Communication Channel" className="w-full bg-white/5 border border-white/10 rounded-2xl p-6 outline-none focus:border-blue-500 transition-all text-white" />
+                     <textarea placeholder="Transmission" rows={5} className="w-full bg-white/5 border border-white/10 rounded-2xl p-6 outline-none focus:border-blue-500 transition-all text-white resize-none"></textarea>
+                     <button className="w-full py-6 bg-blue-600 text-white rounded-2xl font-black uppercase tracking-widest hover:bg-blue-500 transition-all shadow-xl shadow-blue-500/20">Transmit</button>
+                  </div>
+               </div>
+            </div>
+          </section>
+        );
+    }
+  };
+
+  return (
+    <div className="min-h-screen relative animate-in fade-in duration-1000">
+      <Navbar onNavigate={navigate} currentPage={currentPage} />
+      
+      <main>
+        {renderPage()}
       </main>
 
       <footer className="py-20 border-t border-white/10 glass mt-32">
@@ -267,9 +266,10 @@ const App: React.FC = () => {
               <div>
                 <h4 className="font-bold mb-6 text-white uppercase text-[10px] tracking-[0.4em]">Nodes</h4>
                 <ul className="space-y-3 text-slate-500 text-sm">
-                  <li><a href="#mission" className="hover:text-blue-400 transition-colors">Mission</a></li>
-                  <li><a href="#ecosystem" className="hover:text-blue-400 transition-colors">Ecosystem</a></li>
-                  <li><a href="#about" className="hover:text-blue-400 transition-colors">Protocol</a></li>
+                  <li><button onClick={() => navigate('home')} className="hover:text-blue-400 transition-colors">Home</button></li>
+                  <li><button onClick={() => navigate('mission')} className="hover:text-blue-400 transition-colors">Mission</button></li>
+                  <li><button onClick={() => navigate('forge')} className="hover:text-blue-400 transition-colors">Forge</button></li>
+                  <li><button onClick={() => navigate('ecosystem')} className="hover:text-blue-400 transition-colors">Ecosystem</button></li>
                 </ul>
               </div>
               <div>
