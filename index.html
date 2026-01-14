@@ -8,24 +8,59 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Space+Grotesk:wght@300;500;700&display=swap" rel="stylesheet">
     <style>
+        :root {
+            --accent-blue: #3b82f6;
+            --accent-purple: #a855f7;
+        }
+        
         body {
             font-family: 'Inter', sans-serif;
             background-color: #020617; /* slate-950 */
             color: #f8fafc;
             overflow-x: hidden;
+            scroll-behavior: smooth;
         }
+
+        /* Neural Grid Background */
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                radial-gradient(circle at 2px 2px, rgba(59, 130, 246, 0.05) 1px, transparent 0);
+            background-size: 40px 40px;
+            z-index: -1;
+            pointer-events: none;
+        }
+
         .font-display {
             font-family: 'Space+Grotesk', sans-serif;
         }
+
         .glass {
-            background: rgba(255, 255, 255, 0.03);
-            backdrop-filter: blur(16px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            background: rgba(255, 255, 255, 0.02);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
         }
-        .glow-blue {
-            filter: drop-shadow(0 0 25px rgba(59, 130, 246, 0.6));
+
+        .glass-card {
+            background: linear-gradient(135deg, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0.01) 100%);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.1);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
-        
+
+        .glass-card:hover {
+            border-color: rgba(59, 130, 246, 0.4);
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.4), 0 0 20px rgba(59,130,246,0.1);
+        }
+
         @keyframes blink {
             0%, 100% { opacity: 1; }
             50% { opacity: 0; }
@@ -36,21 +71,46 @@
             100% { background-position: 200% center; }
         }
 
+        @keyframes brand-float-rotate {
+            0%, 100% { 
+                transform: translateY(0px) rotate(0deg) scale(1);
+            }
+            33% {
+                transform: translateY(-10px) rotate(1.5deg) scale(1.04);
+            }
+            66% {
+                transform: translateY(5px) rotate(-1deg) scale(0.98);
+            }
+        }
+
+        .animate-brand {
+            animation: brand-float-rotate 8s ease-in-out infinite;
+        }
+
         .shimmer-text {
             background: linear-gradient(
                 90deg, 
                 #60a5fa 0%, 
-                #93c5fd 25%, 
-                #ffffff 50%, 
+                #ffffff 45%, 
                 #ffffff 55%, 
-                #c084fc 80%, 
-                #60a5fa 100%
+                #93c5fd 100%
             );
             background-size: 200% auto;
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
-            animation: shimmer 6s linear infinite;
+            animation: shimmer 5s linear infinite;
+        }
+
+        .reveal-on-scroll {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s ease-out;
+        }
+
+        .reveal-on-scroll.active {
+            opacity: 1;
+            transform: translateY(0);
         }
 
         ::-webkit-scrollbar {

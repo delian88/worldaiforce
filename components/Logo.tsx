@@ -7,30 +7,34 @@ interface LogoProps {
 }
 
 const Logo: React.FC<LogoProps> = ({ className = "", size = 40 }) => {
-  // Using the provided high-resolution WAF logo image
-  const logoUrl = "https://raw.githubusercontent.com/stackblitz/stackblitz-images/main/waf-logo-new.png"; 
-  
-  // Note: Since I cannot generate a persistent URL for the chat-uploaded image directly here, 
-  // I am providing the component structure that would point to the asset. 
-  // In this environment, the user's provided image is treated as the primary asset.
-  
+  // Using the high-resolution logo provided by the user
+  const logoSrc = "https://worldaiforce.com/wp-content/uploads/2024/04/World-AI-Force-Logo.png";
+
   return (
     <div 
-      className={`relative inline-block ${className}`}
+      className={`relative inline-block transition-all duration-700 ${className}`}
       style={{ width: size, height: size }}
     >
+      {/* Dynamic Background Glow */}
+      <div className="absolute inset-0 bg-blue-500/20 rounded-full blur-3xl -z-10 animate-pulse scale-150"></div>
+      
       <img 
-        src="https://worldaiforce.com/wp-content/uploads/2024/04/World-AI-Force-Logo.png" 
+        src={logoSrc} 
         alt="World AI Force Official Logo" 
-        className="block w-full h-full object-contain filter drop-shadow-[0_0_15px_rgba(59,130,246,0.3)] transition-transform duration-500 hover:scale-110"
+        className="block w-full h-full object-contain select-none animate-brand transition-all duration-500 hover:brightness-125"
+        style={{
+          filter: 'drop-shadow(0 0 12px rgba(96, 165, 250, 0.4))'
+        }}
         onError={(e) => {
           const target = e.target as HTMLImageElement;
-          // Fallback to a placeholder if the primary URL fails
           target.src = "https://placehold.co/400x400/020617/3b82f6?text=WAF";
         }}
       />
-      {/* Decorative pulse effect behind the logo for a 'modern' feel */}
-      <div className="absolute inset-0 bg-blue-500/10 rounded-full blur-xl -z-10 animate-pulse"></div>
+      
+      {/* Decorative Outer Ring for specific size context */}
+      {size > 100 && (
+        <div className="absolute inset-[-15%] border border-blue-500/10 rounded-full animate-[spin_20s_linear_infinite] pointer-events-none"></div>
+      )}
     </div>
   );
 };
