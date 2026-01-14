@@ -97,7 +97,7 @@ const Hero: React.FC = () => {
               <div className="absolute inset-[-80px] rounded-full border border-dashed border-white/5 animate-[spin_60s_linear_infinite] opacity-30"></div>
               <div className="absolute inset-[-40px] rounded-full border border-blue-500/20 animate-[spin_40s_linear_infinite_reverse]"></div>
               
-              {/* THE NEW ICON */}
+              {/* THE ICON */}
               <div className="relative z-10 transition-transform duration-1000 group-hover:scale-110">
                 <Logo size={420} className="drop-shadow-[0_0_60px_rgba(59,130,246,0.4)]" />
               </div>
@@ -106,10 +106,13 @@ const Hero: React.FC = () => {
           
         </div>
 
-        {/* PODORE Launch Preview */}
+        {/* PODORE Launch Preview - Global Central Hub Section with Siren Border */}
         <div className={`mt-24 w-full max-w-5xl mx-auto transition-all duration-1000 delay-1000 ${isFinished ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'}`}>
-          <div className="glass rounded-[4rem] p-1 border-white/10 overflow-hidden shadow-3xl">
-            <div className="bg-slate-950/40 backdrop-blur-3xl rounded-[3.9rem] p-10 md:p-14 border border-white/5 flex flex-col lg:flex-row items-center justify-between gap-12">
+          <div className="siren-border-outer rounded-[4rem] p-1 shadow-3xl">
+            {/* Animated Siren Border Component */}
+            <div className="siren-border-inner"></div>
+            
+            <div className="relative z-10 bg-slate-950/80 backdrop-blur-3xl rounded-[3.9rem] p-10 md:p-14 border border-white/5 flex flex-col lg:flex-row items-center justify-between gap-12">
               <div className="text-center lg:text-left">
                 <div className="flex items-center justify-center lg:justify-start gap-3 mb-4">
                   <div className="px-4 py-1.5 bg-blue-600/10 border border-blue-600/20 rounded-xl text-blue-400 text-[10px] font-black tracking-widest uppercase">Global Central Hub</div>
