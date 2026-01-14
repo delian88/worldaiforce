@@ -1,16 +1,22 @@
 
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import Navbar from './components/Navbar.tsx';
 import Hero from './components/Hero.tsx';
 import Ecosystem from './components/Ecosystem.tsx';
 import WafForge from './components/WafForge.tsx';
 import WafAssistant from './components/WafAssistant.tsx';
+import LoadingScreen from './components/LoadingScreen.tsx';
 import Logo from './components/Logo.tsx';
 import { FEATURES } from './constants.tsx';
-import { ExternalLink, ArrowUpRight, Mail, MapPin, Globe, CheckCircle2, Phone } from 'lucide-react';
+import { playWelcomeGreeting } from './services/voiceService.ts';
+import { ExternalLink, ArrowUpRight, Mail, MapPin, Globe, CheckCircle2, Phone, Target, Eye } from 'lucide-react';
 
 const App: React.FC = () => {
+  const [appReady, setAppReady] = useState(false);
+
   useEffect(() => {
+    if (!appReady) return;
+
     const observer = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
@@ -21,10 +27,19 @@ const App: React.FC = () => {
 
     document.querySelectorAll('.reveal-on-scroll').forEach(el => observer.observe(el));
     return () => observer.disconnect();
-  }, []);
+  }, [appReady]);
+
+  const handleInit = () => {
+    setAppReady(true);
+    playWelcomeGreeting();
+  };
+
+  if (!appReady) {
+    return <LoadingScreen onComplete={handleInit} />;
+  }
 
   return (
-    <div className="min-h-screen relative">
+    <div className="min-h-screen relative animate-in fade-in duration-1000">
       <Navbar />
       
       <main>
@@ -52,6 +67,57 @@ const App: React.FC = () => {
                 </div>
               ))}
             </div>
+          </div>
+        </section>
+
+        {/* New About Us Section */}
+        <section id="about-us" className="py-32 relative bg-slate-900/30">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+             <div className="grid lg:grid-cols-2 gap-16 items-center">
+                <div className="reveal-on-scroll">
+                   <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-blue-500/10 border border-blue-500/20 text-blue-400 text-[10px] font-black uppercase tracking-widest mb-6">
+                      <Target className="w-3 h-3" />
+                      Our Purpose
+                   </div>
+                   <h2 className="font-display text-4xl md:text-5xl font-bold mb-8">
+                     Democratizing the <span className="shimmer-text">Future</span>
+                   </h2>
+                   <div className="space-y-6 text-slate-400 text-lg font-light leading-relaxed">
+                      <p>
+                        At World AI Force, we believe that artificial intelligence is the most transformative tool in human history. Yet, its power is often concentrated in the hands of a few. Our mission is to break those barriers.
+                      </p>
+                      <p>
+                        We are a decentralized collective of engineers, ethicists, and visionaries dedicated to building a global infrastructure where every community—regardless of geography or economic status—has the sovereign right to access and build with AI.
+                      </p>
+                   </div>
+                </div>
+
+                <div className="grid gap-8 reveal-on-scroll">
+                   <div className="p-10 rounded-[2.5rem] glass-card border-blue-500/20">
+                      <div className="flex items-center gap-4 mb-6">
+                        <div className="p-3 bg-blue-600/20 rounded-xl text-blue-400">
+                          <Target className="w-6 h-6" />
+                        </div>
+                        <h4 className="text-2xl font-display font-bold">The Mission</h4>
+                      </div>
+                      <p className="text-slate-400 leading-relaxed">
+                        To provide the tools, education, and infrastructure necessary for global AI equity. We aim to decentralize intelligence and return control to the people.
+                      </p>
+                   </div>
+
+                   <div className="p-10 rounded-[2.5rem] glass-card border-purple-500/20">
+                      <div className="flex items-center gap-4 mb-6">
+                        <div className="p-3 bg-purple-600/20 rounded-xl text-purple-400">
+                          <Eye className="w-6 h-6" />
+                        </div>
+                        <h4 className="text-2xl font-display font-bold">The Vision</h4>
+                      </div>
+                      <p className="text-slate-400 leading-relaxed">
+                        A world where AI is as fundamental as electricity—invisible, pervasive, and empowering for every individual on the planet.
+                      </p>
+                   </div>
+                </div>
+             </div>
           </div>
         </section>
 
