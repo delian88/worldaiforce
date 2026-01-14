@@ -11,7 +11,8 @@ import {
   AlertCircle,
   Download,
   Key,
-  Maximize2
+  ShieldAlert,
+  Zap
 } from 'lucide-react';
 
 type ToolType = 'image' | 'content' | 'video';
@@ -24,33 +25,62 @@ const WafForge: React.FC = () => {
   const [loading, setLoading] = useState(false);
   const [result, setResult] = useState<{ type: ToolType; url?: string; text?: string } | null>(null);
   const [status, setStatus] = useState('');
+  const [isProMode, setIsProMode] = useState(false);
 
-  // Video generation requires special key selection as per instructions
+  // Video and Pro Image generation requires special key selection
   const handleKeySelection = async () => {
     // @ts-ignore
     if (window.aistudio && typeof window.aistudio.openSelectKey === 'function') {
       await window.aistudio.openSelectKey();
-      setStatus('API Key active. Initiating render...');
+      setStatus('Neural link established. Protocol ready.');
     }
+  };
+
+  const handleErrorMessage = (error: any) => {
+    console.error(error);
+    const msg = error.message || '';
+    if (msg.includes('429') || msg.toLowerCase().includes('quota') || msg.toLowerCase().includes('exhausted')) {
+      return 'Quota exceeded (429). Switch to Pro Mode or wait for reset.';
+    }
+    if (msg.includes('entity was not found')) {
+      return 'Configuration Error: Resetting key selection suggested.';
+    }
+    return `Synthesis Error: ${msg.substring(0, 50)}...`;
   };
 
   const generateImage = async () => {
     setLoading(true);
-    setStatus('Initializing Visionary model for photorealistic output...');
+    setStatus(isProMode ? 'Engaging Pro Visionary (gemini-3-pro)...' : 'Initializing Visionary model...');
+    
     try {
-      // Create a fresh instance for the call
+      // In Pro mode, we assume the user has selected their key.
+      // Instructions: For gemini-3-pro-image-preview, users MUST select their own API key.
+      if (isProMode) {
+        // @ts-ignore
+        const hasKey = window.aistudio && typeof window.aistudio.hasSelectedApiKey === 'function' 
+          ? await window.aistudio.hasSelectedApiKey() 
+          : true;
+        if (!hasKey) {
+          setStatus('Critical: Pro Mode requires a paid API key.');
+          setLoading(false);
+          return;
+        }
+      }
+
       const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
-      
-      // We append quality modifiers to satisfy the "real image" request if the user hasn't provided them
       const enhancedPrompt = `${prompt}, photorealistic, high quality, highly detailed, professional photography, 8k resolution`;
 
       const response = await ai.models.generateContent({
-        model: 'gemini-2.5-flash-image',
+        model: isProMode ? 'gemini-3-pro-image-preview' : 'gemini-2.5-flash-image',
         contents: { parts: [{ text: enhancedPrompt }] },
         config: {
           imageConfig: {
-            aspectRatio: aspectRatio
-          }
+            aspectRatio: aspectRatio,
+            // Pro model supports imageSize
+            ...(isProMode ? { imageSize: '1K' } : {})
+          },
+          // Pro model supports google_search
+          ...(isProMode ? { tools: [{ googleSearch: {} }] } : {})
         }
       });
       
@@ -65,8 +95,7 @@ const WafForge: React.FC = () => {
         setStatus('Model returned no visual data. Check your prompt.');
       }
     } catch (error: any) {
-      console.error(error);
-      setStatus(`Render failed: ${error.message || 'System overload'}`);
+      setStatus(handleErrorMessage(error));
     } finally {
       setLoading(false);
     }
@@ -87,8 +116,7 @@ const WafForge: React.FC = () => {
       setResult({ type: 'content', text: response.text });
       setStatus('Lexicon synthesized.');
     } catch (error) {
-      console.error(error);
-      setStatus('Synthetics failed.');
+      setStatus(handleErrorMessage(error));
     } finally {
       setLoading(false);
     }
@@ -98,10 +126,11 @@ const WafForge: React.FC = () => {
     // @ts-ignore
     const hasKey = window.aistudio && typeof window.aistudio.hasSelectedApiKey === 'function' 
       ? await window.aistudio.hasSelectedApiKey() 
-      : true; // Fallback for environments where the bridge isn't present
+      : true;
 
     if (!hasKey) {
-      setStatus('Critical: Paid API Key required for Motion render.');
+      setStatus('Critical: Motion synthesis requires a paid API Key.');
+      setLoading(false);
       return;
     }
 
@@ -126,7 +155,7 @@ const WafForge: React.FC = () => {
       while (!operation.done) {
         setStatus(reassuringMessages[msgIdx % reassuringMessages.length]);
         msgIdx++;
-        await new Promise(resolve => setTimeout(resolve, 8000));
+        await new Promise(resolve => setTimeout(resolve, 10000));
         operation = await ai.operations.getVideosOperation({ operation: operation });
       }
 
@@ -136,12 +165,7 @@ const WafForge: React.FC = () => {
       setResult({ type: 'video', url: URL.createObjectURL(blob) });
       setStatus('Motion render complete.');
     } catch (error: any) {
-      console.error(error);
-      if (error.message?.includes('entity was not found')) {
-        setStatus('API Key error. Please re-select your account.');
-      } else {
-        setStatus('Motion synthesis interrupted.');
-      }
+      setStatus(handleErrorMessage(error));
     } finally {
       setLoading(false);
     }
@@ -181,7 +205,7 @@ const WafForge: React.FC = () => {
             ].map((tool) => (
               <button
                 key={tool.id}
-                onClick={() => { setActiveTool(tool.id as ToolType); setResult(null); }}
+                onClick={() => { setActiveTool(tool.id as ToolType); setResult(null); setStatus(''); }}
                 className={`flex items-center gap-3 px-8 py-4 rounded-2xl font-bold uppercase tracking-widest text-[10px] transition-all
                   ${activeTool === tool.id 
                     ? 'bg-blue-600 text-white shadow-xl shadow-blue-500/20' 
@@ -198,7 +222,20 @@ const WafForge: React.FC = () => {
               {/* Input Area */}
               <div className="lg:w-1/2 space-y-8">
                 <div>
-                  <label className="block text-[10px] uppercase tracking-[0.4em] text-slate-500 font-black mb-4">Transmission Prompt</label>
+                  <div className="flex justify-between items-center mb-4">
+                    <label className="block text-[10px] uppercase tracking-[0.4em] text-slate-500 font-black">Transmission Prompt</label>
+                    {activeTool === 'image' && (
+                      <button 
+                        onClick={() => setIsProMode(!isProMode)}
+                        className={`flex items-center gap-2 px-3 py-1.5 rounded-full text-[9px] font-black uppercase tracking-widest transition-all ${
+                          isProMode ? 'bg-blue-600 text-white shadow-lg shadow-blue-500/30' : 'bg-white/5 text-slate-500'
+                        }`}
+                      >
+                        <Zap className={`w-3 h-3 ${isProMode ? 'animate-pulse' : ''}`} />
+                        {isProMode ? 'Pro Mode Active' : 'Enable Pro Mode'}
+                      </button>
+                    )}
+                  </div>
                   <textarea
                     value={prompt}
                     onChange={(e) => setPrompt(e.target.value)}
@@ -214,7 +251,7 @@ const WafForge: React.FC = () => {
                 {activeTool === 'image' && (
                   <div>
                     <label className="block text-[10px] uppercase tracking-[0.4em] text-slate-500 font-black mb-4">Aspect Ratio</label>
-                    <div className="flex gap-2">
+                    <div className="flex flex-wrap gap-2">
                       {(['1:1', '16:9', '9:16', '4:3', '3:4'] as AspectRatio[]).map((ratio) => (
                         <button
                           key={ratio}
@@ -232,12 +269,12 @@ const WafForge: React.FC = () => {
                   </div>
                 )}
 
-                {activeTool === 'video' && (
+                {(activeTool === 'video' || isProMode) && (
                   <div className="p-6 rounded-2xl bg-blue-500/5 border border-blue-500/20 flex items-start gap-4">
                     <AlertCircle className="w-6 h-6 text-blue-400 shrink-0" />
                     <div>
                       <p className="text-xs text-blue-300 mb-3 leading-relaxed">
-                        Motion synthesis requires a paid API key for high-quality video generation.
+                        {activeTool === 'video' ? 'Motion synthesis' : 'Pro Visionary'} requires a paid API key to bypass global usage limits.
                       </p>
                       <div className="flex items-center gap-4">
                         <button 
@@ -270,9 +307,12 @@ const WafForge: React.FC = () => {
                 </button>
 
                 {status && (
-                  <p className="text-center text-[10px] uppercase tracking-widest text-blue-400 font-bold animate-pulse">
-                    {status}
-                  </p>
+                  <div className={`p-4 rounded-2xl text-center flex items-center justify-center gap-3 ${status.includes('429') || status.includes('Error') ? 'bg-red-500/10 border border-red-500/20 text-red-400' : 'text-blue-400'}`}>
+                    {status.includes('429') && <ShieldAlert className="w-4 h-4" />}
+                    <p className="text-[10px] uppercase tracking-widest font-bold">
+                      {status}
+                    </p>
+                  </div>
                 )}
               </div>
 
