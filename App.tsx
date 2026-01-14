@@ -4,8 +4,9 @@ import Navbar from './components/Navbar.tsx';
 import Hero from './components/Hero.tsx';
 import Ecosystem from './components/Ecosystem.tsx';
 import WafAssistant from './components/WafAssistant.tsx';
+import Logo from './components/Logo.tsx';
 import { FEATURES } from './constants.tsx';
-import { ExternalLink, Shield } from 'lucide-react';
+import { ExternalLink } from 'lucide-react';
 
 const App: React.FC = () => {
   return (
@@ -21,7 +22,7 @@ const App: React.FC = () => {
             <div className="grid md:grid-cols-3 gap-12">
               {FEATURES.map((feat, idx) => (
                 <div key={idx} className="flex flex-col items-center text-center group">
-                  <div className="w-16 h-16 rounded-full glass flex items-center justify-center mb-6 group-hover:scale-110 transition-transform border border-white/20">
+                  <div className="w-16 h-16 rounded-full glass flex items-center justify-center mb-6 group-hover:scale-110 transition-transform border border-white/20 shadow-lg">
                     {feat.icon}
                   </div>
                   <h3 className="text-2xl font-display font-bold mb-4">{feat.title}</h3>
@@ -112,13 +113,13 @@ const App: React.FC = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 md:grid-cols-4 gap-12 mb-16">
             <div className="col-span-1 md:col-span-2">
-              <div className="flex items-center gap-2 mb-6">
-                <Shield className="text-blue-500 w-8 h-8" />
+              <div className="flex items-center gap-3 mb-6">
+                <Logo size={48} className="glow-blue" />
                 <span className="font-display font-bold text-2xl tracking-tight">
                   WORLD <span className="shimmer-text">AI</span> FORCE
                 </span>
               </div>
-              <p className="text-slate-500 max-sm leading-relaxed">
+              <p className="text-slate-500 max-w-sm leading-relaxed">
                 A globally integrated, multi-division ecosystem designed to democratize AI and ensure digital equity for all communities.
               </p>
             </div>

@@ -1,6 +1,7 @@
 
 import React, { useState } from 'react';
-import { Menu, X, Shield, Globe } from 'lucide-react';
+import { Menu, X } from 'lucide-react';
+import Logo from './Logo.tsx';
 
 const Navbar: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -9,12 +10,10 @@ const Navbar: React.FC = () => {
     <nav className="fixed top-0 left-0 right-0 z-50 glass border-b border-white/5">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-20">
-          <div className="flex items-center gap-2">
-            <div className="w-10 h-10 bg-gradient-to-tr from-blue-600 to-purple-600 rounded-lg flex items-center justify-center glow-blue">
-              <Shield className="text-white w-6 h-6" />
-            </div>
+          <div className="flex items-center gap-3">
+            <Logo size={48} className="glow-blue" />
             <span className="font-display font-bold text-xl tracking-tight">
-              WORLD <span className="text-blue-400">AI</span> FORCE
+              WORLD <span className="shimmer-text">AI</span> FORCE
             </span>
           </div>
 
@@ -29,7 +28,7 @@ const Navbar: React.FC = () => {
                   {item}
                 </a>
               ))}
-              <button className="bg-blue-600 hover:bg-blue-500 px-6 py-2 rounded-full text-sm font-bold transition-all transform hover:scale-105 shadow-lg shadow-blue-500/20">
+              <button className="bg-blue-600 hover:bg-blue-500 px-6 py-2 rounded-full text-sm font-bold transition-all transform hover:scale-105 shadow-xl shadow-blue-500/20">
                 Join The Force
               </button>
             </div>
