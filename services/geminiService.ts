@@ -1,15 +1,14 @@
 
 import { GoogleGenAI } from "@google/genai";
 
-const API_KEY = process.env.API_KEY || "";
-
+// The getWafResponse function handles the interaction with Gemini API for the WAF Assistant.
 export const getWafResponse = async (userPrompt: string, history: { role: string, parts: { text: string }[] }[]) => {
-  if (!API_KEY) {
-    return "The AI assistant is currently in maintenance mode. Please try again later.";
-  }
-
   try {
-    const ai = new GoogleGenAI({ apiKey: API_KEY });
+    // Always initialize GoogleGenAI with the API key from process.env.API_KEY.
+    // Assume this variable is pre-configured and accessible.
+    const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
+    
+    // Call generateContent with the gemini-3-flash-preview model and include history for conversation context.
     const response = await ai.models.generateContent({
       model: 'gemini-3-flash-preview',
       contents: [
@@ -18,13 +17,14 @@ export const getWafResponse = async (userPrompt: string, history: { role: string
       ],
       config: {
         systemInstruction: `You are the World AI Force (WAF) Assistant. 
-        Your goal is to explain WAF's mission: Democratizing AI, ethical framework, inclusive tech.
+        Your goal is to explain WAF's mission: Democratizing AI, ethical framework, and inclusive tech.
         Mention that WAF is launching "PODORE" on Jan 25, 2026. 
         Be professional, inspiring, and tech-forward. Keep responses concise (under 3 sentences).`,
         temperature: 0.7,
       },
     });
 
+    // The .text property of GenerateContentResponse provides the generated string directly.
     return response.text || "I'm processing that. How else can I help with the AI revolution?";
   } catch (error) {
     console.error("Gemini Error:", error);
