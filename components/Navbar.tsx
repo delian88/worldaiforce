@@ -6,29 +6,36 @@ import Logo from './Logo.tsx';
 const Navbar: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
 
+  const navItems = [
+    { name: 'Mission', href: '#mission' },
+    { name: 'Ecosystem', href: '#ecosystem' },
+    { name: 'About', href: '#about' },
+    { name: 'Contact', href: '#contact' }
+  ];
+
   return (
     <nav className="fixed top-0 left-0 right-0 z-50 glass border-b border-white/5">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-20">
-          <div className="flex items-center gap-3">
-            <Logo size={48} className="glow-blue" />
-            <span className="font-display font-bold text-xl tracking-tight">
+        <div className="flex items-center justify-between h-24">
+          <div className="flex items-center gap-4">
+            <Logo size={52} />
+            <span className="font-display font-bold text-xl tracking-tight hidden sm:inline-block">
               WORLD <span className="shimmer-text">AI</span> FORCE
             </span>
           </div>
 
           <div className="hidden md:block">
-            <div className="flex items-baseline space-x-8">
-              {['Mission', 'Ecosystem', 'PODORE', 'Ethics'].map((item) => (
+            <div className="flex items-center space-x-10">
+              {navItems.map((item) => (
                 <a
-                  key={item}
-                  href={`#${item.toLowerCase()}`}
-                  className="text-slate-300 hover:text-white px-3 py-2 text-sm font-medium transition-colors"
+                  key={item.name}
+                  href={item.href}
+                  className="text-slate-400 hover:text-white px-3 py-2 text-sm font-medium transition-all hover:scale-105"
                 >
-                  {item}
+                  {item.name}
                 </a>
               ))}
-              <button className="bg-blue-600 hover:bg-blue-500 px-6 py-2 rounded-full text-sm font-bold transition-all transform hover:scale-105 shadow-xl shadow-blue-500/20">
+              <button className="bg-blue-600 hover:bg-blue-500 text-white px-8 py-3 rounded-full text-sm font-bold transition-all transform hover:scale-105 shadow-xl shadow-blue-500/20">
                 Join The Force
               </button>
             </div>
@@ -42,19 +49,20 @@ const Navbar: React.FC = () => {
         </div>
       </div>
 
+      {/* Mobile menu */}
       {isOpen && (
-        <div className="md:hidden glass border-t border-white/5 p-4 space-y-2">
-          {['Mission', 'Ecosystem', 'PODORE', 'Ethics'].map((item) => (
+        <div className="md:hidden glass border-t border-white/5 p-6 space-y-4 animate-in fade-in slide-in-from-top-4">
+          {navItems.map((item) => (
             <a
-              key={item}
-              href={`#${item.toLowerCase()}`}
-              className="block text-slate-300 hover:text-white px-3 py-3 text-base font-medium"
+              key={item.name}
+              href={item.href}
+              className="block text-slate-300 hover:text-white px-3 py-3 text-lg font-medium border-b border-white/5"
               onClick={() => setIsOpen(false)}
             >
-              {item}
+              {item.name}
             </a>
           ))}
-          <button className="w-full bg-blue-600 text-white py-3 rounded-xl font-bold">
+          <button className="w-full bg-blue-600 text-white py-4 rounded-2xl font-bold shadow-xl shadow-blue-500/10">
             Join The Force
           </button>
         </div>
