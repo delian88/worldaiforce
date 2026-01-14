@@ -13,7 +13,8 @@ import {
   Target, Eye, ShieldCheck, Globe, Zap, ArrowRight, Download, 
   Mail, Phone, MapPin, ArrowUpRight, Lock, FileText, Cpu, 
   BarChart3, Users, Network, Layers, Rocket, Award, CheckCircle2,
-  TrendingUp, Calculator, HardDrive, ShieldAlert, Sparkles, Wand2
+  TrendingUp, Calculator, HardDrive, ShieldAlert, Sparkles, Wand2,
+  KeyRound, UserPlus
 } from 'lucide-react';
 
 type Page = 'home' | 'mission' | 'forge' | 'ecosystem' | 'about' | 'contact' | 'privacy';
@@ -48,6 +49,10 @@ const App: React.FC = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
+  const openPodore = () => {
+    window.open('https://worldaiforce.org/', '_blank');
+  };
+
   if (!appReady) {
     return <LoadingScreen onComplete={handleInit} />;
   }
@@ -77,6 +82,82 @@ const App: React.FC = () => {
                     <WafForge />
                  </div>
               </div>
+            </section>
+
+            {/* NEW: PODORE REGISTRATION SECTION */}
+            <section className="py-32 bg-slate-950 relative overflow-hidden">
+               <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(59,130,246,0.1)_0%,transparent_70%)]"></div>
+               <div className="max-w-7xl mx-auto px-4 relative z-10">
+                  <div className="siren-border-outer rounded-[4rem] p-1.5 shadow-2xl overflow-hidden group">
+                     <div className="siren-border-inner opacity-20 group-hover:opacity-40 transition-opacity duration-1000"></div>
+                     <div className="relative z-10 bg-slate-900/90 backdrop-blur-3xl rounded-[3.9rem] p-12 md:p-24 flex flex-col lg:flex-row items-center gap-16 overflow-hidden">
+                        
+                        {/* Decorative background element */}
+                        <div className="absolute top-0 left-0 w-full h-full pointer-events-none opacity-20">
+                           <div className="absolute top-[-20%] left-[-10%] w-[500px] h-[500px] bg-blue-600 rounded-full blur-[120px] animate-pulse"></div>
+                        </div>
+
+                        <div className="lg:w-1/2 text-left reveal-on-scroll">
+                           <div className="flex items-center gap-4 mb-8">
+                              <div className="w-14 h-14 rounded-2xl bg-blue-600/20 border border-blue-500/30 flex items-center justify-center text-blue-400">
+                                 <KeyRound className="w-6 h-6" />
+                              </div>
+                              <span className="text-blue-500 text-[10px] font-black uppercase tracking-[0.6em]">Neural Access Control</span>
+                           </div>
+                           <h2 className="text-4xl md:text-6xl font-display font-bold mb-8 leading-tight">
+                              Establish Your <span className="shimmer-text">Podore Account</span>
+                           </h2>
+                           <p className="text-slate-400 text-lg md:text-xl font-light leading-relaxed mb-10 border-l-2 border-blue-500/30 pl-8">
+                              Join the premier decentralized AI network. Your account grants you sovereign access to the 5 pillars of the World AI Force ecosystem.
+                           </p>
+                           <div className="space-y-4 mb-12">
+                              {[
+                                 "Sovereign Data Identity",
+                                 "Decentralized Model Access",
+                                 "WAF Academy Enrollment",
+                                 "Neural Asset Management"
+                              ].map((item, idx) => (
+                                 <div key={idx} className="flex items-center gap-3 text-slate-300">
+                                    <CheckCircle2 className="w-4 h-4 text-blue-500" />
+                                    <span className="text-xs font-bold uppercase tracking-widest">{item}</span>
+                                 </div>
+                              ))}
+                           </div>
+                           <button 
+                              onClick={openPodore}
+                              className="px-14 py-7 bg-blue-600 text-white rounded-full font-black uppercase tracking-[0.3em] hover:bg-blue-500 transition-all shadow-3xl shadow-blue-500/40 flex items-center justify-center gap-4 group"
+                           >
+                              Create Account <UserPlus className="w-5 h-5 group-hover:scale-110 transition-transform" />
+                           </button>
+                        </div>
+
+                        <div className="lg:w-1/2 relative reveal-on-scroll">
+                           <div className="relative z-10 p-4">
+                              <div className="aspect-video glass rounded-[2.5rem] border-white/10 flex flex-col items-center justify-center p-8 overflow-hidden relative shadow-2xl">
+                                 <div className="absolute inset-0 bg-gradient-to-br from-blue-600/10 to-transparent"></div>
+                                 <Logo size={120} className="mb-6 opacity-80" />
+                                 <div className="text-center">
+                                    <div className="text-[10px] font-black text-blue-400 uppercase tracking-[0.8em] mb-2">Platform Protocol</div>
+                                    <div className="text-3xl font-display font-bold text-white italic">PODORE CORE v1.0</div>
+                                 </div>
+                                 <div className="mt-8 flex gap-4">
+                                    <div className="w-12 h-1.5 bg-blue-600 rounded-full animate-pulse"></div>
+                                    <div className="w-12 h-1.5 bg-slate-800 rounded-full"></div>
+                                    <div className="w-12 h-1.5 bg-slate-800 rounded-full"></div>
+                                 </div>
+                              </div>
+                              {/* Floating tech UI bits */}
+                              <div className="absolute -top-6 -right-6 w-32 h-32 glass rounded-3xl border-white/10 flex items-center justify-center animate-bounce duration-[3s]">
+                                 <ShieldCheck className="w-10 h-10 text-blue-500/50" />
+                              </div>
+                              <div className="absolute -bottom-10 -left-6 w-40 h-16 glass rounded-2xl border-white/10 flex items-center justify-center animate-pulse">
+                                 <span className="text-[8px] font-black uppercase tracking-[0.5em] text-blue-400/60">Verified Node</span>
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+               </div>
             </section>
 
             {/* Statistics Section */}
@@ -215,8 +296,8 @@ const App: React.FC = () => {
                         WAF is a community-first movement. We are currently recruiting **Regional Ambassadors** and **Node Developers** to anchor the mission across all continents.
                       </p>
                       <div className="flex flex-col sm:flex-row gap-8 justify-center items-center">
-                        <button onClick={() => navigate('contact')} className="px-14 py-7 bg-blue-600 text-white rounded-full font-black uppercase tracking-[0.3em] hover:bg-blue-500 transition-all shadow-3xl shadow-blue-500/30 flex items-center justify-center gap-4 group">
-                          Join the Force <Rocket className="w-5 h-5 group-hover:-translate-y-1 group-hover:translate-x-1 transition-transform" />
+                        <button onClick={openPodore} className="px-14 py-7 bg-blue-600 text-white rounded-full font-black uppercase tracking-[0.3em] hover:bg-blue-500 transition-all shadow-3xl shadow-blue-500/30 flex items-center justify-center gap-4 group">
+                          Join the Network <Rocket className="w-5 h-5 group-hover:-translate-y-1 group-hover:translate-x-1 transition-transform" />
                         </button>
                         <button onClick={() => navigate('mission')} className="px-14 py-7 glass text-white rounded-full font-black uppercase tracking-[0.3em] hover:bg-white/10 transition-all border border-white/10">
                           The Charter
