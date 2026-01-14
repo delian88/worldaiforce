@@ -3,6 +3,7 @@ import React, { useEffect } from 'react';
 import Navbar from './components/Navbar.tsx';
 import Hero from './components/Hero.tsx';
 import Ecosystem from './components/Ecosystem.tsx';
+import WafForge from './components/WafForge.tsx';
 import WafAssistant from './components/WafAssistant.tsx';
 import Logo from './components/Logo.tsx';
 import { FEATURES } from './constants.tsx';
@@ -55,6 +56,8 @@ const App: React.FC = () => {
         </section>
 
         <Ecosystem />
+
+        <WafForge />
 
         {/* Detailed About Section */}
         <section id="about" className="py-32 relative">
