@@ -7,7 +7,12 @@ import {
   Globe, 
   Cpu, 
   BookOpen, 
-  Code
+  Code,
+  TrendingUp,
+  Calculator,
+  Scale,
+  Wand2,
+  Network
 } from 'lucide-react';
 import { EcosystemTool } from './types.ts';
 
@@ -15,49 +20,56 @@ export const PODORE_LAUNCH_DATE = new Date('2026-01-25T00:00:00');
 
 export const ECOSYSTEM_TOOLS: EcosystemTool[] = [
   {
-    id: 'waf-research',
-    name: 'WAF Research Lab',
-    description: 'Pioneering ethical AI frameworks and inclusive algorithms for global challenges.',
-    icon: 'Cpu',
-    category: 'Research'
+    id: 'waf-forge',
+    name: 'WAF Forge',
+    description: 'Real-time neural synthesis engine for image, motion, and lexicon generation.',
+    icon: 'Wand2',
+    category: 'Development'
   },
   {
     id: 'waf-academy',
-    name: 'Empower Academy',
-    description: 'Democratizing knowledge through free, accessible AI training and certification.',
+    name: 'WAF Academy',
+    description: 'Democratized AI education and global certification platform. Coming soon.',
     icon: 'BookOpen',
     category: 'Education'
   },
   {
-    id: 'waf-community',
-    name: 'Global Node Network',
-    description: 'Connecting local innovators to a global grid of AI resources and mentorship.',
-    icon: 'Users',
-    category: 'Community'
+    id: 'waf-stocks',
+    name: 'Stock Market',
+    description: 'AI-driven predictive analytics for global equity and trade markets. Coming soon.',
+    icon: 'TrendingUp',
+    category: 'Research'
   },
   {
-    id: 'waf-dev',
-    name: 'PODORE Core',
-    description: 'The upcoming centralized platform for seamless AI tool integration.',
-    icon: 'Code',
+    id: 'waf-accounting',
+    name: 'AI Accounting',
+    description: 'Automated decentralized financial auditing and enterprise management. Coming soon.',
+    icon: 'Calculator',
     category: 'Development'
+  },
+  {
+    id: 'podore-core',
+    name: 'Podore',
+    description: 'The master digital hub and unified platform. Launching Jan 25, 2026.',
+    icon: 'Network',
+    category: 'Community'
   }
 ];
 
 export const FEATURES = [
   {
     title: 'Accessible AI',
-    description: 'Breaking barriers to ensure technology reaches the underserved.',
+    description: 'Ensuring advanced intelligence tools reach underserved communities.',
     icon: <Globe className="w-8 h-8 text-blue-400" />
   },
   {
     title: 'Ethical Framework',
-    description: 'Built-in safeguards to ensure AI serves humanity responsibly.',
+    description: 'Rigid safeguards to ensure AI serves humanity responsibly and safely.',
     icon: <ShieldCheck className="w-8 h-8 text-purple-400" />
   },
   {
-    title: 'Inclusive Growth',
-    description: 'Diverse perspectives shaping the future of global digital ecosystems.',
+    title: 'Sovereign Data',
+    description: 'Users maintain 100% ownership of their forged intelligence assets.',
     icon: <Zap className="w-8 h-8 text-yellow-400" />
   }
 ];
