@@ -10,33 +10,48 @@ import {
   Sparkles, 
   AlertCircle,
   Download,
-  Key
+  Key,
+  Maximize2
 } from 'lucide-react';
 
 type ToolType = 'image' | 'content' | 'video';
+type AspectRatio = '1:1' | '16:9' | '9:16' | '4:3' | '3:4';
 
 const WafForge: React.FC = () => {
   const [activeTool, setActiveTool] = useState<ToolType>('image');
   const [prompt, setPrompt] = useState('');
+  const [aspectRatio, setAspectRatio] = useState<AspectRatio>('1:1');
   const [loading, setLoading] = useState(false);
   const [result, setResult] = useState<{ type: ToolType; url?: string; text?: string } | null>(null);
   const [status, setStatus] = useState('');
 
-  // Video generation requires special key selection
+  // Video generation requires special key selection as per instructions
   const handleKeySelection = async () => {
     // @ts-ignore
-    await window.aistudio.openSelectKey();
-    setStatus('API Key active. Initiating render...');
+    if (window.aistudio && typeof window.aistudio.openSelectKey === 'function') {
+      await window.aistudio.openSelectKey();
+      setStatus('API Key active. Initiating render...');
+    }
   };
 
   const generateImage = async () => {
     setLoading(true);
-    setStatus('Initializing Visionary model...');
+    setStatus('Initializing Visionary model for photorealistic output...');
     try {
+      // Create a fresh instance for the call
       const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
+      
+      // We append quality modifiers to satisfy the "real image" request if the user hasn't provided them
+      const enhancedPrompt = `${prompt}, photorealistic, high quality, highly detailed, professional photography, 8k resolution`;
+
       const response = await ai.models.generateContent({
         model: 'gemini-2.5-flash-image',
-        contents: [{ parts: [{ text: prompt }] }],
+        contents: { parts: [{ text: enhancedPrompt }] },
+        config: {
+          imageConfig: {
+            aspectRatio: aspectRatio
+          }
+        }
       });
       
       const part = response.candidates?.[0]?.content?.parts?.find(p => p.inlineData);
@@ -45,10 +60,13 @@ const WafForge: React.FC = () => {
           type: 'image',
           url: `data:${part.inlineData.mimeType};base64,${part.inlineData.data}`
         });
+        setStatus('Vision successfully forged.');
+      } else {
+        setStatus('Model returned no visual data. Check your prompt.');
       }
-    } catch (error) {
+    } catch (error: any) {
       console.error(error);
-      setStatus('Render failed. System overload.');
+      setStatus(`Render failed: ${error.message || 'System overload'}`);
     } finally {
       setLoading(false);
     }
@@ -61,12 +79,13 @@ const WafForge: React.FC = () => {
       const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
       const response = await ai.models.generateContent({
         model: 'gemini-3-flash-preview',
-        contents: prompt,
+        contents: { parts: [{ text: prompt }] },
         config: {
-          systemInstruction: "You are the WAF Forge Lexicon. Generate professional, tech-forward content based on user prompts. Keep it high-impact."
+          systemInstruction: "You are the WAF Forge Lexicon. Generate professional, tech-forward, and high-impact content. Use markdown formatting where appropriate."
         }
       });
       setResult({ type: 'content', text: response.text });
+      setStatus('Lexicon synthesized.');
     } catch (error) {
       console.error(error);
       setStatus('Synthetics failed.');
@@ -77,7 +96,10 @@ const WafForge: React.FC = () => {
 
   const generateVideo = async () => {
     // @ts-ignore
-    const hasKey = await window.aistudio.hasSelectedApiKey();
+    const hasKey = window.aistudio && typeof window.aistudio.hasSelectedApiKey === 'function' 
+      ? await window.aistudio.hasSelectedApiKey() 
+      : true; // Fallback for environments where the bridge isn't present
+
     if (!hasKey) {
       setStatus('Critical: Paid API Key required for Motion render.');
       return;
@@ -112,9 +134,14 @@ const WafForge: React.FC = () => {
       const response = await fetch(`${downloadLink}&key=${process.env.API_KEY}`);
       const blob = await response.blob();
       setResult({ type: 'video', url: URL.createObjectURL(blob) });
-    } catch (error) {
+      setStatus('Motion render complete.');
+    } catch (error: any) {
       console.error(error);
-      setStatus('Motion synthesis interrupted.');
+      if (error.message?.includes('entity was not found')) {
+        setStatus('API Key error. Please re-select your account.');
+      } else {
+        setStatus('Motion synthesis interrupted.');
+      }
     } finally {
       setLoading(false);
     }
@@ -176,7 +203,7 @@ const WafForge: React.FC = () => {
                     value={prompt}
                     onChange={(e) => setPrompt(e.target.value)}
                     placeholder={
-                      activeTool === 'image' ? "Describe the vision... (e.g. A digital sanctuary for AI research)" :
+                      activeTool === 'image' ? "Describe the vision... (e.g. A hyper-realistic portrait of an AI guardian)" :
                       activeTool === 'content' ? "Describe the text required... (e.g. A manifesto for universal intelligence)" :
                       "Describe the cinematic sequence..."
                     }
@@ -184,12 +211,33 @@ const WafForge: React.FC = () => {
                   />
                 </div>
 
+                {activeTool === 'image' && (
+                  <div>
+                    <label className="block text-[10px] uppercase tracking-[0.4em] text-slate-500 font-black mb-4">Aspect Ratio</label>
+                    <div className="flex gap-2">
+                      {(['1:1', '16:9', '9:16', '4:3', '3:4'] as AspectRatio[]).map((ratio) => (
+                        <button
+                          key={ratio}
+                          onClick={() => setAspectRatio(ratio)}
+                          className={`px-4 py-2 rounded-xl text-[10px] font-bold border transition-all ${
+                            aspectRatio === ratio 
+                              ? 'bg-blue-600 border-blue-600 text-white' 
+                              : 'bg-white/5 border-white/10 text-slate-500 hover:border-white/20'
+                          }`}
+                        >
+                          {ratio}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+                )}
+
                 {activeTool === 'video' && (
                   <div className="p-6 rounded-2xl bg-blue-500/5 border border-blue-500/20 flex items-start gap-4">
                     <AlertCircle className="w-6 h-6 text-blue-400 shrink-0" />
                     <div>
                       <p className="text-xs text-blue-300 mb-3 leading-relaxed">
-                        Motion synthesis requires a paid API key from a billing-enabled project.
+                        Motion synthesis requires a paid API key for high-quality video generation.
                       </p>
                       <div className="flex items-center gap-4">
                         <button 
@@ -232,7 +280,7 @@ const WafForge: React.FC = () => {
               <div className="lg:w-1/2 min-h-[400px]">
                 <div className="h-full siren-border-outer rounded-[2.5rem] p-1">
                   {loading && <div className="siren-border-inner"></div>}
-                  <div className="relative z-10 w-full h-full bg-slate-900 rounded-[2.4rem] border border-white/5 flex items-center justify-center overflow-hidden">
+                  <div className="relative z-10 w-full h-full bg-slate-900 rounded-[2.4rem] border border-white/5 flex items-center justify-center overflow-hidden min-h-[400px]">
                     {!result && !loading && (
                       <div className="text-center p-12">
                         <div className="w-20 h-20 rounded-full glass border-white/10 flex items-center justify-center mx-auto mb-6 text-slate-700">
@@ -245,32 +293,44 @@ const WafForge: React.FC = () => {
                     )}
 
                     {loading && (
-                      <div className="text-center animate-in zoom-in duration-500">
+                      <div className="text-center animate-in zoom-in duration-500 px-6">
                         <Loader2 className="w-16 h-16 animate-spin text-blue-600 mx-auto mb-8" />
                         <h4 className="text-white font-display text-2xl font-bold mb-2">Engaging Core</h4>
-                        <p className="text-slate-500 text-xs uppercase tracking-[0.4em]">Processing Data Stream</p>
+                        <p className="text-slate-500 text-xs uppercase tracking-[0.4em]">{status}</p>
                       </div>
                     )}
 
                     {result && !loading && (
-                      <div className="w-full h-full animate-in fade-in duration-700">
+                      <div className="w-full h-full animate-in fade-in duration-700 flex flex-col">
                         {result.type === 'image' && (
-                          <div className="relative group w-full h-full">
-                            <img src={result.url} className="w-full h-full object-cover" alt="Forged Vision" />
-                            <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
-                              <a href={result.url} download="waf-forge-vision.png" className="p-4 bg-white text-black rounded-full hover:scale-110 transition-transform">
-                                <Download />
+                          <div className="relative group w-full h-full flex items-center justify-center bg-black/20">
+                            <img src={result.url} className="max-w-full max-h-[600px] object-contain shadow-2xl" alt="Forged Vision" />
+                            <div className="absolute top-4 right-4 flex gap-2">
+                              <a href={result.url} download="waf-forge-vision.png" className="p-3 bg-blue-600 text-white rounded-xl hover:scale-110 transition-transform shadow-xl">
+                                <Download className="w-5 h-5" />
                               </a>
                             </div>
                           </div>
                         )}
                         {result.type === 'content' && (
                           <div className="p-10 h-full overflow-y-auto font-light leading-relaxed text-slate-300">
+                            <div className="flex justify-between items-center mb-6 border-b border-white/5 pb-4">
+                              <span className="text-[10px] font-black uppercase tracking-widest text-blue-400">Lexicon Output</span>
+                              <button onClick={() => {
+                                navigator.clipboard.writeText(result.text || '');
+                                setStatus('Copied to clipboard');
+                              }} className="text-[10px] font-bold uppercase hover:text-white transition-colors">Copy Text</button>
+                            </div>
                             <pre className="whitespace-pre-wrap font-sans text-lg">{result.text}</pre>
                           </div>
                         )}
                         {result.type === 'video' && (
-                          <video src={result.url} className="w-full h-full object-cover" controls autoPlay loop />
+                          <div className="relative w-full h-full">
+                            <video src={result.url} className="w-full h-full object-cover" controls autoPlay loop />
+                            <a href={result.url} download="waf-motion.mp4" className="absolute top-4 right-4 p-3 bg-blue-600 text-white rounded-xl hover:scale-110 transition-transform shadow-xl z-20">
+                              <Download className="w-5 h-5" />
+                            </a>
+                          </div>
                         )}
                       </div>
                     )}
