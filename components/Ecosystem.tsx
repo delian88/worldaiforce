@@ -8,7 +8,7 @@ const Ecosystem: React.FC = () => {
     <section id="ecosystem" className="py-24 bg-slate-950">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-16">
-          <h2 className="font-display text-4xl md:text-6xl font-bold mb-4">Our <span className="text-blue-500">Ecosystem</span></h2>
+          <h2 className="font-display text-4xl md:text-6xl font-bold mb-4">Our <span className="shimmer-text">Ecosystem</span></h2>
           <p className="text-slate-400 max-w-xl mx-auto">
             A multi-division framework designed to bridge the gap between AI innovation and community empowerment.
           </p>
@@ -20,16 +20,16 @@ const Ecosystem: React.FC = () => {
             return (
               <div 
                 key={tool.id} 
-                className="group p-8 rounded-3xl glass border-white/5 hover:border-blue-500/30 transition-all hover:translate-y-[-10px]"
+                className="group p-8 rounded-3xl glass border-white/10 hover:border-blue-500/30 transition-all hover:translate-y-[-10px] shadow-lg shadow-blue-500/5"
               >
-                <div className="w-14 h-14 rounded-2xl bg-blue-500/10 flex items-center justify-center mb-6 text-blue-400 group-hover:bg-blue-500 group-hover:text-white transition-colors">
+                <div className="w-14 h-14 rounded-2xl bg-blue-500/10 flex items-center justify-center mb-6 text-blue-400 group-hover:bg-blue-600 group-hover:text-white transition-all">
                   <IconComponent className="w-8 h-8" />
                 </div>
-                <h3 className="font-display text-xl font-bold mb-3">{tool.name}</h3>
+                <h3 className="font-display text-xl font-bold mb-3 group-hover:text-blue-400 transition-colors">{tool.name}</h3>
                 <p className="text-slate-400 text-sm leading-relaxed mb-6">
                   {tool.description}
                 </p>
-                <div className="inline-block px-3 py-1 rounded-full bg-slate-900 border border-white/10 text-xs font-mono text-slate-500 uppercase">
+                <div className="inline-block px-3 py-1 rounded-full bg-slate-900 border border-white/10 text-xs font-mono text-slate-500 uppercase tracking-widest font-bold">
                   {tool.category}
                 </div>
               </div>
