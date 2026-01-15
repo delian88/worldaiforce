@@ -25,80 +25,34 @@
             scroll-behavior: smooth;
         }
 
-        /* --- GALAXY BACKGROUND ANIMATION --- */
-        .galaxy-wrap {
+        /* --- NEURAL GALAXY CANVAS --- */
+        #galaxy-canvas {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
             z-index: -2;
-            overflow: hidden;
-            background: radial-gradient(ellipse at bottom, #1B2735 0%, #090A0F 100%);
+            pointer-events: none;
+            background: #020617;
         }
 
-        /* Nebula Wisps */
-        .nebula {
-            position: absolute;
-            width: 150%;
-            height: 150%;
-            top: -25%;
-            left: -25%;
-            background: 
-                radial-gradient(circle at 20% 30%, rgba(59, 130, 246, 0.08) 0%, transparent 40%),
-                radial-gradient(circle at 80% 70%, rgba(168, 85, 247, 0.08) 0%, transparent 40%),
-                radial-gradient(circle at 50% 50%, rgba(29, 78, 216, 0.04) 0%, transparent 60%);
-            filter: blur(80px);
-            animation: nebula-drift 60s ease-in-out infinite alternate;
-        }
-
-        /* Star Layers */
-        .stars-container {
-            position: absolute;
+        /* Overlay Nebula for color depth */
+        .nebula-overlay {
+            position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
+            background: 
+                radial-gradient(circle at 50% 100%, rgba(59, 130, 246, 0.1) 0%, transparent 60%),
+                radial-gradient(circle at 80% 20%, rgba(168, 85, 247, 0.05) 0%, transparent 50%);
+            z-index: -1;
+            pointer-events: none;
+            mix-blend-mode: screen;
         }
 
-        /* Generating stars via Box-Shadow for efficiency */
-        #stars, #stars2, #stars3 {
-            position: absolute;
-            background: transparent;
-        }
-
-        #stars {
-            width: 1px;
-            height: 1px;
-            box-shadow: 1744px 115px #FFF , 134px 1198px #FFF , 1801px 406px #FFF , 507px 1974px #FFF , 1384px 341px #FFF , 214px 1747px #FFF , 1658px 1151px #FFF , 1272px 1357px #FFF , 1860px 1862px #FFF , 428px 1450px #FFF , 1276px 1438px #FFF , 1840px 1582px #FFF , 1033px 1857px #FFF , 1916px 1347px #FFF , 577px 1124px #FFF , 1318px 233px #FFF , 359px 1277px #FFF , 1761px 1109px #FFF , 648px 1906px #FFF , 1056px 1222px #FFF;
-            animation: space-scroll 100s linear infinite;
-        }
-
-        #stars2 {
-            width: 2px;
-            height: 2px;
-            box-shadow: 1344px 125px #FFF , 34px 1298px #FFF , 1701px 506px #FFF , 407px 1874px #FFF , 1284px 441px #FFF , 114px 1647px #FFF , 1558px 1051px #FFF , 1172px 1257px #FFF , 1760px 1762px #FFF , 328px 1350px #FFF;
-            animation: space-scroll 150s linear infinite;
-        }
-
-        #stars3 {
-            width: 3px;
-            height: 3px;
-            box-shadow: 1544px 325px #FFF , 234px 1198px #FFF , 1901px 606px #FFF , 607px 1674px #FFF , 1484px 541px #FFF;
-            animation: space-scroll 200s linear infinite;
-        }
-
-        @keyframes nebula-drift {
-            from { transform: rotate(0deg) scale(1); }
-            to { transform: rotate(5deg) scale(1.1); }
-        }
-
-        @keyframes space-scroll {
-            from { transform: translateY(0px); }
-            to { transform: translateY(-2000px); }
-        }
-
-        /* Neural Grid Background (Now transparent overlaying galaxy) */
+        /* Neural Grid Background overlaying the galaxy */
         body::before {
             content: "";
             position: fixed;
@@ -107,8 +61,8 @@
             width: 100%;
             height: 100%;
             background-image: 
-                radial-gradient(circle at 2px 2px, rgba(59, 130, 246, 0.08) 1px, transparent 0);
-            background-size: 50px 50px;
+                radial-gradient(circle at 2px 2px, rgba(59, 130, 246, 0.06) 1px, transparent 0);
+            background-size: 60px 60px;
             z-index: -1;
             pointer-events: none;
         }
@@ -118,81 +72,11 @@
         }
 
         .glass {
-            background: rgba(15, 23, 42, 0.4);
+            background: rgba(15, 23, 42, 0.6);
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.1);
             box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
-        }
-
-        .glass-card {
-            background: linear-gradient(135deg, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0.01) 100%);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255,255,255,0.1);
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-        }
-
-        .glass-card:hover {
-            border-color: rgba(59, 130, 246, 0.4);
-            transform: translateY(-8px) scale(1.02);
-            box-shadow: 0 20px 40px rgba(0,0,0,0.4), 0 0 20px rgba(59,130,246,0.1);
-        }
-
-        @keyframes blink {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0; }
-        }
-        
-        @keyframes shimmer {
-            0% { background-position: -200% center; }
-            100% { background-position: 200% center; }
-        }
-
-        @keyframes brand-float-rotate {
-            0% { transform: translateY(0px) rotate(0deg) scale(1); }
-            25% { transform: translateY(-8px) rotate(1deg) scale(1.02); }
-            50% { transform: translateY(0px) rotate(0deg) scale(1); }
-            75% { transform: translateY(8px) rotate(-1deg) scale(0.98); }
-            100% { transform: translateY(0px) rotate(0deg) scale(1); }
-        }
-
-        @keyframes siren-rotate {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-
-        .animate-brand {
-            animation: brand-float-rotate 10s ease-in-out infinite;
-        }
-
-        .siren-border-outer {
-            position: relative;
-            overflow: hidden;
-            background: rgba(255, 255, 255, 0.05);
-        }
-
-        .siren-border-inner {
-            position: absolute;
-            top: -150%;
-            left: -150%;
-            width: 400%;
-            height: 400%;
-            background: conic-gradient(
-                from 0deg,
-                transparent 0%,
-                #3b82f6 10%,
-                #ef4444 25%,
-                #3b82f6 40%,
-                transparent 50%,
-                #3b82f6 60%,
-                #ef4444 75%,
-                #3b82f6 90%,
-                transparent 100%
-            );
-            animation: siren-rotate 4s linear infinite;
-            filter: blur(20px);
-            z-index: 0;
-            opacity: 0.6;
         }
 
         .shimmer-text {
@@ -210,6 +94,11 @@
             animation: shimmer 5s linear infinite;
         }
 
+        @keyframes shimmer {
+            0% { background-position: -200% center; }
+            100% { background-position: 200% center; }
+        }
+
         .reveal-on-scroll {
             opacity: 0;
             transform: translateY(30px);
@@ -221,19 +110,9 @@
             transform: translateY(0);
         }
 
-        ::-webkit-scrollbar {
-            width: 8px;
-        }
-        ::-webkit-scrollbar-track {
-            background: #020617;
-        }
-        ::-webkit-scrollbar-thumb {
-            background: #1e293b;
-            border-radius: 4px;
-        }
-        ::-webkit-scrollbar-thumb:hover {
-            background: #334155;
-        }
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #020617; }
+        ::-webkit-scrollbar-thumb { background: #1e293b; border-radius: 4px; }
     </style>
     <script type="importmap">
 {
@@ -243,23 +122,132 @@
     "react-dom/client": "https://esm.sh/react-dom@19.0.0/client",
     "lucide-react": "https://esm.sh/lucide-react@0.460.0?external=react,react-dom",
     "@google/genai": "https://esm.sh/@google/genai@1.3.0",
-    "react-dom/": "https://esm.sh/react-dom@^19.2.3/",
-    "react/": "https://esm.sh/react@^19.2.3/"
+    "react/": "https://esm.sh/react@^19.2.3/",
+    "react-dom/": "https://esm.sh/react-dom@^19.2.3/"
   }
 }
 </script>
 </head>
 <body>
-    <!-- Galaxy Elements -->
-    <div class="galaxy-wrap">
-        <div class="nebula"></div>
-        <div class="stars-container">
-            <div id="stars"></div>
-            <div id="stars2"></div>
-            <div id="stars3"></div>
-        </div>
-    </div>
+    <canvas id="galaxy-canvas"></canvas>
+    <div class="nebula-overlay"></div>
 
+    <script>
+        const canvas = document.getElementById('galaxy-canvas');
+        const ctx = canvas.getContext('2d');
+        let width, height;
+        let particles = [];
+        const particleCount = 180;
+        const connectionDistance = 150;
+
+        function init() {
+            width = canvas.width = window.innerWidth;
+            height = canvas.height = window.innerHeight;
+            particles = [];
+            for (let i = 0; i < particleCount; i++) {
+                particles.push(new Particle());
+            }
+        }
+
+        class Particle {
+            constructor() {
+                this.reset();
+            }
+
+            reset() {
+                // Radiate from bottom center
+                this.originX = width / 2;
+                this.originY = height;
+                this.x = this.originX;
+                this.y = this.originY;
+                
+                // Angle between -PI (left) and 0 (right) to fan upwards
+                const angle = -Math.PI * Math.random();
+                const force = 1 + Math.random() * 5;
+                this.vx = Math.cos(angle) * force;
+                this.vy = Math.sin(angle) * force;
+                
+                this.size = Math.random() * 2 + 1;
+                this.alpha = 0;
+                this.maxAlpha = 0.2 + Math.random() * 0.5;
+                this.color = Math.random() > 0.5 ? '#3b82f6' : '#ffffff';
+                this.life = 0;
+                this.maxLife = 100 + Math.random() * 200;
+            }
+
+            update() {
+                this.x += this.vx;
+                this.y += this.vy;
+                
+                // Drift slightly
+                this.vx += (Math.random() - 0.5) * 0.05;
+                this.vy -= 0.01; // Gravity-like lift
+
+                this.life++;
+                this.alpha = Math.sin((this.life / this.maxLife) * Math.PI) * this.maxAlpha;
+
+                if (this.life >= this.maxLife || this.x < 0 || this.x > width || this.y < 0) {
+                    this.reset();
+                }
+            }
+
+            draw() {
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fillStyle = this.color;
+                ctx.globalAlpha = this.alpha;
+                ctx.fill();
+            }
+        }
+
+        function drawConnections() {
+            for (let i = 0; i < particles.length; i++) {
+                for (let j = i + 1; j < particles.length; j++) {
+                    const p1 = particles[i];
+                    const p2 = particles[j];
+                    const dx = p1.x - p2.x;
+                    const dy = p1.y - p2.y;
+                    const dist = Math.sqrt(dx * dx + dy * dy);
+
+                    if (dist < connectionDistance) {
+                        const alpha = (1 - dist / connectionDistance) * Math.min(p1.alpha, p2.alpha) * 0.5;
+                        ctx.beginPath();
+                        ctx.moveTo(p1.x, p1.y);
+                        ctx.lineTo(p2.x, p2.y);
+                        ctx.strokeStyle = '#3b82f6';
+                        ctx.globalAlpha = alpha;
+                        ctx.lineWidth = 0.5;
+                        ctx.stroke();
+                    }
+                }
+            }
+        }
+
+        function animate() {
+            ctx.clearRect(0, 0, width, height);
+            
+            // Draw Origin Glow
+            const gradient = ctx.createRadialGradient(width/2, height, 0, width/2, height, 300);
+            gradient.addColorStop(0, 'rgba(59, 130, 246, 0.15)');
+            gradient.addColorStop(1, 'transparent');
+            ctx.fillStyle = gradient;
+            ctx.globalAlpha = 1;
+            ctx.fillRect(0, 0, width, height);
+
+            drawConnections();
+            
+            particles.forEach(p => {
+                p.update();
+                p.draw();
+            });
+
+            requestAnimationFrame(animate);
+        }
+
+        window.addEventListener('resize', init);
+        init();
+        animate();
+    </script>
     <div id="root"></div>
     <script type="module" src="./index.tsx"></script>
 </body>

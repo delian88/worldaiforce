@@ -62,7 +62,7 @@ const App: React.FC = () => {
             <Hero onNavigate={navigate} />
             
             {/* Neural Forge Terminal */}
-            <section className="py-24 bg-slate-950 relative overflow-hidden">
+            <section className="py-24 bg-slate-950/20 relative overflow-hidden">
               <div className="absolute inset-0 bg-blue-600/5 -z-10 blur-[120px]"></div>
               <div className="max-w-7xl mx-auto px-4">
                  <div className="text-center mb-16 reveal-on-scroll">
@@ -81,13 +81,13 @@ const App: React.FC = () => {
               </div>
             </section>
 
-            {/* PodOre REGISTRATION SECTION WITH COMPLETE FEATURE SET */}
-            <section className="py-32 bg-slate-950 relative overflow-hidden">
-               <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(59,130,246,0.15)_0%,transparent_70%)]"></div>
+            {/* PodOre REGISTRATION SECTION */}
+            <section className="py-32 bg-transparent relative overflow-hidden">
+               <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(59,130,246,0.1)_0%,transparent_70%)]"></div>
                <div className="max-w-7xl mx-auto px-4 relative z-10">
                   <div className="siren-border-outer rounded-[4rem] p-1.5 shadow-2xl overflow-hidden group">
                      <div className="siren-border-inner opacity-25 group-hover:opacity-50 transition-opacity duration-[2000ms]"></div>
-                     <div className="relative z-10 bg-slate-900/95 backdrop-blur-3xl rounded-[3.9rem] p-12 md:p-24 flex flex-col lg:flex-row items-center gap-16 overflow-hidden">
+                     <div className="relative z-10 bg-slate-900/90 backdrop-blur-3xl rounded-[3.9rem] p-12 md:p-24 flex flex-col lg:flex-row items-center gap-16 overflow-hidden">
                         
                         <div className="lg:w-3/5 text-left reveal-on-scroll">
                            <div className="flex items-center gap-4 mb-8">
@@ -155,31 +155,11 @@ const App: React.FC = () => {
                   </div>
                </div>
             </section>
-
-            {/* Statistics Section */}
-            <section className="py-24 border-y border-white/5 bg-slate-900/20">
-              <div className="max-w-7xl mx-auto px-4">
-                <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
-                  {[
-                    { label: 'Global Nodes', value: '1,240+', icon: <Globe className="w-5 h-5 text-blue-500" /> },
-                    { label: 'AI Models Forged', value: '45k+', icon: <Zap className="w-5 h-5 text-purple-500" /> },
-                    { label: 'Community Members', value: '2.4M', icon: <Users className="w-5 h-5 text-green-500" /> },
-                    { label: 'Platform Uptime', value: '99.9%', icon: <Rocket className="w-5 h-5 text-yellow-500" /> }
-                  ].map((stat, i) => (
-                    <div key={i} className="text-center reveal-on-scroll">
-                      <div className="flex justify-center mb-4 opacity-50">{stat.icon}</div>
-                      <div className="text-4xl md:text-5xl font-display font-bold text-white mb-2 italic">{stat.value}</div>
-                      <div className="text-[10px] uppercase tracking-[0.3em] text-slate-500 font-black">{stat.label}</div>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </section>
           </>
         );
       case 'mission':
         return (
-          <section className="pt-40 pb-32 min-h-screen bg-slate-950">
+          <section className="pt-40 pb-32 min-h-screen bg-transparent">
             <div className="max-w-4xl mx-auto px-4 text-center">
               <h1 className="text-6xl md:text-8xl font-display font-bold mb-12 tracking-tight">The <span className="shimmer-text italic">Mission</span></h1>
               <div className="glass p-12 md:p-20 rounded-[4rem] border-white/10">
@@ -196,7 +176,7 @@ const App: React.FC = () => {
         return <Ecosystem />;
       case 'about':
         return (
-          <section className="pt-40 pb-32 bg-slate-950">
+          <section className="pt-40 pb-32">
             <div className="max-w-7xl mx-auto px-4">
                <div className="grid lg:grid-cols-2 gap-20 items-center">
                   <div className="reveal-on-scroll">
@@ -222,7 +202,7 @@ const App: React.FC = () => {
         );
       case 'contact':
         return (
-          <section className="pt-40 pb-32 bg-slate-950">
+          <section className="pt-40 pb-32">
             <div className="max-w-5xl mx-auto px-4">
                <div className="glass p-12 md:p-20 rounded-[4rem] border-white/10 reveal-on-scroll active text-center">
                   <h2 className="text-5xl font-display font-bold mb-8 italic">SYNAPTIC <span className="shimmer-text">CONTACT</span></h2>
@@ -239,7 +219,7 @@ const App: React.FC = () => {
         );
       case 'privacy':
         return (
-          <section className="pt-40 pb-32 bg-slate-950 min-h-screen">
+          <section className="pt-40 pb-32 min-h-screen">
             <div className="max-w-5xl mx-auto px-6">
               <div className="text-center mb-16">
                  <div className="inline-flex items-center gap-3 px-5 py-2 rounded-full glass border-white/10 text-[11px] font-black uppercase tracking-[0.4em] text-blue-400 mb-6">
@@ -263,28 +243,6 @@ const App: React.FC = () => {
                     <h3 className="font-bold text-white uppercase text-xs tracking-widest">1.2 Automatically Collected Information</h3>
                     <p className="text-sm">Device info, IP address, Usage patterns, Cookies, Activity within spaces, Error logs.</p>
                   </section>
-
-                  <section className="space-y-6">
-                    <h2 className="text-3xl font-display font-bold text-blue-400 italic">2. How We Use Your Information</h2>
-                    <p className="text-sm">We use your info to: Provide services, facilitate meetings, deliver AI tools, enable news syndication, improve platform performance, and ensure security/compliance.</p>
-                    <p className="text-blue-500 font-bold uppercase tracking-widest text-[10px]">We do not sell your personal data.</p>
-                  </section>
-
-                  <section className="space-y-6">
-                    <h2 className="text-3xl font-display font-bold text-blue-400 italic">3. How We Share Information</h2>
-                    <p className="text-sm">Shared with: Trusted service providers (Payment, Hosting, Analytics), Community features (visible to participants), and Compliance/Legal requirements to prevent fraud and abuse.</p>
-                  </section>
-
-                  <section className="space-y-6">
-                    <h2 className="text-3xl font-display font-bold text-blue-400 italic">8. How We Protect Your Information</h2>
-                    <p className="text-sm">Advanced security: Strong encryption, Multi-layered authentication, Secure server architecture, Access controls, and Continuous monitoring by our ethical safety framework.</p>
-                  </section>
-
-                  <section className="pt-12 border-t border-white/10 text-center space-y-4">
-                    <h2 className="text-3xl font-display font-bold text-white italic">Legal Transmission Link</h2>
-                    <p className="text-sm">Email: <span className="text-blue-400 font-bold">privacy@worldaiforce.org</span></p>
-                    <p className="text-sm">Web: <span className="text-white font-bold">www.worldaiforce.org</span></p>
-                  </section>
                 </div>
               </div>
             </div>
@@ -304,12 +262,12 @@ const App: React.FC = () => {
             <div className="max-w-sm">
               <div className="flex items-center gap-4 mb-8">
                 <Logo size={64} />
-                <span className="font-display font-bold text-3xl tracking-tighter uppercase italic">
+                <span className="font-display font-bold text-3xl tracking-tighter uppercase">
                   World <span className="shimmer-text">AI</span> Force
                 </span>
               </div>
               <p className="text-slate-400 leading-relaxed mb-6 font-light">
-                Democratizing Ai intelligence through an ethical, decentralized framework. Ensuring global participation for all underserved communities.
+                Democratizing AI intelligence through an ethical, decentralized framework. Ensuring global participation for all underserved communities.
               </p>
               <div className="space-y-2 mb-6 text-sm text-slate-500">
                 <p className="flex items-center gap-2"><Phone className="w-4 h-4" /> +1-240-813-0308</p>
