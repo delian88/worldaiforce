@@ -12,7 +12,7 @@ import {
   ShieldCheck, Globe, Zap, Mail, Phone, MapPin, Lock, Fingerprint, 
   KeyRound, UserPlus, Newspaper, Wallet, Users, Video, Dna, 
   Briefcase, ShoppingBag, MessageSquare, TrendingUp, BarChart3, 
-  Layers, Rocket, GraduationCap, Gavel
+  Layers, Rocket, GraduationCap
 } from 'lucide-react';
 
 type Page = 'home' | 'mission' | 'forge' | 'ecosystem' | 'about' | 'contact' | 'privacy';
@@ -200,7 +200,7 @@ const App: React.FC = () => {
           <section className="pt-40 pb-32 bg-slate-950">
             <div className="max-w-7xl mx-auto px-4">
                <div className="grid lg:grid-cols-2 gap-20 items-center">
-                  <div>
+                  <div className="reveal-on-scroll">
                     <h1 className="text-5xl md:text-7xl font-display font-bold mb-8">About <span className="shimmer-text">WAF</span></h1>
                     <p className="text-slate-400 text-lg font-light leading-relaxed mb-6">
                       World AI Force is a decentralized global intelligence ecosystem. We believe the power of AI should belong to the people, not just a handful of corporations.
@@ -209,7 +209,14 @@ const App: React.FC = () => {
                       Our PODORE platform represents the culmination of decentralized development, designed for the "AI for Good" global movement. Anything outside the scope of ethical, human-centric development is automatically filtered by our AI Global Ranking System.
                     </p>
                   </div>
-                  <img src="https://images.unsplash.com/photo-1620712943543-bcc4628c6bb5?q=80&w=2000" className="rounded-[4rem] border border-white/10 shadow-3xl" alt="WAF Tech" />
+                  <div className="relative reveal-on-scroll">
+                    <div className="absolute inset-0 bg-blue-500/20 rounded-[4rem] blur-[60px] animate-pulse -z-10"></div>
+                    <img 
+                      src="https://images.unsplash.com/photo-1677442136019-21780ecad995?auto=format&fit=crop&q=80&w=2000" 
+                      className="rounded-[4rem] border border-white/10 shadow-3xl animate-brand" 
+                      alt="WAF Neural Technology Visual" 
+                    />
+                  </div>
                </div>
             </div>
           </section>
