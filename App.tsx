@@ -14,7 +14,7 @@ import {
   Mail, Phone, MapPin, ArrowUpRight, Lock, FileText, Cpu, 
   BarChart3, Users, Network, Layers, Rocket, Award, CheckCircle2,
   TrendingUp, Calculator, HardDrive, ShieldAlert, Sparkles, Wand2,
-  KeyRound, UserPlus
+  KeyRound, UserPlus, Fingerprint, Shield
 } from 'lucide-react';
 
 type Page = 'home' | 'mission' | 'forge' | 'ecosystem' | 'about' | 'contact' | 'privacy';
@@ -84,74 +84,120 @@ const App: React.FC = () => {
               </div>
             </section>
 
-            {/* NEW: PODORE REGISTRATION SECTION */}
+            {/* ENHANCED: PODORE REGISTRATION SECTION */}
             <section className="py-32 bg-slate-950 relative overflow-hidden">
-               <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(59,130,246,0.1)_0%,transparent_70%)]"></div>
+               <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(59,130,246,0.15)_0%,transparent_70%)]"></div>
                <div className="max-w-7xl mx-auto px-4 relative z-10">
                   <div className="siren-border-outer rounded-[4rem] p-1.5 shadow-2xl overflow-hidden group">
-                     <div className="siren-border-inner opacity-20 group-hover:opacity-40 transition-opacity duration-1000"></div>
-                     <div className="relative z-10 bg-slate-900/90 backdrop-blur-3xl rounded-[3.9rem] p-12 md:p-24 flex flex-col lg:flex-row items-center gap-16 overflow-hidden">
+                     <div className="siren-border-inner opacity-25 group-hover:opacity-50 transition-opacity duration-[2000ms]"></div>
+                     <div className="relative z-10 bg-slate-900/95 backdrop-blur-3xl rounded-[3.9rem] p-12 md:p-24 flex flex-col lg:flex-row items-center gap-16 overflow-hidden">
                         
-                        {/* Decorative background element */}
-                        <div className="absolute top-0 left-0 w-full h-full pointer-events-none opacity-20">
-                           <div className="absolute top-[-20%] left-[-10%] w-[500px] h-[500px] bg-blue-600 rounded-full blur-[120px] animate-pulse"></div>
+                        {/* Interactive Background Particles (CSS simulated) */}
+                        <div className="absolute inset-0 overflow-hidden pointer-events-none opacity-20">
+                            {[...Array(6)].map((_, i) => (
+                                <div 
+                                    key={i}
+                                    className="absolute bg-blue-500/30 rounded-full blur-2xl animate-pulse"
+                                    style={{
+                                        width: Math.random() * 300 + 100 + 'px',
+                                        height: Math.random() * 300 + 100 + 'px',
+                                        top: Math.random() * 100 + '%',
+                                        left: Math.random() * 100 + '%',
+                                        animationDuration: (Math.random() * 5 + 5) + 's',
+                                        animationDelay: (Math.random() * 5) + 's'
+                                    }}
+                                />
+                            ))}
                         </div>
 
-                        <div className="lg:w-1/2 text-left reveal-on-scroll">
+                        <div className="lg:w-3/5 text-left reveal-on-scroll">
                            <div className="flex items-center gap-4 mb-8">
-                              <div className="w-14 h-14 rounded-2xl bg-blue-600/20 border border-blue-500/30 flex items-center justify-center text-blue-400">
-                                 <KeyRound className="w-6 h-6" />
+                              <div className="w-14 h-14 rounded-2xl bg-blue-600/20 border border-blue-500/30 flex items-center justify-center text-blue-400 shadow-[0_0_20px_rgba(59,130,246,0.2)]">
+                                 <Fingerprint className="w-7 h-7" />
                               </div>
-                              <span className="text-blue-500 text-[10px] font-black uppercase tracking-[0.6em]">Neural Access Control</span>
+                              <span className="text-blue-500 text-[11px] font-black uppercase tracking-[0.7em]">Neural Identity Protocol</span>
                            </div>
-                           <h2 className="text-4xl md:text-6xl font-display font-bold mb-8 leading-tight">
-                              Establish Your <span className="shimmer-text">Podore Account</span>
+                           
+                           <h2 className="text-4xl md:text-7xl font-display font-bold mb-8 leading-[1.1] tracking-tighter">
+                              Establish Your <br/><span className="shimmer-text">Podore Account</span>
                            </h2>
-                           <p className="text-slate-400 text-lg md:text-xl font-light leading-relaxed mb-10 border-l-2 border-blue-500/30 pl-8">
-                              Join the premier decentralized AI network. Your account grants you sovereign access to the 5 pillars of the World AI Force ecosystem.
+                           
+                           <p className="text-slate-400 text-lg md:text-2xl font-light leading-relaxed mb-12 border-l-4 border-blue-600 pl-8 max-w-xl italic">
+                              "The key to the World AI Force ecosystem. Your sovereign digital presence starts here."
                            </p>
-                           <div className="space-y-4 mb-12">
+
+                           <div className="grid sm:grid-cols-2 gap-6 mb-16">
                               {[
-                                 "Sovereign Data Identity",
-                                 "Decentralized Model Access",
-                                 "WAF Academy Enrollment",
-                                 "Neural Asset Management"
+                                 { icon: <Shield className="w-4 h-4" />, text: "Sovereign Data Vault" },
+                                 { icon: <Globe className="w-4 h-4" />, text: "Global Node Verification" },
+                                 { icon: <Cpu className="w-4 h-4" />, text: "Priority Neural Access" },
+                                 { icon: <TrendingUp className="w-4 h-4" />, text: "Market Participation" }
                               ].map((item, idx) => (
-                                 <div key={idx} className="flex items-center gap-3 text-slate-300">
-                                    <CheckCircle2 className="w-4 h-4 text-blue-500" />
-                                    <span className="text-xs font-bold uppercase tracking-widest">{item}</span>
+                                 <div key={idx} className="flex items-center gap-4 text-slate-300 group/item">
+                                    <div className="w-8 h-8 rounded-lg bg-white/5 flex items-center justify-center text-blue-500 group-hover/item:bg-blue-600 group-hover/item:text-white transition-all">
+                                       {item.icon}
+                                    </div>
+                                    <span className="text-[10px] font-bold uppercase tracking-[0.2em]">{item.text}</span>
                                  </div>
                               ))}
                            </div>
-                           <button 
-                              onClick={openPodore}
-                              className="px-14 py-7 bg-blue-600 text-white rounded-full font-black uppercase tracking-[0.3em] hover:bg-blue-500 transition-all shadow-3xl shadow-blue-500/40 flex items-center justify-center gap-4 group"
-                           >
-                              Create Account <UserPlus className="w-5 h-5 group-hover:scale-110 transition-transform" />
-                           </button>
+
+                           <div className="flex flex-col sm:flex-row gap-6">
+                              <button 
+                                 onClick={openPodore}
+                                 className="px-16 py-8 bg-blue-600 text-white rounded-full font-black uppercase tracking-[0.4em] hover:bg-blue-500 transition-all shadow-[0_20px_50px_rgba(37,99,235,0.4)] flex items-center justify-center gap-4 group text-xs transform hover:-translate-y-1"
+                              >
+                                 Create Podore Account <UserPlus className="w-5 h-5 group-hover:scale-125 transition-transform" />
+                              </button>
+                              <button 
+                                 onClick={() => navigate('about')}
+                                 className="px-12 py-8 glass text-slate-300 rounded-full font-black uppercase tracking-[0.4em] hover:text-white hover:bg-white/5 transition-all text-xs"
+                              >
+                                 Learn More
+                              </button>
+                           </div>
                         </div>
 
-                        <div className="lg:w-1/2 relative reveal-on-scroll">
-                           <div className="relative z-10 p-4">
-                              <div className="aspect-video glass rounded-[2.5rem] border-white/10 flex flex-col items-center justify-center p-8 overflow-hidden relative shadow-2xl">
-                                 <div className="absolute inset-0 bg-gradient-to-br from-blue-600/10 to-transparent"></div>
-                                 <Logo size={120} className="mb-6 opacity-80" />
-                                 <div className="text-center">
-                                    <div className="text-[10px] font-black text-blue-400 uppercase tracking-[0.8em] mb-2">Platform Protocol</div>
-                                    <div className="text-3xl font-display font-bold text-white italic">PODORE CORE v1.0</div>
+                        <div className="lg:w-2/5 relative reveal-on-scroll">
+                           <div className="relative z-10 p-6">
+                              {/* Central Animated Identity Card */}
+                              <div className="aspect-[4/5] w-full max-w-[340px] mx-auto bg-gradient-to-br from-slate-900 to-slate-950 rounded-[3rem] border border-white/10 p-10 flex flex-col items-center justify-between shadow-3xl relative overflow-hidden group/card">
+                                 <div className="absolute inset-0 bg-blue-600/5 opacity-0 group-hover/card:opacity-100 transition-opacity"></div>
+                                 
+                                 <div className="w-full flex justify-between items-center mb-12">
+                                    <Logo size={50} />
+                                    <div className="w-12 h-12 rounded-full border-2 border-dashed border-blue-500/30 flex items-center justify-center animate-spin-slow">
+                                       <Zap className="w-4 h-4 text-blue-500" />
+                                    </div>
                                  </div>
-                                 <div className="mt-8 flex gap-4">
-                                    <div className="w-12 h-1.5 bg-blue-600 rounded-full animate-pulse"></div>
-                                    <div className="w-12 h-1.5 bg-slate-800 rounded-full"></div>
-                                    <div className="w-12 h-1.5 bg-slate-800 rounded-full"></div>
+
+                                 <div className="text-center w-full">
+                                    <div className="w-32 h-32 bg-blue-600/10 rounded-full mx-auto mb-8 flex items-center justify-center relative">
+                                       <div className="absolute inset-0 border-2 border-blue-500/20 rounded-full animate-ping"></div>
+                                       <KeyRound className="w-12 h-12 text-blue-500" />
+                                    </div>
+                                    <div className="text-[10px] font-black text-blue-400 uppercase tracking-[0.6em] mb-3">Neural Core Link</div>
+                                    <div className="text-2xl font-display font-bold text-white tracking-tighter">AUTHENTICATED</div>
+                                 </div>
+
+                                 <div className="w-full space-y-3 pt-12 border-t border-white/5">
+                                    <div className="h-2 w-full bg-white/5 rounded-full overflow-hidden">
+                                       <div className="h-full bg-blue-600 w-3/4 animate-pulse"></div>
+                                    </div>
+                                    <div className="flex justify-between text-[8px] font-black text-slate-500 uppercase tracking-widest">
+                                       <span>Syncing...</span>
+                                       <span>PODORE-OS</span>
+                                    </div>
                                  </div>
                               </div>
-                              {/* Floating tech UI bits */}
-                              <div className="absolute -top-6 -right-6 w-32 h-32 glass rounded-3xl border-white/10 flex items-center justify-center animate-bounce duration-[3s]">
-                                 <ShieldCheck className="w-10 h-10 text-blue-500/50" />
+
+                              {/* Decorative Elements */}
+                              <div className="absolute top-[-20px] right-[-20px] w-24 h-24 glass rounded-3xl border-white/10 flex items-center justify-center animate-bounce duration-[4s] shadow-2xl">
+                                 <ShieldCheck className="w-8 h-8 text-blue-400/50" />
                               </div>
-                              <div className="absolute -bottom-10 -left-6 w-40 h-16 glass rounded-2xl border-white/10 flex items-center justify-center animate-pulse">
-                                 <span className="text-[8px] font-black uppercase tracking-[0.5em] text-blue-400/60">Verified Node</span>
+                              <div className="absolute bottom-[-10px] left-[-30px] w-48 h-20 glass rounded-3xl border-white/10 flex flex-col justify-center px-6 shadow-2xl animate-pulse">
+                                 <span className="text-[7px] font-black text-slate-500 uppercase tracking-[0.5em] mb-1">Global Verification</span>
+                                 <span className="text-[10px] font-bold text-green-400 uppercase tracking-widest">SUCCESSFUL_CONNECT</span>
                               </div>
                            </div>
                         </div>
