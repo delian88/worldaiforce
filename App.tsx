@@ -47,7 +47,7 @@ const App: React.FC = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
-  const openPodore = () => {
+  const openPodOre = () => {
     window.open('https://worldaiforce.org/', '_blank');
   };
 
@@ -82,7 +82,7 @@ const App: React.FC = () => {
               </div>
             </section>
 
-            {/* PODORE REGISTRATION SECTION WITH COMPLETE FEATURE SET */}
+            {/* PodOre REGISTRATION SECTION WITH COMPLETE FEATURE SET */}
             <section className="py-32 bg-slate-950 relative overflow-hidden">
                <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(59,130,246,0.15)_0%,transparent_70%)]"></div>
                <div className="max-w-7xl mx-auto px-4 relative z-10">
@@ -95,11 +95,11 @@ const App: React.FC = () => {
                               <div className="w-14 h-14 rounded-2xl bg-blue-600/20 border border-blue-500/30 flex items-center justify-center text-blue-400">
                                  <KeyRound className="w-7 h-7" />
                               </div>
-                              <span className="text-blue-500 text-[11px] font-black uppercase tracking-[0.7em]">PODORE GLOBAL NETWORK v2.0</span>
+                              <span className="text-blue-500 text-[11px] font-black uppercase tracking-[0.7em]">PodOre GLOBAL NETWORK v2.0</span>
                            </div>
                            
                            <h2 className="text-4xl md:text-7xl font-display font-bold mb-8 leading-[1.1] tracking-tighter">
-                              Establish Your <br/><span className="shimmer-text">Podore Account</span>
+                              Establish Your <br/><span className="shimmer-text">PodOre Account</span>
                            </h2>
 
                            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-12">
@@ -112,7 +112,7 @@ const App: React.FC = () => {
                                  { icon: <Dna />, name: "Digital LAB", desc: "Investment" },
                                  { icon: <ShoppingBag />, name: "Market", desc: "AI Products" },
                                  { icon: <MessageSquare />, name: "Forum", desc: "Global Topics" },
-                                 { icon: <BarChart3 />, name: "BarChart3", desc: "Ad-Manager" },
+                                 { icon: <BarChart3 />, name: "Ad-Manager", desc: "Campaigns" },
                                  { icon: <Rocket />, name: "Boosting", desc: "Go Viral" },
                                  { icon: <Layers />, name: "Circles", desc: "Pro Groups" },
                                  { icon: <GraduationCap />, name: "Courses", desc: "Education" }
@@ -126,8 +126,8 @@ const App: React.FC = () => {
                            </div>
                            
                            <div className="flex flex-col sm:flex-row gap-6">
-                              <button onClick={openPodore} className="px-16 py-7 bg-blue-600 text-white rounded-full font-black uppercase tracking-[0.4em] hover:bg-blue-500 transition-all shadow-3xl flex items-center justify-center gap-4 group text-[10px] transform hover:-translate-y-1">
-                                 Create Podore Account <UserPlus className="w-4 h-4 group-hover:scale-125 transition-transform" />
+                              <button onClick={openPodOre} className="px-16 py-7 bg-blue-600 text-white rounded-full font-black uppercase tracking-[0.4em] hover:bg-blue-500 transition-all shadow-3xl flex items-center justify-center gap-4 group text-[10px] transform hover:-translate-y-1">
+                                 Create PodOre Account <UserPlus className="w-4 h-4 group-hover:scale-125 transition-transform" />
                               </button>
                            </div>
                         </div>
@@ -145,7 +145,7 @@ const App: React.FC = () => {
                                  </div>
                                  <div className="w-full space-y-3 pt-12 border-t border-white/5">
                                     <div className="flex justify-between text-[8px] font-black text-slate-500 uppercase tracking-widest">
-                                       <span>Node: Podore-Mainnet</span>
+                                       <span>Node: PodOre-Mainnet</span>
                                        <span>v2.0.1</span>
                                     </div>
                                  </div>
@@ -206,7 +206,7 @@ const App: React.FC = () => {
                       World AI Force is a decentralized global intelligence ecosystem. We believe the power of AI should belong to the people, not just a handful of corporations.
                     </p>
                     <p className="text-slate-500 text-base font-light leading-relaxed">
-                      Our PODORE platform represents the culmination of decentralized development, designed for the "AI for Good" global movement. Anything outside the scope of ethical, human-centric development is automatically filtered by our AI Global Ranking System.
+                      Our PodOre platform represents the culmination of decentralized development, designed for the "AI for Good" global movement. Anything outside the scope of ethical, human-centric development is automatically filtered by our AI Global Ranking System.
                     </p>
                   </div>
                   <div className="relative reveal-on-scroll">

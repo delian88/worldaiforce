@@ -49,7 +49,7 @@ export const ECOSYSTEM_TOOLS: EcosystemTool[] = [
   },
   {
     id: 'podore-core',
-    name: 'Podore',
+    name: 'PodOre',
     description: 'The master digital hub and unified platform. Launching Jan 25, 2026.',
     icon: 'Network',
     category: 'Community'
