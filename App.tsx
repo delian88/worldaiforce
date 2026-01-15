@@ -587,10 +587,15 @@ const App: React.FC = () => {
           
           <div className="pt-12 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-6">
             <p className="text-slate-600 text-[10px] uppercase tracking-[0.3em]">
-              &copy; 2024 - 2026 World AI Force. All rights reserved.
+              &copy; 2026 World AI Force. All rights reserved.
             </p>
             <div className="flex gap-8">
-              <button onClick={() => navigate('privacy')} className={`text-[10px] uppercase tracking-[0.3em] transition-colors ${currentPage === 'privacy' ? 'text-blue-400' : 'text-slate-600 hover:text-white'}`}>Privacy Policy</button>
+              <button 
+                onClick={() => navigate('privacy')} 
+                className={`text-[10px] uppercase tracking-[0.3em] transition-colors ${currentPage === 'privacy' ? 'text-blue-400' : 'text-slate-600 hover:text-white'}`}
+              >
+                Privacy Policy
+              </button>
               <a href="#" className="text-slate-600 hover:text-white text-[10px] uppercase tracking-[0.3em] transition-colors">Ethics</a>
             </div>
           </div>
