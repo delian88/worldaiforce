@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect, useCallback } from 'react';
 import { ArrowRight, Sparkles, ShieldCheck } from 'lucide-react';
 import Logo from './Logo.tsx';
@@ -56,10 +55,18 @@ const Hero: React.FC<HeroProps> = ({ onNavigate }) => {
               <span>Universal Access Protocol</span>
             </div>
 
-            <h1 className="font-display text-4xl md:text-6xl lg:text-7xl xl:text-8xl font-bold tracking-tighter mb-8 leading-[1.1] min-h-[3.3em] md:min-h-[2.2em]">
-              <span className="shimmer-text block lg:inline">
-                {displayText}
-              </span>
+            <h1 className="font-display text-5xl md:text-7xl lg:text-8xl font-bold tracking-tight mb-8 leading-[1] min-h-[3.3em] md:min-h-[2.2em]">
+              {!isFinished ? (
+                <span className="shimmer-text block lg:inline">
+                  {displayText}
+                </span>
+              ) : (
+                <>
+                  <span className="text-white block">Global</span>
+                  <span className="italic text-blue-400 block lg:inline shimmer-text">AI Strategy</span>
+                  <span className="text-white block">Excellence</span>
+                </>
+              )}
               <span className={`inline-block w-[6px] h-[0.85em] bg-blue-500 ml-3 align-middle shadow-[0_0_20px_rgba(59,130,246,0.8)] ${!isFinished ? 'animate-[blink_0.8s_infinite]' : 'opacity-0'}`}></span>
             </h1>
 

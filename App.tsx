@@ -1,4 +1,3 @@
-
 import React, { useEffect, useState } from 'react';
 import Navbar from './components/Navbar.tsx';
 import Hero from './components/Hero.tsx';
@@ -70,7 +69,7 @@ const App: React.FC = () => {
                     <div className="inline-flex items-center gap-2 px-4 py-1 rounded-full bg-blue-500/10 border border-blue-500/20 text-blue-400 text-[10px] font-black uppercase tracking-widest mb-6">
                       <Zap className="w-3 h-3" /> System Status: Online
                     </div>
-                    <h2 className="text-4xl md:text-6xl font-display font-bold mb-4">Neural <span className="shimmer-text">Forge</span> Terminal</h2>
+                    <h2 className="text-5xl md:text-7xl font-display font-bold mb-4 tracking-tight">Neural <span className="shimmer-text">Forge</span> Terminal</h2>
                     <p className="text-slate-500 max-w-2xl mx-auto font-light leading-relaxed">
                       Instant synaptic access to the WAF generation engine. Envision visuals, synthesize lexicon, and initiate motion sequences directly from the global hub.
                     </p>
@@ -98,7 +97,7 @@ const App: React.FC = () => {
                               <span className="text-blue-500 text-[11px] font-black uppercase tracking-[0.7em]">PodOre GLOBAL NETWORK v2.0</span>
                            </div>
                            
-                           <h2 className="text-4xl md:text-7xl font-display font-bold mb-8 leading-[1.1] tracking-tighter">
+                           <h2 className="text-5xl md:text-8xl font-display font-bold mb-8 leading-[1] tracking-tighter">
                               Establish Your <br/><span className="shimmer-text">PodOre Account</span>
                            </h2>
 
@@ -141,7 +140,7 @@ const App: React.FC = () => {
                                        <Fingerprint className="w-12 h-12 text-blue-500" />
                                     </div>
                                     <div className="text-[10px] font-black text-blue-400 uppercase tracking-[0.6em] mb-3">Neural Core Verified</div>
-                                    <div className="text-2xl font-display font-bold text-white tracking-tighter uppercase">Global Node</div>
+                                    <div className="text-3xl font-display font-bold text-white tracking-tighter uppercase italic">Global Node</div>
                                  </div>
                                  <div className="w-full space-y-3 pt-12 border-t border-white/5">
                                     <div className="flex justify-between text-[8px] font-black text-slate-500 uppercase tracking-widest">
@@ -169,7 +168,7 @@ const App: React.FC = () => {
                   ].map((stat, i) => (
                     <div key={i} className="text-center reveal-on-scroll">
                       <div className="flex justify-center mb-4 opacity-50">{stat.icon}</div>
-                      <div className="text-3xl md:text-5xl font-display font-bold text-white mb-2">{stat.value}</div>
+                      <div className="text-4xl md:text-5xl font-display font-bold text-white mb-2 italic">{stat.value}</div>
                       <div className="text-[10px] uppercase tracking-[0.3em] text-slate-500 font-black">{stat.label}</div>
                     </div>
                   ))}
@@ -182,9 +181,9 @@ const App: React.FC = () => {
         return (
           <section className="pt-40 pb-32 min-h-screen bg-slate-950">
             <div className="max-w-4xl mx-auto px-4 text-center">
-              <h1 className="text-5xl md:text-7xl font-display font-bold mb-12">The <span className="shimmer-text">Mission</span></h1>
+              <h1 className="text-6xl md:text-8xl font-display font-bold mb-12 tracking-tight">The <span className="shimmer-text italic">Mission</span></h1>
               <div className="glass p-12 md:p-20 rounded-[4rem] border-white/10">
-                <p className="text-2xl md:text-3xl text-white font-light leading-relaxed italic">
+                <p className="text-3xl md:text-4xl text-white font-display italic font-light leading-relaxed">
                   "To ensure equitable access to AI tools, education, economic opportunities, and global participation for underserved communities transforming AI into a force for inclusion, safety, and shared prosperity."
                 </p>
               </div>
@@ -201,7 +200,7 @@ const App: React.FC = () => {
             <div className="max-w-7xl mx-auto px-4">
                <div className="grid lg:grid-cols-2 gap-20 items-center">
                   <div className="reveal-on-scroll">
-                    <h1 className="text-5xl md:text-7xl font-display font-bold mb-8">About <span className="shimmer-text">WAF</span></h1>
+                    <h1 className="text-6xl md:text-8xl font-display font-bold mb-8 tracking-tight">About <span className="shimmer-text italic">WAF</span></h1>
                     <p className="text-slate-400 text-lg font-light leading-relaxed mb-6">
                       World AI Force is a decentralized global intelligence ecosystem. We believe the power of AI should belong to the people, not just a handful of corporations.
                     </p>
@@ -226,10 +225,10 @@ const App: React.FC = () => {
           <section className="pt-40 pb-32 bg-slate-950">
             <div className="max-w-5xl mx-auto px-4">
                <div className="glass p-12 md:p-20 rounded-[4rem] border-white/10 reveal-on-scroll active text-center">
-                  <h2 className="text-4xl font-display font-bold mb-8 italic">SYNAPTIC <span className="shimmer-text">CONTACT</span></h2>
+                  <h2 className="text-5xl font-display font-bold mb-8 italic">SYNAPTIC <span className="shimmer-text">CONTACT</span></h2>
                   <div className="space-y-4 mb-12">
-                     <p className="text-white font-bold text-2xl">contact@worldaiforce.com</p>
-                     <p className="text-blue-500 font-black tracking-widest uppercase">+1-240-813-0308</p>
+                     <p className="text-white font-display font-bold text-4xl">contact@worldaiforce.com</p>
+                     <p className="text-blue-500 font-black tracking-[0.5em] uppercase text-sm">+1-240-813-0308</p>
                   </div>
                   <div className="flex justify-center gap-4">
                      <button className="px-12 py-5 bg-blue-600 rounded-full font-black uppercase text-xs tracking-widest hover:bg-blue-500 transition-all">Establish Link</button>
@@ -246,7 +245,7 @@ const App: React.FC = () => {
                  <div className="inline-flex items-center gap-3 px-5 py-2 rounded-full glass border-white/10 text-[11px] font-black uppercase tracking-[0.4em] text-blue-400 mb-6">
                     <Lock className="w-4 h-4" /> Legal Trust Framework
                  </div>
-                 <h1 className="text-5xl md:text-7xl font-display font-bold mb-8">World AI Force™ <br/><span className="shimmer-text">Privacy Policy</span></h1>
+                 <h1 className="text-6xl md:text-8xl font-display font-bold mb-8 tracking-tight">World AI Force™ <br/><span className="shimmer-text italic">Privacy Policy</span></h1>
                  <p className="text-slate-500 text-xs font-black uppercase tracking-widest mb-12">Effective Date: October 2024</p>
               </div>
 
@@ -258,7 +257,7 @@ const App: React.FC = () => {
                   </section>
 
                   <section className="space-y-6">
-                    <h2 className="text-2xl font-bold text-blue-400">1. Information We Collect</h2>
+                    <h2 className="text-3xl font-display font-bold text-blue-400 italic">1. Information We Collect</h2>
                     <h3 className="font-bold text-white uppercase text-xs tracking-widest">1.1 Personal Information Provided by You</h3>
                     <p className="text-sm">We may collect: Full name, Email address, Phone number, Password (encrypted), Profile information, Developer details, Payment information.</p>
                     <h3 className="font-bold text-white uppercase text-xs tracking-widest">1.2 Automatically Collected Information</h3>
@@ -266,23 +265,23 @@ const App: React.FC = () => {
                   </section>
 
                   <section className="space-y-6">
-                    <h2 className="text-2xl font-bold text-blue-400">2. How We Use Your Information</h2>
+                    <h2 className="text-3xl font-display font-bold text-blue-400 italic">2. How We Use Your Information</h2>
                     <p className="text-sm">We use your info to: Provide services, facilitate meetings, deliver AI tools, enable news syndication, improve platform performance, and ensure security/compliance.</p>
                     <p className="text-blue-500 font-bold uppercase tracking-widest text-[10px]">We do not sell your personal data.</p>
                   </section>
 
                   <section className="space-y-6">
-                    <h2 className="text-2xl font-bold text-blue-400">3. How We Share Information</h2>
+                    <h2 className="text-3xl font-display font-bold text-blue-400 italic">3. How We Share Information</h2>
                     <p className="text-sm">Shared with: Trusted service providers (Payment, Hosting, Analytics), Community features (visible to participants), and Compliance/Legal requirements to prevent fraud and abuse.</p>
                   </section>
 
                   <section className="space-y-6">
-                    <h2 className="text-2xl font-bold text-blue-400">8. How We Protect Your Information</h2>
+                    <h2 className="text-3xl font-display font-bold text-blue-400 italic">8. How We Protect Your Information</h2>
                     <p className="text-sm">Advanced security: Strong encryption, Multi-layered authentication, Secure server architecture, Access controls, and Continuous monitoring by our ethical safety framework.</p>
                   </section>
 
                   <section className="pt-12 border-t border-white/10 text-center space-y-4">
-                    <h2 className="text-2xl font-bold text-white">Legal Transmission Link</h2>
+                    <h2 className="text-3xl font-display font-bold text-white italic">Legal Transmission Link</h2>
                     <p className="text-sm">Email: <span className="text-blue-400 font-bold">privacy@worldaiforce.org</span></p>
                     <p className="text-sm">Web: <span className="text-white font-bold">www.worldaiforce.org</span></p>
                   </section>
@@ -305,7 +304,7 @@ const App: React.FC = () => {
             <div className="max-w-sm">
               <div className="flex items-center gap-4 mb-8">
                 <Logo size={64} />
-                <span className="font-display font-bold text-2xl tracking-tighter uppercase">
+                <span className="font-display font-bold text-3xl tracking-tighter uppercase italic">
                   World <span className="shimmer-text">AI</span> Force
                 </span>
               </div>

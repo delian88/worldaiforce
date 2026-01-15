@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>World AI Force | Global Intelligence Ecosystem</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Space+Grotesk:wght@300;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Playfair+Display:ital,wght@0,700;0,900;1,700;1,900&display=swap" rel="stylesheet">
     <script>
         // Safety shim for cPanel/Static hosting to prevent "process is not defined" errors
         window.process = window.process || { env: {} };
@@ -14,17 +14,91 @@
         :root {
             --accent-blue: #3b82f6;
             --accent-purple: #a855f7;
+            --space-bg: #020617;
         }
         
         body {
             font-family: 'Inter', sans-serif;
-            background-color: #020617; /* slate-950 */
+            background-color: var(--space-bg);
             color: #f8fafc;
             overflow-x: hidden;
             scroll-behavior: smooth;
         }
 
-        /* Neural Grid Background */
+        /* --- GALAXY BACKGROUND ANIMATION --- */
+        .galaxy-wrap {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -2;
+            overflow: hidden;
+            background: radial-gradient(ellipse at bottom, #1B2735 0%, #090A0F 100%);
+        }
+
+        /* Nebula Wisps */
+        .nebula {
+            position: absolute;
+            width: 150%;
+            height: 150%;
+            top: -25%;
+            left: -25%;
+            background: 
+                radial-gradient(circle at 20% 30%, rgba(59, 130, 246, 0.08) 0%, transparent 40%),
+                radial-gradient(circle at 80% 70%, rgba(168, 85, 247, 0.08) 0%, transparent 40%),
+                radial-gradient(circle at 50% 50%, rgba(29, 78, 216, 0.04) 0%, transparent 60%);
+            filter: blur(80px);
+            animation: nebula-drift 60s ease-in-out infinite alternate;
+        }
+
+        /* Star Layers */
+        .stars-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        /* Generating stars via Box-Shadow for efficiency */
+        #stars, #stars2, #stars3 {
+            position: absolute;
+            background: transparent;
+        }
+
+        #stars {
+            width: 1px;
+            height: 1px;
+            box-shadow: 1744px 115px #FFF , 134px 1198px #FFF , 1801px 406px #FFF , 507px 1974px #FFF , 1384px 341px #FFF , 214px 1747px #FFF , 1658px 1151px #FFF , 1272px 1357px #FFF , 1860px 1862px #FFF , 428px 1450px #FFF , 1276px 1438px #FFF , 1840px 1582px #FFF , 1033px 1857px #FFF , 1916px 1347px #FFF , 577px 1124px #FFF , 1318px 233px #FFF , 359px 1277px #FFF , 1761px 1109px #FFF , 648px 1906px #FFF , 1056px 1222px #FFF;
+            animation: space-scroll 100s linear infinite;
+        }
+
+        #stars2 {
+            width: 2px;
+            height: 2px;
+            box-shadow: 1344px 125px #FFF , 34px 1298px #FFF , 1701px 506px #FFF , 407px 1874px #FFF , 1284px 441px #FFF , 114px 1647px #FFF , 1558px 1051px #FFF , 1172px 1257px #FFF , 1760px 1762px #FFF , 328px 1350px #FFF;
+            animation: space-scroll 150s linear infinite;
+        }
+
+        #stars3 {
+            width: 3px;
+            height: 3px;
+            box-shadow: 1544px 325px #FFF , 234px 1198px #FFF , 1901px 606px #FFF , 607px 1674px #FFF , 1484px 541px #FFF;
+            animation: space-scroll 200s linear infinite;
+        }
+
+        @keyframes nebula-drift {
+            from { transform: rotate(0deg) scale(1); }
+            to { transform: rotate(5deg) scale(1.1); }
+        }
+
+        @keyframes space-scroll {
+            from { transform: translateY(0px); }
+            to { transform: translateY(-2000px); }
+        }
+
+        /* Neural Grid Background (Now transparent overlaying galaxy) */
         body::before {
             content: "";
             position: fixed;
@@ -33,18 +107,18 @@
             width: 100%;
             height: 100%;
             background-image: 
-                radial-gradient(circle at 2px 2px, rgba(59, 130, 246, 0.05) 1px, transparent 0);
-            background-size: 40px 40px;
+                radial-gradient(circle at 2px 2px, rgba(59, 130, 246, 0.08) 1px, transparent 0);
+            background-size: 50px 50px;
             z-index: -1;
             pointer-events: none;
         }
 
         .font-display {
-            font-family: 'Space+Grotesk', sans-serif;
+            font-family: 'Playfair Display', serif;
         }
 
         .glass {
-            background: rgba(255, 255, 255, 0.02);
+            background: rgba(15, 23, 42, 0.4);
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
             border: 1px solid rgba(255, 255, 255, 0.08);
@@ -75,21 +149,11 @@
         }
 
         @keyframes brand-float-rotate {
-            0% { 
-                transform: translateY(0px) rotate(0deg) scale(1);
-            }
-            25% {
-                transform: translateY(-8px) rotate(1deg) scale(1.02);
-            }
-            50% {
-                transform: translateY(0px) rotate(0deg) scale(1);
-            }
-            75% {
-                transform: translateY(8px) rotate(-1deg) scale(0.98);
-            }
-            100% { 
-                transform: translateY(0px) rotate(0deg) scale(1);
-            }
+            0% { transform: translateY(0px) rotate(0deg) scale(1); }
+            25% { transform: translateY(-8px) rotate(1deg) scale(1.02); }
+            50% { transform: translateY(0px) rotate(0deg) scale(1); }
+            75% { transform: translateY(8px) rotate(-1deg) scale(0.98); }
+            100% { transform: translateY(0px) rotate(0deg) scale(1); }
         }
 
         @keyframes siren-rotate {
@@ -186,6 +250,16 @@
 </script>
 </head>
 <body>
+    <!-- Galaxy Elements -->
+    <div class="galaxy-wrap">
+        <div class="nebula"></div>
+        <div class="stars-container">
+            <div id="stars"></div>
+            <div id="stars2"></div>
+            <div id="stars3"></div>
+        </div>
+    </div>
+
     <div id="root"></div>
     <script type="module" src="./index.tsx"></script>
 </body>
