@@ -14,7 +14,7 @@ import {
   Mail, Phone, MapPin, ArrowUpRight, Lock, FileText, Cpu, 
   BarChart3, Users, Network, Layers, Rocket, Award, CheckCircle2,
   TrendingUp, Calculator, HardDrive, ShieldAlert, Sparkles, Wand2,
-  KeyRound, UserPlus, Fingerprint, Shield
+  KeyRound, UserPlus, Fingerprint, Shield, Info, EyeOff, Gavel
 } from 'lucide-react';
 
 type Page = 'home' | 'mission' | 'forge' | 'ecosystem' | 'about' | 'contact' | 'privacy';
@@ -84,7 +84,7 @@ const App: React.FC = () => {
               </div>
             </section>
 
-            {/* ENHANCED: PODORE REGISTRATION SECTION */}
+            {/* PODORE REGISTRATION SECTION */}
             <section className="py-32 bg-slate-950 relative overflow-hidden">
                <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(59,130,246,0.15)_0%,transparent_70%)]"></div>
                <div className="max-w-7xl mx-auto px-4 relative z-10">
@@ -92,7 +92,6 @@ const App: React.FC = () => {
                      <div className="siren-border-inner opacity-25 group-hover:opacity-50 transition-opacity duration-[2000ms]"></div>
                      <div className="relative z-10 bg-slate-900/95 backdrop-blur-3xl rounded-[3.9rem] p-12 md:p-24 flex flex-col lg:flex-row items-center gap-16 overflow-hidden">
                         
-                        {/* Interactive Background Particles (CSS simulated) */}
                         <div className="absolute inset-0 overflow-hidden pointer-events-none opacity-20">
                             {[...Array(6)].map((_, i) => (
                                 <div 
@@ -160,7 +159,6 @@ const App: React.FC = () => {
 
                         <div className="lg:w-2/5 relative reveal-on-scroll">
                            <div className="relative z-10 p-6">
-                              {/* Central Animated Identity Card */}
                               <div className="aspect-[4/5] w-full max-w-[340px] mx-auto bg-gradient-to-br from-slate-900 to-slate-950 rounded-[3rem] border border-white/10 p-10 flex flex-col items-center justify-between shadow-3xl relative overflow-hidden group/card">
                                  <div className="absolute inset-0 bg-blue-600/5 opacity-0 group-hover/card:opacity-100 transition-opacity"></div>
                                  
@@ -191,7 +189,6 @@ const App: React.FC = () => {
                                  </div>
                               </div>
 
-                              {/* Decorative Elements */}
                               <div className="absolute top-[-20px] right-[-20px] w-24 h-24 glass rounded-3xl border-white/10 flex items-center justify-center animate-bounce duration-[4s] shadow-2xl">
                                  <ShieldCheck className="w-8 h-8 text-blue-400/50" />
                               </div>
@@ -226,7 +223,7 @@ const App: React.FC = () => {
               </div>
             </section>
 
-            {/* Sovereign Infrastructure Section - Replaced Timeline */}
+            {/* Sovereign Infrastructure Section */}
             <section className="py-32 bg-slate-950 relative overflow-hidden">
                <div className="absolute right-0 top-0 w-[600px] h-[600px] bg-blue-600/5 blur-[160px] -z-10"></div>
                <div className="max-w-7xl mx-auto px-4">
@@ -269,86 +266,6 @@ const App: React.FC = () => {
                              </div>
                           </div>
                        </div>
-                    </div>
-                  </div>
-               </div>
-            </section>
-
-            {/* Strategic Divisions - The 5 Pillars Bento Grid */}
-            <section className="py-32 bg-slate-900/5">
-              <div className="max-w-7xl mx-auto px-4">
-                <div className="text-center mb-16">
-                  <h2 className="text-4xl md:text-5xl font-display font-bold mb-4">Ecosystem <span className="shimmer-text">Pillars</span></h2>
-                  <p className="text-slate-400 max-w-2xl mx-auto font-light">Five interconnected nodes forming the backbone of global intelligence.</p>
-                </div>
-                <div className="grid md:grid-cols-3 gap-6">
-                  {/* Pillar 1: Forge */}
-                  <div className="p-10 rounded-[3rem] glass-card border-white/5 reveal-on-scroll">
-                    <div className="w-12 h-12 rounded-2xl bg-blue-600/20 flex items-center justify-center text-blue-400 mb-6"><Wand2 /></div>
-                    <h3 className="text-2xl font-bold mb-4">1. WAF Forge</h3>
-                    <p className="text-slate-400 text-sm leading-relaxed mb-6">Active synthesis for image, lexicon, and motion. Empowerment through instant creative production.</p>
-                    <button onClick={() => navigate('forge')} className="text-[10px] font-black uppercase tracking-[0.3em] text-blue-500 flex items-center gap-2 group">
-                      Access Node <ArrowUpRight className="w-3 h-3 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 transition-transform" />
-                    </button>
-                  </div>
-
-                  {/* Pillar 2: Academy */}
-                  <div className="p-10 rounded-[3rem] glass-card border-white/5 reveal-on-scroll">
-                    <div className="w-12 h-12 rounded-2xl bg-purple-600/20 flex items-center justify-center text-purple-400 mb-6"><Award /></div>
-                    <h3 className="text-2xl font-bold mb-4">2. WAF Academy</h3>
-                    <p className="text-slate-400 text-sm leading-relaxed">Democratizing knowledge through free training and global certification. Education is the ultimate force multiplier.</p>
-                  </div>
-
-                  {/* Pillar 3: Stock Market */}
-                  <div className="p-10 rounded-[3rem] glass-card border-white/5 reveal-on-scroll">
-                    <div className="w-12 h-12 rounded-2xl bg-green-600/20 flex items-center justify-center text-green-400 mb-6"><TrendingUp /></div>
-                    <h3 className="text-2xl font-bold mb-4">3. Stock Market</h3>
-                    <p className="text-slate-400 text-sm leading-relaxed">AI-driven predictive analytics for global equity markets. Bridging the financial gap for emerging economies.</p>
-                  </div>
-
-                  {/* Pillar 4: AI Accounting */}
-                  <div className="md:col-span-1 p-10 rounded-[3rem] glass-card border-white/5 reveal-on-scroll">
-                    <div className="w-12 h-12 rounded-2xl bg-yellow-600/20 flex items-center justify-center text-yellow-400 mb-6"><Calculator /></div>
-                    <h3 className="text-2xl font-bold mb-4">4. AI Accounting</h3>
-                    <p className="text-slate-400 text-sm leading-relaxed">Automated decentralized auditing and financial governance systems for WAF-integrated enterprises.</p>
-                  </div>
-
-                  {/* Pillar 5: Podore */}
-                  <div className="md:col-span-2 p-10 rounded-[3rem] bg-slate-900 border border-white/10 relative overflow-hidden reveal-on-scroll">
-                    <div className="absolute right-[-100px] bottom-[-100px] opacity-10 rotate-12"><Logo size={400} /></div>
-                    <div className="relative z-10">
-                      <div className="w-12 h-12 rounded-2xl bg-blue-600/20 flex items-center justify-center text-blue-400 mb-6"><Cpu /></div>
-                      <h3 className="text-2xl font-bold mb-4">5. Podore Core Hub</h3>
-                      <p className="text-slate-400 text-sm leading-relaxed max-w-md mb-8">The ultimate digital destination. A secure, multilingual ecosystem hosting all WAF programs. The unified point of global entry.</p>
-                      <div className="flex flex-wrap gap-4">
-                        <div className="px-5 py-2.5 bg-white/5 rounded-xl border border-white/10 text-[10px] font-black text-slate-400 uppercase tracking-widest">Multilingual UI</div>
-                        <div className="px-5 py-2.5 bg-white/5 rounded-xl border border-white/10 text-[10px] font-black text-slate-400 uppercase tracking-widest">Cyber-Secure</div>
-                        <div className="px-5 py-2.5 bg-white/5 rounded-xl border border-white/10 text-[10px] font-black text-slate-400 uppercase tracking-widest">Scalable Grid</div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </section>
-
-            {/* Global Node Participation Section */}
-            <section className="py-32 bg-slate-950 relative">
-               <div className="max-w-7xl mx-auto px-4 text-center">
-                  <div className="glass p-16 md:p-32 rounded-[5rem] border-white/10 relative overflow-hidden shadow-3xl">
-                    <div className="absolute inset-0 opacity-10 bg-[url('https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=2000')] bg-cover"></div>
-                    <div className="relative z-10 max-w-3xl mx-auto">
-                      <h2 className="text-5xl md:text-7xl font-display font-bold mb-10 italic">Join the <span className="shimmer-text">Global Grid</span></h2>
-                      <p className="text-slate-400 text-xl md:text-2xl font-light mb-16 leading-relaxed">
-                        WAF is a community-first movement. We are currently recruiting **Regional Ambassadors** and **Node Developers** to anchor the mission across all continents.
-                      </p>
-                      <div className="flex flex-col sm:flex-row gap-8 justify-center items-center">
-                        <button onClick={openPodore} className="px-14 py-7 bg-blue-600 text-white rounded-full font-black uppercase tracking-[0.3em] hover:bg-blue-500 transition-all shadow-3xl shadow-blue-500/30 flex items-center justify-center gap-4 group">
-                          Join the Network <Rocket className="w-5 h-5 group-hover:-translate-y-1 group-hover:translate-x-1 transition-transform" />
-                        </button>
-                        <button onClick={() => navigate('mission')} className="px-14 py-7 glass text-white rounded-full font-black uppercase tracking-[0.3em] hover:bg-white/10 transition-all border border-white/10">
-                          The Charter
-                        </button>
-                      </div>
                     </div>
                   </div>
                </div>
@@ -448,17 +365,161 @@ const App: React.FC = () => {
       case 'privacy':
         return (
           <section className="pt-40 pb-32 bg-slate-950 min-h-screen">
-            <div className="max-w-4xl mx-auto px-6">
-              <div className="mb-12 flex items-center gap-4 reveal-on-scroll active">
-                <Lock className="text-blue-500 w-8 h-8" />
-                <h1 className="text-4xl md:text-5xl font-display font-bold">World AI Force™ <span className="shimmer-text">Privacy Policy</span></h1>
+            <div className="max-w-5xl mx-auto px-6">
+              <div className="text-center mb-16">
+                 <div className="inline-flex items-center gap-3 px-5 py-2 rounded-full glass border-white/10 text-[11px] font-black uppercase tracking-[0.4em] text-blue-400 mb-6 reveal-on-scroll active">
+                    <Lock className="w-4 h-4" /> Legal Trust Framework
+                 </div>
+                 <h1 className="text-5xl md:text-7xl font-display font-bold mb-8 reveal-on-scroll active">World AI Force™ <br/><span className="shimmer-text">Privacy Policy</span></h1>
+                 <p className="text-slate-500 text-xs font-black uppercase tracking-widest mb-12">Effective Date: October 2024</p>
               </div>
-              <div className="glass p-10 md:p-16 rounded-[3rem] border-white/10 prose prose-invert max-w-none font-light leading-relaxed text-slate-300 reveal-on-scroll active">
-                <p className="mb-8">World AI Force (“WAF”) is committed to protecting your privacy. This policy explains our data handling practices for our decentralized nodes and platforms.</p>
-                <h2 className="text-2xl font-bold text-blue-400 mb-6">1. Information Protection</h2>
-                <p>We use end-to-end encryption for all generated content. WAF does not claim ownership over any forged assets.</p>
-                <div className="pt-12 border-t border-white/10">
-                  <p className="text-white font-bold">📧 privacy@worldaiforce.org</p>
+
+              <div className="glass p-10 md:p-20 rounded-[4rem] border-white/10 font-light leading-relaxed text-slate-300 reveal-on-scroll active">
+                <div className="max-w-4xl mx-auto space-y-16">
+                  
+                  <section>
+                    <p className="text-lg leading-relaxed text-slate-200">
+                      World AI Force (“WAF,” “we,” “our,” or “us”) is committed to protecting your privacy and ensuring that your personal data is handled lawfully, transparently, and securely. This Privacy Policy explains how we collect, use, store, share, and protect your data when you sign up for or use our platform, including our digital boardrooms, developer tools, AI product marketplace, news syndication systems, and any related services.
+                    </p>
+                    <p className="mt-8 font-bold text-white uppercase tracking-widest text-sm">By using World AI Force, you agree to the practices described in this Privacy Policy.</p>
+                  </section>
+
+                  <section className="space-y-8">
+                    <h2 className="text-3xl font-display font-bold text-blue-400 border-b border-white/5 pb-4 flex items-center gap-4">
+                       <Fingerprint className="w-6 h-6" /> 1. Information We Collect
+                    </h2>
+                    
+                    <div className="grid md:grid-cols-2 gap-12">
+                      <div className="space-y-4">
+                        <h3 className="text-white font-bold text-lg">1.1 Personal Information Provided by You</h3>
+                        <p className="text-sm text-slate-400">We may collect the following types of information when you sign up, create a profile, or use our services:</p>
+                        <ul className="space-y-2 text-sm text-slate-300">
+                           <li className="flex items-center gap-2"><div className="w-1.5 h-1.5 rounded-full bg-blue-500"></div> Full name</li>
+                           <li className="flex items-center gap-2"><div className="w-1.5 h-1.5 rounded-full bg-blue-500"></div> Email address</li>
+                           <li className="flex items-center gap-2"><div className="w-1.5 h-1.5 rounded-full bg-blue-500"></div> Phone number (optional)</li>
+                           <li className="flex items-center gap-2"><div className="w-1.5 h-1.5 rounded-full bg-blue-500"></div> Password (encrypted)</li>
+                           <li className="flex items-center gap-2"><div className="w-1.5 h-1.5 rounded-full bg-blue-500"></div> Profile information</li>
+                        </ul>
+                      </div>
+
+                      <div className="space-y-4">
+                        <h3 className="text-white font-bold text-lg">1.2 Automatically Collected Information</h3>
+                        <p className="text-sm text-slate-400">When you interact with WAF, we automatically collect:</p>
+                        <ul className="space-y-2 text-sm text-slate-300">
+                           <li className="flex items-center gap-2"><div className="w-1.5 h-1.5 rounded-full bg-blue-500"></div> Device information (browser, OS)</li>
+                           <li className="flex items-center gap-2"><div className="w-1.5 h-1.5 rounded-full bg-blue-500"></div> IP address & location approx.</li>
+                           <li className="flex items-center gap-2"><div className="w-1.5 h-1.5 rounded-full bg-blue-500"></div> Usage patterns & Cookies</li>
+                           <li className="flex items-center gap-2"><div className="w-1.5 h-1.5 rounded-full bg-blue-500"></div> Activity within digital spaces</li>
+                        </ul>
+                      </div>
+                    </div>
+
+                    <div className="p-8 rounded-3xl bg-blue-600/5 border border-blue-500/10 mt-8">
+                       <h3 className="text-blue-400 font-bold mb-2">1.3 AI Product & Developer Data</h3>
+                       <p className="text-sm">For creators and developers, we may collect: Submitted products, Product metadata, Compliance documents, Evaluation data, Ranking and market analytics.</p>
+                    </div>
+
+                    <div className="p-8 rounded-3xl bg-purple-600/5 border border-purple-500/10">
+                       <h3 className="text-purple-400 font-bold mb-2">1.4 Community Laissez-Passer Verification Data</h3>
+                       <p className="text-sm">If you apply for or use the World AI Force Community Laissez-Passer, we may collect: Identity verification documents, Professional verification details, Community reputation signals.</p>
+                    </div>
+                  </section>
+
+                  <section className="space-y-8">
+                    <h2 className="text-3xl font-display font-bold text-blue-400 border-b border-white/5 pb-4 flex items-center gap-4">
+                       <Zap className="w-6 h-6" /> 2. How We Use Your Information
+                    </h2>
+                    <div className="grid sm:grid-cols-2 gap-8 text-sm">
+                       <div>
+                          <h4 className="text-white font-bold mb-4 uppercase tracking-widest text-xs">2.1 Services</h4>
+                          <ul className="space-y-2 text-slate-400">
+                             <li>Create and manage your account</li>
+                             <li>Facilitate digital boardroom meetings</li>
+                             <li>Provide AI-powered tools (Lexicon, Vision, Motion)</li>
+                             <li>Enable news syndication and distribution</li>
+                          </ul>
+                       </div>
+                       <div>
+                          <h4 className="text-white font-bold mb-4 uppercase tracking-widest text-xs">2.2 Security & Compliance</h4>
+                          <ul className="space-y-2 text-slate-400">
+                             <li>Authenticate users & prevent fraud</li>
+                             <li>Monitor for abuse or criminal activity</li>
+                             <li>Enforce Terms & Conditions</li>
+                             <li>Conduct Laissez-Passer verification</li>
+                          </ul>
+                       </div>
+                    </div>
+                    <p className="p-6 rounded-2xl glass border-blue-500/20 text-blue-400 font-bold text-center uppercase tracking-widest text-xs">
+                       We do not sell your personal data.
+                    </p>
+                  </section>
+
+                  <section className="space-y-8">
+                    <h2 className="text-3xl font-display font-bold text-blue-400 border-b border-white/5 pb-4 flex items-center gap-4">
+                       <Users className="w-6 h-6" /> 3. How We Share Information
+                    </h2>
+                    <p className="text-sm leading-relaxed">
+                       We only share information with trusted service providers (payment processing, hosting, security), within community features (boardrooms/workspaces), or for legal requirements to prevent fraud and abuse. Any additional sharing occurs only with your explicit consent.
+                    </p>
+                  </section>
+
+                  <section className="grid md:grid-cols-2 gap-12">
+                     <div className="space-y-6">
+                        <h2 className="text-2xl font-display font-bold text-blue-400 flex items-center gap-3"><EyeOff className="w-5 h-5" /> 4. Cookies</h2>
+                        <p className="text-sm text-slate-400">WAF uses cookies to maintain login sessions, personalize the platform, and provide analytics. Manage preferences in your browser.</p>
+                     </div>
+                     <div className="space-y-6">
+                        <h2 className="text-2xl font-display font-bold text-blue-400 flex items-center gap-3"><HardDrive className="w-5 h-5" /> 5. Data Retention</h2>
+                        <p className="text-sm text-slate-400">We retain data as long as necessary for account functionality, legal compliance, and security obligations. You may request deletion at any time.</p>
+                     </div>
+                  </section>
+
+                  <section className="space-y-8 p-12 rounded-[3rem] bg-slate-900 border border-white/10 shadow-inner">
+                    <h2 className="text-3xl font-display font-bold text-white text-center mb-8">6. Your Rights</h2>
+                    <div className="flex flex-wrap justify-center gap-4">
+                       {["Access", "Correct", "Delete", "Portability", "Restrict", "Object"].map(right => (
+                          <div key={right} className="px-6 py-3 rounded-full bg-white/5 border border-white/10 text-xs font-bold uppercase tracking-widest text-blue-400">
+                             {right}
+                          </div>
+                       ))}
+                    </div>
+                    <p className="text-center text-sm text-slate-500 max-w-lg mx-auto">
+                       Depending on your region (GDPR, CCPA), you have the above rights. To exercise them, contact privacy@worldaiforce.org.
+                    </p>
+                  </section>
+
+                  <section className="space-y-8">
+                    <h2 className="text-3xl font-display font-bold text-blue-400 border-b border-white/5 pb-4 flex items-center gap-4">
+                       <ShieldCheck className="w-6 h-6" /> 8. Security Protocols
+                    </h2>
+                    <p className="text-sm leading-relaxed mb-6">
+                       We use advanced security systems including strong encryption, multi-layered authentication, secure server architecture, and continuous monitoring. We commit to notifying users in the event of a significant security breach.
+                    </p>
+                    <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                       <div className="p-4 rounded-xl glass text-center"><Shield className="w-6 h-6 mx-auto mb-2 text-blue-500" /><span className="text-[8px] font-black uppercase tracking-widest">Encryption</span></div>
+                       <div className="p-4 rounded-xl glass text-center"><Lock className="w-6 h-6 mx-auto mb-2 text-blue-500" /><span className="text-[8px] font-black uppercase tracking-widest">Access Control</span></div>
+                       <div className="p-4 rounded-xl glass text-center"><Cpu className="w-6 h-6 mx-auto mb-2 text-blue-500" /><span className="text-[8px] font-black uppercase tracking-widest">Secure Server</span></div>
+                       <div className="p-4 rounded-xl glass text-center"><Target className="w-6 h-6 mx-auto mb-2 text-blue-500" /><span className="text-[8px] font-black uppercase tracking-widest">Monitoring</span></div>
+                    </div>
+                  </section>
+
+                  <section className="pt-20 border-t border-white/10 flex flex-col md:flex-row items-center justify-between gap-12">
+                    <div className="space-y-4">
+                       <h2 className="text-4xl font-display font-bold text-white">Contact Us</h2>
+                       <p className="text-slate-400 font-light">For questions, concerns, or rights requests establishing a secure link.</p>
+                    </div>
+                    <div className="space-y-4 text-right">
+                       <div className="flex items-center gap-4 justify-end">
+                          <span className="text-xl font-bold text-blue-400">privacy@worldaiforce.org</span>
+                          <Mail className="text-blue-500" />
+                       </div>
+                       <div className="flex items-center gap-4 justify-end">
+                          <span className="text-xl font-bold text-white">www.worldaiforce.org</span>
+                          <Globe className="text-blue-500" />
+                       </div>
+                    </div>
+                  </section>
+
                 </div>
               </div>
             </div>
@@ -529,7 +590,7 @@ const App: React.FC = () => {
               &copy; 2024 - 2026 World AI Force. All rights reserved.
             </p>
             <div className="flex gap-8">
-              <button onClick={() => navigate('privacy')} className="text-slate-600 hover:text-white text-[10px] uppercase tracking-[0.3em] transition-colors">Privacy Policy</button>
+              <button onClick={() => navigate('privacy')} className={`text-[10px] uppercase tracking-[0.3em] transition-colors ${currentPage === 'privacy' ? 'text-blue-400' : 'text-slate-600 hover:text-white'}`}>Privacy Policy</button>
               <a href="#" className="text-slate-600 hover:text-white text-[10px] uppercase tracking-[0.3em] transition-colors">Ethics</a>
             </div>
           </div>
