@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { 
   Zap, 
@@ -12,7 +11,8 @@ import {
   Calculator,
   Scale,
   Wand2,
-  Network
+  Network,
+  BarChart3
 } from 'lucide-react';
 import { EcosystemTool } from './types.ts';
 
@@ -45,18 +45,29 @@ export const ECOSYSTEM_TOOLS: EcosystemTool[] = [
     }
   },
   {
+    id: 'waf-wax',
+    name: 'World AI Exchange (WAX)',
+    description: 'A secure, ethical, AI-powered stock market system for listing and trading PodOre AI assets.',
+    icon: 'BarChart3',
+    category: 'Research',
+    details: {
+      fullTitle: "World AI Exchange (WAX)",
+      purpose: "To transform innovation into opportunity by allowing AI products developed on World AI Force PodOre to be digitally listed, governed, and traded within a secure, ethical, AI-powered stock market system.",
+      functions: [
+        "Digital listing of AI products developed on PodOre",
+        "Governance and decentralized trading mechanisms",
+        "AI-powered market analysis and valuation",
+        "Secure, ethical digital finance infrastructure"
+      ],
+      participants: "Designed for global innovators, investors, and community members participating in the future of global digital finance."
+    }
+  },
+  {
     id: 'waf-academy',
     name: 'WAF Academy',
     description: 'Democratized AI education and global certification platform. Coming soon.',
     icon: 'BookOpen',
     category: 'Education'
-  },
-  {
-    id: 'waf-stocks',
-    name: 'Stock Market',
-    description: 'AI-driven predictive analytics for global equity and trade markets. Coming soon.',
-    icon: 'TrendingUp',
-    category: 'Research'
   },
   {
     id: 'waf-accounting',
