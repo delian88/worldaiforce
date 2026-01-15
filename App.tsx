@@ -7,16 +7,12 @@ import WafForge from './components/WafForge.tsx';
 import WafAssistant from './components/WafAssistant.tsx';
 import LoadingScreen from './components/LoadingScreen.tsx';
 import Logo from './components/Logo.tsx';
-import { FEATURES, ECOSYSTEM_TOOLS } from './constants.tsx';
 import { playWelcomeGreeting } from './services/voiceService.ts';
 import { 
-  Target, Eye, ShieldCheck, Globe, Zap, ArrowRight, Download, 
-  Mail, Phone, MapPin, ArrowUpRight, Lock, FileText, Cpu, 
-  BarChart3, Users, Network, Layers, Rocket, Award, CheckCircle2,
-  TrendingUp, Calculator, HardDrive, ShieldAlert, Sparkles, Wand2,
-  KeyRound, UserPlus, Fingerprint, Shield, Info, EyeOff, Gavel,
-  Newspaper, Wallet, Layout, MessageSquare, Video, ShoppingBag, 
-  Dna, Briefcase, GraduationCap
+  ShieldCheck, Globe, Zap, Mail, Phone, MapPin, Lock, Fingerprint, 
+  KeyRound, UserPlus, Newspaper, Wallet, Users, Video, Dna, 
+  Briefcase, ShoppingBag, MessageSquare, TrendingUp, BarChart3, 
+  Layers, Rocket, GraduationCap, Gavel
 } from 'lucide-react';
 
 type Page = 'home' | 'mission' | 'forge' | 'ecosystem' | 'about' | 'contact' | 'privacy';
@@ -72,7 +68,7 @@ const App: React.FC = () => {
               <div className="max-w-7xl mx-auto px-4">
                  <div className="text-center mb-16 reveal-on-scroll">
                     <div className="inline-flex items-center gap-2 px-4 py-1 rounded-full bg-blue-500/10 border border-blue-500/20 text-blue-400 text-[10px] font-black uppercase tracking-widest mb-6">
-                      <Sparkles className="w-3 h-3" /> System Status: Online
+                      <Zap className="w-3 h-3" /> System Status: Online
                     </div>
                     <h2 className="text-4xl md:text-6xl font-display font-bold mb-4">Neural <span className="shimmer-text">Forge</span> Terminal</h2>
                     <p className="text-slate-500 max-w-2xl mx-auto font-light leading-relaxed">
@@ -86,7 +82,7 @@ const App: React.FC = () => {
               </div>
             </section>
 
-            {/* ENHANCED PODORE REGISTRATION SECTION WITH FEATURES LIST */}
+            {/* PODORE REGISTRATION SECTION WITH COMPLETE FEATURE SET */}
             <section className="py-32 bg-slate-950 relative overflow-hidden">
                <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(59,130,246,0.15)_0%,transparent_70%)]"></div>
                <div className="max-w-7xl mx-auto px-4 relative z-10">
@@ -99,33 +95,39 @@ const App: React.FC = () => {
                               <div className="w-14 h-14 rounded-2xl bg-blue-600/20 border border-blue-500/30 flex items-center justify-center text-blue-400">
                                  <KeyRound className="w-7 h-7" />
                               </div>
-                              <span className="text-blue-500 text-[11px] font-black uppercase tracking-[0.7em]">PODORE Protocol v1.2</span>
+                              <span className="text-blue-500 text-[11px] font-black uppercase tracking-[0.7em]">PODORE GLOBAL NETWORK v2.0</span>
                            </div>
                            
                            <h2 className="text-4xl md:text-7xl font-display font-bold mb-8 leading-[1.1] tracking-tighter">
                               Establish Your <br/><span className="shimmer-text">Podore Account</span>
                            </h2>
 
-                           <div className="grid grid-cols-2 md:grid-cols-3 gap-6 mb-12">
+                           <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-12">
                               {[
-                                 { icon: <Newspaper />, name: "POD Feed", desc: "Share tech content" },
-                                 { icon: <Briefcase />, name: "Careers", desc: "Jobs & Requests" },
-                                 { icon: <Wallet />, name: "Wallet", desc: "Dollar Tokens" },
+                                 { icon: <Newspaper />, name: "POD Feed", desc: "Share tech" },
+                                 { icon: <Briefcase />, name: "Careers", desc: "Jobs/Hiring" },
+                                 { icon: <Wallet />, name: "Wallet", desc: "$ Tokens" },
                                  { icon: <Video />, name: "Reels", desc: "AI for Good" },
-                                 { icon: <Users />, name: "Boardroom", desc: "Group Collab" },
-                                 { icon: <Dna />, name: "Digital LAB", desc: "Mentors & Tech" }
+                                 { icon: <Users />, name: "Boardroom", desc: "Video Calls" },
+                                 { icon: <Dna />, name: "Digital LAB", desc: "Investment" },
+                                 { icon: <ShoppingBag />, name: "Market", desc: "AI Products" },
+                                 { icon: <MessageSquare />, name: "Forum", desc: "Global Topics" },
+                                 { icon: <BarChart3 />, name: "Ad-Manager", desc: "Campaigns" },
+                                 { icon: <Rocket />, name: "Boosting", desc: "Go Viral" },
+                                 { icon: <Layers />, name: "Circles", desc: "Pro Groups" },
+                                 { icon: <GraduationCap />, name: "Courses", desc: "Education" }
                               ].map((f, i) => (
-                                 <div key={i} className="p-4 rounded-2xl bg-white/5 border border-white/5 hover:border-blue-500/30 transition-all">
-                                    <div className="text-blue-500 mb-2 w-5 h-5">{f.icon}</div>
-                                    <div className="text-[10px] font-black uppercase text-white mb-1 tracking-widest">{f.name}</div>
-                                    <div className="text-[9px] text-slate-500 font-light">{f.desc}</div>
+                                 <div key={i} className="p-3 rounded-2xl bg-white/5 border border-white/5 hover:border-blue-500/30 transition-all hover:bg-white/[0.07]">
+                                    <div className="text-blue-500 mb-1.5 w-4 h-4">{f.icon}</div>
+                                    <div className="text-[9px] font-black uppercase text-white mb-0.5 tracking-wider">{f.name}</div>
+                                    <div className="text-[8px] text-slate-500 font-light truncate">{f.desc}</div>
                                  </div>
                               ))}
                            </div>
                            
                            <div className="flex flex-col sm:flex-row gap-6">
-                              <button onClick={openPodore} className="px-16 py-8 bg-blue-600 text-white rounded-full font-black uppercase tracking-[0.4em] hover:bg-blue-500 transition-all shadow-3xl flex items-center justify-center gap-4 group text-xs">
-                                 Create Podore Account <UserPlus className="w-5 h-5 group-hover:scale-125 transition-transform" />
+                              <button onClick={openPodore} className="px-16 py-7 bg-blue-600 text-white rounded-full font-black uppercase tracking-[0.4em] hover:bg-blue-500 transition-all shadow-3xl flex items-center justify-center gap-4 group text-[10px] transform hover:-translate-y-1">
+                                 Create Podore Account <UserPlus className="w-4 h-4 group-hover:scale-125 transition-transform" />
                               </button>
                            </div>
                         </div>
@@ -138,13 +140,13 @@ const App: React.FC = () => {
                                        <div className="absolute inset-0 border-2 border-blue-500/20 rounded-full animate-ping"></div>
                                        <Fingerprint className="w-12 h-12 text-blue-500" />
                                     </div>
-                                    <div className="text-[10px] font-black text-blue-400 uppercase tracking-[0.6em] mb-3">Synaptic Identity</div>
-                                    <div className="text-2xl font-display font-bold text-white tracking-tighter">VERIFIED NODE</div>
+                                    <div className="text-[10px] font-black text-blue-400 uppercase tracking-[0.6em] mb-3">Neural Core Verified</div>
+                                    <div className="text-2xl font-display font-bold text-white tracking-tighter uppercase">Global Node</div>
                                  </div>
                                  <div className="w-full space-y-3 pt-12 border-t border-white/5">
                                     <div className="flex justify-between text-[8px] font-black text-slate-500 uppercase tracking-widest">
-                                       <span>Status: Synchronized</span>
-                                       <span>v1.2.0</span>
+                                       <span>Node: Podore-Mainnet</span>
+                                       <span>v2.0.1</span>
                                     </div>
                                  </div>
                               </div>
@@ -161,9 +163,9 @@ const App: React.FC = () => {
                 <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
                   {[
                     { label: 'Global Nodes', value: '1,240+', icon: <Globe className="w-5 h-5 text-blue-500" /> },
-                    { label: 'AI Models Forged', value: '45k+', icon: <Cpu className="w-5 h-5 text-purple-500" /> },
+                    { label: 'AI Models Forged', value: '45k+', icon: <Zap className="w-5 h-5 text-purple-500" /> },
                     { label: 'Community Members', value: '2.4M', icon: <Users className="w-5 h-5 text-green-500" /> },
-                    { label: 'Platform Uptime', value: '99.9%', icon: <Zap className="w-5 h-5 text-yellow-500" /> }
+                    { label: 'Platform Uptime', value: '99.9%', icon: <Rocket className="w-5 h-5 text-yellow-500" /> }
                   ].map((stat, i) => (
                     <div key={i} className="text-center reveal-on-scroll">
                       <div className="flex justify-center mb-4 opacity-50">{stat.icon}</div>
@@ -200,8 +202,11 @@ const App: React.FC = () => {
                <div className="grid lg:grid-cols-2 gap-20 items-center">
                   <div>
                     <h1 className="text-5xl md:text-7xl font-display font-bold mb-8">About <span className="shimmer-text">WAF</span></h1>
-                    <p className="text-slate-400 text-lg font-light leading-relaxed">
-                      World AI Force is a decentralized global intelligence ecosystem. We believe the power of AI should belong to the people, not just a handful of corporations. Our PODORE platform represents the culmination of decentralized development, designed for the "AI for Good" global movement.
+                    <p className="text-slate-400 text-lg font-light leading-relaxed mb-6">
+                      World AI Force is a decentralized global intelligence ecosystem. We believe the power of AI should belong to the people, not just a handful of corporations.
+                    </p>
+                    <p className="text-slate-500 text-base font-light leading-relaxed">
+                      Our PODORE platform represents the culmination of decentralized development, designed for the "AI for Good" global movement. Anything outside the scope of ethical, human-centric development is automatically filtered by our AI Global Ranking System.
                     </p>
                   </div>
                   <img src="https://images.unsplash.com/photo-1620712943543-bcc4628c6bb5?q=80&w=2000" className="rounded-[4rem] border border-white/10 shadow-3xl" alt="WAF Tech" />
@@ -220,7 +225,7 @@ const App: React.FC = () => {
                      <p className="text-blue-500 font-black tracking-widest uppercase">+1-240-813-0308</p>
                   </div>
                   <div className="flex justify-center gap-4">
-                     <button className="px-12 py-5 bg-blue-600 rounded-full font-black uppercase text-xs tracking-widest">Connect Hub</button>
+                     <button className="px-12 py-5 bg-blue-600 rounded-full font-black uppercase text-xs tracking-widest hover:bg-blue-500 transition-all">Establish Link</button>
                   </div>
                </div>
             </div>
@@ -247,32 +252,32 @@ const App: React.FC = () => {
 
                   <section className="space-y-6">
                     <h2 className="text-2xl font-bold text-blue-400">1. Information We Collect</h2>
-                    <h3 className="font-bold text-white">1.1 Personal Information Provided by You</h3>
-                    <p>We may collect: Full name, Email address, Phone number, Password (encrypted), Profile information, Developer details, Payment information.</p>
-                    <h3 className="font-bold text-white">1.2 Automatically Collected Information</h3>
-                    <p>Device info, IP address, Usage patterns, Cookies, Activity within spaces, Error logs.</p>
+                    <h3 className="font-bold text-white uppercase text-xs tracking-widest">1.1 Personal Information Provided by You</h3>
+                    <p className="text-sm">We may collect: Full name, Email address, Phone number, Password (encrypted), Profile information, Developer details, Payment information.</p>
+                    <h3 className="font-bold text-white uppercase text-xs tracking-widest">1.2 Automatically Collected Information</h3>
+                    <p className="text-sm">Device info, IP address, Usage patterns, Cookies, Activity within spaces, Error logs.</p>
                   </section>
 
                   <section className="space-y-6">
                     <h2 className="text-2xl font-bold text-blue-400">2. How We Use Your Information</h2>
-                    <p>We use your info to: Provide services, facilitate meetings, deliver AI tools, enable news syndication, improve platform performance, and ensure security/compliance.</p>
-                    <p className="text-blue-500 font-bold uppercase tracking-widest">We do not sell your personal data.</p>
+                    <p className="text-sm">We use your info to: Provide services, facilitate meetings, deliver AI tools, enable news syndication, improve platform performance, and ensure security/compliance.</p>
+                    <p className="text-blue-500 font-bold uppercase tracking-widest text-[10px]">We do not sell your personal data.</p>
                   </section>
 
                   <section className="space-y-6">
                     <h2 className="text-2xl font-bold text-blue-400">3. How We Share Information</h2>
-                    <p>Shared with: Trusted service providers (Payment, Hosting, Analytics), Community features (visible to participants), and Compliance/Legal requirements.</p>
+                    <p className="text-sm">Shared with: Trusted service providers (Payment, Hosting, Analytics), Community features (visible to participants), and Compliance/Legal requirements to prevent fraud and abuse.</p>
                   </section>
 
                   <section className="space-y-6">
                     <h2 className="text-2xl font-bold text-blue-400">8. How We Protect Your Information</h2>
-                    <p>Advanced security: Strong encryption, Multi-layered authentication, Secure server architecture, Access controls, and Continuous monitoring.</p>
+                    <p className="text-sm">Advanced security: Strong encryption, Multi-layered authentication, Secure server architecture, Access controls, and Continuous monitoring by our ethical safety framework.</p>
                   </section>
 
                   <section className="pt-12 border-t border-white/10 text-center space-y-4">
-                    <h2 className="text-2xl font-bold text-white">Contact Us</h2>
-                    <p>Email: <span className="text-blue-400 font-bold">privacy@worldaiforce.org</span></p>
-                    <p>Web: <span className="text-white font-bold">www.worldaiforce.org</span></p>
+                    <h2 className="text-2xl font-bold text-white">Legal Transmission Link</h2>
+                    <p className="text-sm">Email: <span className="text-blue-400 font-bold">privacy@worldaiforce.org</span></p>
+                    <p className="text-sm">Web: <span className="text-white font-bold">www.worldaiforce.org</span></p>
                   </section>
                 </div>
               </div>
@@ -313,7 +318,7 @@ const App: React.FC = () => {
                   <li><button onClick={() => navigate('home')} className="hover:text-blue-400 transition-colors">Home</button></li>
                   <li><button onClick={() => navigate('mission')} className="hover:text-blue-400 transition-colors">Mission</button></li>
                   <li><button onClick={() => navigate('forge')} className="hover:text-blue-400 transition-colors">Forge</button></li>
-                  <li><button onClick={() => navigate('privacy')} className="hover:text-blue-400 transition-colors">Privacy Policy</button></li>
+                  <li><button onClick={() => navigate('privacy')} className={`transition-colors ${currentPage === 'privacy' ? 'text-blue-400' : 'hover:text-blue-400'}`}>Privacy Policy</button></li>
                 </ul>
               </div>
               <div>

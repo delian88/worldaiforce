@@ -5,26 +5,13 @@ import {
   Image as ImageIcon, 
   FileText, 
   Video as VideoIcon, 
-  Wand2, 
   Loader2, 
   Sparkles, 
-  Download,
-  Key,
-  RefreshCw,
-  Info,
-  ShieldCheck,
-  Globe,
-  Plus,
-  Zap,
-  Layers,
-  Activity,
-  Maximize2,
-  Terminal,
-  Cpu,
-  Fingerprint,
-  Radio
+  Layers, 
+  Activity, 
+  Terminal, 
+  Radio 
 } from 'lucide-react';
-// Import the missing Logo component
 import Logo from './Logo.tsx';
 
 type ToolType = 'image' | 'content' | 'video';
@@ -81,7 +68,7 @@ const WafForge: React.FC = () => {
       const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
       const response = await ai.models.generateContent({
         model: 'gemini-2.5-flash-image',
-        contents: { parts: [{ text: `${prompt}, cinematic masterpiece, ultra-detailed, professional digital art` }] },
+        contents: { parts: [{ text: `${prompt}, cinematic masterpiece, ultra-detailed, professional digital art, 8k, realistic lighting` }] },
         config: { imageConfig: { aspectRatio } }
       });
       const part = response.candidates?.[0]?.content?.parts?.find(p => p.inlineData);
@@ -93,8 +80,14 @@ const WafForge: React.FC = () => {
         });
         setStatus('Vision forged.');
         addLog('> SYNTH_COMPLETE: VISION_ASSET');
-      } else setStatus('Vision node returned empty.');
-    } catch (error) { setStatus('Transmission Interrupted.'); } finally { setLoading(false); }
+      } else {
+        setStatus('Vision node returned empty.');
+        addLog('> ERROR: EMPTY_RESPONSE');
+      }
+    } catch (error) { 
+      setStatus('Transmission Interrupted.'); 
+      addLog('> CRITICAL_ERR: SYNAPTIC_FAIL');
+    } finally { setLoading(false); }
   };
 
   const forgeContent = async () => {
@@ -107,7 +100,7 @@ const WafForge: React.FC = () => {
       const response = await ai.models.generateContent({
         model: 'gemini-3-flash-preview',
         contents: { parts: [{ text: prompt }] },
-        config: { systemInstruction: "WAF Lexicon Node. High-impact output." }
+        config: { systemInstruction: "WAF Lexicon Node. High-impact, professional, concise, and inspiring output." }
       });
       setResult({ 
         type: 'content', 
@@ -116,11 +109,18 @@ const WafForge: React.FC = () => {
       });
       setStatus('Lexicon forged.');
       addLog('> SYNTH_COMPLETE: LEXICON_STREAM');
-    } catch (error) { setStatus('Transmission Interrupted.'); } finally { setLoading(false); }
+    } catch (error) { 
+      setStatus('Transmission Interrupted.'); 
+      addLog('> ERROR: LEXICON_OVERLOAD');
+    } finally { setLoading(false); }
   };
 
   const forgeVideo = async () => {
-    if (!hasPersonalKey) { setStatus('Sync required for Motion Synthesis.'); return; }
+    if (!hasPersonalKey) { 
+      setStatus('Sync required for Motion Synthesis.'); 
+      addLog('> ERR: KEY_NOT_FOUND');
+      return; 
+    }
     setLoading(true);
     setStatus('Motion Sequence Initiated...');
     addLog('> TEMPORAL_SEQUENCE_START');
@@ -142,7 +142,10 @@ const WafForge: React.FC = () => {
       setResult({ type: 'video', url: URL.createObjectURL(blob) });
       setStatus('Motion sequence forged.');
       addLog('> SYNTH_COMPLETE: MOTION_ASSET');
-    } catch (error) { setStatus('Motion Error.'); } finally { setLoading(false); }
+    } catch (error) { 
+      setStatus('Motion Error.'); 
+      addLog('> ERROR: TEMPORAL_BREAK');
+    } finally { setLoading(false); }
   };
 
   const handleForge = () => {
@@ -154,7 +157,7 @@ const WafForge: React.FC = () => {
   };
 
   return (
-    <div className="glass rounded-[4rem] border-white/10 p-1 relative shadow-3xl bg-slate-900/40 overflow-hidden">
+    <div className="glass rounded-[4rem] border-white/10 p-1 relative shadow-3xl bg-slate-900/40 overflow-hidden reveal-on-scroll active">
       {/* High-Tech Grid Overlays */}
       <div className="absolute inset-0 pointer-events-none opacity-[0.03]">
         <div className="absolute top-0 left-0 w-full h-full" style={{ backgroundImage: 'linear-gradient(90deg, #fff 1px, transparent 0), linear-gradient(#fff 1px, transparent 0)', backgroundSize: '40px 40px' }}></div>
@@ -200,7 +203,8 @@ const WafForge: React.FC = () => {
                {logMessages.map((log, i) => (
                  <div key={i} className={i === 0 ? 'text-blue-400' : ''}>{log}</div>
                ))}
-               {!logMessages.length && <div>> AWAITING_INPUT...</div>}
+               {/* Fixed syntax error by escaping the ">" character */}
+               {!logMessages.length && <div>&gt; AWAITING_INPUT...</div>}
             </div>
 
             <button 
@@ -211,33 +215,51 @@ const WafForge: React.FC = () => {
               {loading ? <Loader2 className="w-5 h-5 animate-spin" /> : <Sparkles className="w-5 h-5 group-hover:scale-125 transition-transform" />}
               {loading ? 'Synthesizing...' : 'Forging Asset'}
             </button>
+
+            {status && !loading && status.includes('Sync') && (
+              <button 
+                onClick={handleSyncGrid}
+                className="w-full flex items-center justify-center gap-2 text-[10px] font-black text-blue-400 uppercase tracking-widest hover:text-white transition-colors"
+              >
+                <Terminal className="w-4 h-4" /> Resolve Neural Link Status
+              </button>
+            )}
           </div>
 
           <div className="lg:w-1/2">
-            <div className="h-full min-h-[450px] bg-slate-950/50 rounded-[3rem] border border-white/10 flex items-center justify-center overflow-hidden relative shadow-2xl">
+            <div className="h-full min-h-[450px] bg-slate-950/50 rounded-[3rem] border border-white/10 flex items-center justify-center overflow-hidden relative shadow-2xl group">
+              {/* Scanline Animation Effect */}
+              <div className="absolute inset-0 pointer-events-none z-30 opacity-20 overflow-hidden">
+                <div className="w-full h-1 bg-blue-500/50 blur-sm animate-[scan_3s_linear_infinite]"></div>
+              </div>
+
               {!result && !loading && (
-                <div className="text-center opacity-10">
+                <div className="text-center opacity-10 group-hover:opacity-20 transition-opacity">
                   <Logo size={150} />
                   <p className="mt-6 font-black text-[10px] uppercase tracking-[0.8em]">Awaiting Synapse</p>
                 </div>
               )}
               
               {loading && (
-                <div className="text-center">
-                  <Loader2 className="w-12 h-12 animate-spin text-blue-500 mx-auto mb-4" />
+                <div className="text-center relative z-40">
+                  <Loader2 className="w-12 h-12 animate-spin text-blue-500 mx-auto mb-4 shadow-[0_0_15px_rgba(59,130,246,0.5)]" />
                   <p className="text-slate-500 text-[10px] font-black uppercase tracking-[0.5em] animate-pulse">Computing Matrix...</p>
                 </div>
               )}
               
               {result && !loading && (
-                <div className="w-full h-full animate-in fade-in zoom-in-95 relative p-6">
-                  {result.type === 'image' && <img src={result.url} className="w-full h-full object-contain rounded-2xl" />}
-                  {result.type === 'content' && <div className="p-10 text-slate-300 font-light leading-relaxed prose prose-invert max-w-none">{result.text}</div>}
-                  {result.type === 'video' && <video src={result.url} className="w-full h-full object-contain rounded-2xl" controls autoPlay loop />}
+                <div className="w-full h-full animate-in fade-in zoom-in-95 relative p-6 flex items-center justify-center">
+                  {result.type === 'image' && <img src={result.url} className="max-w-full max-h-[400px] object-contain rounded-2xl shadow-2xl border border-white/10" alt="Forged vision" />}
+                  {result.type === 'content' && (
+                    <div className="p-10 text-slate-300 font-light leading-relaxed prose prose-invert max-w-none overflow-y-auto max-h-[400px] custom-scrollbar selection:bg-blue-600/30">
+                      {result.text}
+                    </div>
+                  )}
+                  {result.type === 'video' && <video src={result.url} className="max-w-full max-h-[400px] object-contain rounded-2xl shadow-2xl border border-white/10" controls autoPlay loop />}
                   
                   <div className="absolute top-10 right-10 flex gap-2">
-                     <div className="px-4 py-2 bg-slate-900/80 rounded-full border border-white/10 text-[9px] font-black uppercase tracking-widest text-blue-400">Time: {result.time}</div>
-                     <button onClick={() => setResult(null)} className="p-2 bg-red-600/20 hover:bg-red-600/40 rounded-full text-red-500 transition-colors">
+                     <div className="px-4 py-2 bg-slate-900/90 backdrop-blur-md rounded-full border border-white/10 text-[9px] font-black uppercase tracking-widest text-blue-400">Node_ID: {Math.random().toString(36).substr(2, 6).toUpperCase()}</div>
+                     <button onClick={() => { setResult(null); addLog('> CACHE_CLEARED'); }} className="p-2 bg-red-600/20 hover:bg-red-600/40 rounded-full text-red-500 transition-colors">
                         <Radio className="w-3 h-3 rotate-45" />
                      </button>
                   </div>
@@ -247,6 +269,14 @@ const WafForge: React.FC = () => {
           </div>
         </div>
       </div>
+      <style>{`
+        @keyframes scan {
+          0% { top: -10%; }
+          100% { top: 110%; }
+        }
+        .custom-scrollbar::-webkit-scrollbar { width: 4px; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: rgba(59, 130, 246, 0.2); border-radius: 10px; }
+      `}</style>
     </div>
   );
 };
