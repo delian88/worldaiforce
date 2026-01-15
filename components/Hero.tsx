@@ -41,7 +41,7 @@ const Hero: React.FC<HeroProps> = ({ onNavigate }) => {
   }, [typeText]);
 
   return (
-    <section id="home" className="relative min-h-screen flex items-center pt-24 overflow-hidden bg-slate-950">
+    <section id="home" className="relative min-h-screen flex items-center pt-24 overflow-hidden bg-transparent">
       <div className="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none -z-10">
         <div className="absolute top-[-15%] left-[-5%] w-[600px] h-[600px] bg-blue-600/10 rounded-full blur-[140px] animate-pulse"></div>
         <div className="absolute bottom-[-15%] right-[-5%] w-[600px] h-[600px] bg-purple-600/10 rounded-full blur-[140px] animate-pulse" style={{ animationDelay: '2s' }}></div>
@@ -63,7 +63,7 @@ const Hero: React.FC<HeroProps> = ({ onNavigate }) => {
               ) : (
                 <>
                   <span className="text-white block">Global</span>
-                  <span className="italic text-blue-400 block lg:inline shimmer-text">AI Strategy</span>
+                  <span className="text-blue-400 block lg:inline shimmer-text">AI Strategy</span>
                   <span className="text-white block">Excellence</span>
                 </>
               )}
@@ -77,11 +77,11 @@ const Hero: React.FC<HeroProps> = ({ onNavigate }) => {
               </p>
 
               <div className="flex flex-col sm:flex-row gap-6">
-                <button onClick={() => onNavigate('forge')} className="px-12 py-5 bg-blue-600 text-white font-black uppercase tracking-widest rounded-full hover:bg-blue-500 transition-all flex items-center justify-center gap-3 group shadow-2xl shadow-blue-500/40 transform hover:-translate-y-1">
+                <button onClick={() => onNavigate('forge')} className="px-12 py-5 bg-blue-600 text-white font-black uppercase tracking-widest rounded-full hover:bg-blue-500 transition-all flex items-center justify-center gap-3 group shadow-2xl shadow-blue-500/40 transform hover:-translate-y-1 text-xs">
                   Access Forge
                   <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
                 </button>
-                <button onClick={() => onNavigate('mission')} className="px-12 py-5 glass text-white font-black uppercase tracking-widest rounded-full hover:bg-white/10 transition-all border border-white/10 backdrop-blur-2xl">
+                <button onClick={() => onNavigate('mission')} className="px-12 py-5 glass text-white font-black uppercase tracking-widest rounded-full hover:bg-white/10 transition-all border border-white/10 backdrop-blur-2xl text-xs">
                   Our Mission
                 </button>
               </div>

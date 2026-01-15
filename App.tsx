@@ -62,7 +62,7 @@ const App: React.FC = () => {
             <Hero onNavigate={navigate} />
             
             {/* Neural Forge Terminal */}
-            <section className="py-24 bg-slate-950/20 relative overflow-hidden">
+            <section className="py-24 bg-transparent relative overflow-hidden">
               <div className="absolute inset-0 bg-blue-600/5 -z-10 blur-[120px]"></div>
               <div className="max-w-7xl mx-auto px-4">
                  <div className="text-center mb-16 reveal-on-scroll">
@@ -140,7 +140,7 @@ const App: React.FC = () => {
                                        <Fingerprint className="w-12 h-12 text-blue-500" />
                                     </div>
                                     <div className="text-[10px] font-black text-blue-400 uppercase tracking-[0.6em] mb-3">Neural Core Verified</div>
-                                    <div className="text-3xl font-display font-bold text-white tracking-tighter uppercase italic">Global Node</div>
+                                    <div className="text-3xl font-display font-bold text-white tracking-tighter uppercase">Global Node</div>
                                  </div>
                                  <div className="w-full space-y-3 pt-12 border-t border-white/5">
                                     <div className="flex justify-between text-[8px] font-black text-slate-500 uppercase tracking-widest">
@@ -161,9 +161,9 @@ const App: React.FC = () => {
         return (
           <section className="pt-40 pb-32 min-h-screen bg-transparent">
             <div className="max-w-4xl mx-auto px-4 text-center">
-              <h1 className="text-6xl md:text-8xl font-display font-bold mb-12 tracking-tight">The <span className="shimmer-text italic">Mission</span></h1>
+              <h1 className="text-6xl md:text-8xl font-display font-bold mb-12 tracking-tight">The <span className="shimmer-text">Mission</span></h1>
               <div className="glass p-12 md:p-20 rounded-[4rem] border-white/10">
-                <p className="text-3xl md:text-4xl text-white font-display italic font-light leading-relaxed">
+                <p className="text-3xl md:text-4xl text-white font-display font-light leading-relaxed">
                   "To ensure equitable access to AI tools, education, economic opportunities, and global participation for underserved communities transforming AI into a force for inclusion, safety, and shared prosperity."
                 </p>
               </div>
@@ -171,16 +171,16 @@ const App: React.FC = () => {
           </section>
         );
       case 'forge':
-        return <div className="pt-40 pb-32"><WafForge /></div>;
+        return <div className="pt-40 pb-32 bg-transparent"><WafForge /></div>;
       case 'ecosystem':
         return <Ecosystem />;
       case 'about':
         return (
-          <section className="pt-40 pb-32">
+          <section className="pt-40 pb-32 bg-transparent">
             <div className="max-w-7xl mx-auto px-4">
                <div className="grid lg:grid-cols-2 gap-20 items-center">
                   <div className="reveal-on-scroll">
-                    <h1 className="text-6xl md:text-8xl font-display font-bold mb-8 tracking-tight">About <span className="shimmer-text italic">WAF</span></h1>
+                    <h1 className="text-6xl md:text-8xl font-display font-bold mb-8 tracking-tight">About <span className="shimmer-text">WAF</span></h1>
                     <p className="text-slate-400 text-lg font-light leading-relaxed mb-6">
                       World AI Force is a decentralized global intelligence ecosystem. We believe the power of AI should belong to the people, not just a handful of corporations.
                     </p>
@@ -192,7 +192,7 @@ const App: React.FC = () => {
                     <div className="absolute inset-0 bg-blue-500/20 rounded-[4rem] blur-[60px] animate-pulse -z-10"></div>
                     <img 
                       src="https://images.unsplash.com/photo-1677442136019-21780ecad995?auto=format&fit=crop&q=80&w=2000" 
-                      className="rounded-[4rem] border border-white/10 shadow-3xl animate-brand" 
+                      className="rounded-[4rem] border border-white/10 shadow-3xl" 
                       alt="WAF Neural Technology Visual" 
                     />
                   </div>
@@ -202,10 +202,10 @@ const App: React.FC = () => {
         );
       case 'contact':
         return (
-          <section className="pt-40 pb-32">
+          <section className="pt-40 pb-32 bg-transparent">
             <div className="max-w-5xl mx-auto px-4">
                <div className="glass p-12 md:p-20 rounded-[4rem] border-white/10 reveal-on-scroll active text-center">
-                  <h2 className="text-5xl font-display font-bold mb-8 italic">SYNAPTIC <span className="shimmer-text">CONTACT</span></h2>
+                  <h2 className="text-5xl font-display font-bold mb-8 uppercase">Synaptic <span className="shimmer-text">Contact</span></h2>
                   <div className="space-y-4 mb-12">
                      <p className="text-white font-display font-bold text-4xl">contact@worldaiforce.com</p>
                      <p className="text-blue-500 font-black tracking-[0.5em] uppercase text-sm">+1-240-813-0308</p>
@@ -219,13 +219,13 @@ const App: React.FC = () => {
         );
       case 'privacy':
         return (
-          <section className="pt-40 pb-32 min-h-screen">
+          <section className="pt-40 pb-32 min-h-screen bg-transparent">
             <div className="max-w-5xl mx-auto px-6">
               <div className="text-center mb-16">
                  <div className="inline-flex items-center gap-3 px-5 py-2 rounded-full glass border-white/10 text-[11px] font-black uppercase tracking-[0.4em] text-blue-400 mb-6">
                     <Lock className="w-4 h-4" /> Legal Trust Framework
                  </div>
-                 <h1 className="text-6xl md:text-8xl font-display font-bold mb-8 tracking-tight">World AI Force™ <br/><span className="shimmer-text italic">Privacy Policy</span></h1>
+                 <h1 className="text-6xl md:text-8xl font-display font-bold mb-8 tracking-tight">World AI Force™ <br/><span className="shimmer-text">Privacy Policy</span></h1>
                  <p className="text-slate-500 text-xs font-black uppercase tracking-widest mb-12">Effective Date: October 2024</p>
               </div>
 
@@ -237,7 +237,7 @@ const App: React.FC = () => {
                   </section>
 
                   <section className="space-y-6">
-                    <h2 className="text-3xl font-display font-bold text-blue-400 italic">1. Information We Collect</h2>
+                    <h2 className="text-3xl font-display font-bold text-blue-400">1. Information We Collect</h2>
                     <h3 className="font-bold text-white uppercase text-xs tracking-widest">1.1 Personal Information Provided by You</h3>
                     <p className="text-sm">We may collect: Full name, Email address, Phone number, Password (encrypted), Profile information, Developer details, Payment information.</p>
                     <h3 className="font-bold text-white uppercase text-xs tracking-widest">1.2 Automatically Collected Information</h3>
@@ -252,7 +252,7 @@ const App: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen relative animate-in fade-in duration-1000">
+    <div className="min-h-screen relative animate-in fade-in duration-1000 bg-transparent">
       <Navbar onNavigate={navigate} currentPage={currentPage} />
       <main>{renderPage()}</main>
 

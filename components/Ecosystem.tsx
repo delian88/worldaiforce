@@ -1,11 +1,10 @@
-
 import React from 'react';
 import { ECOSYSTEM_TOOLS } from '../constants.tsx';
 import * as Icons from 'lucide-react';
 
 const Ecosystem: React.FC = () => {
   return (
-    <section id="ecosystem" className="py-32 bg-slate-950">
+    <section id="ecosystem" className="py-32 bg-transparent">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-20">
           <span className="text-blue-500 text-[10px] font-black uppercase tracking-[0.6em] mb-4 block">Unified Framework</span>

@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Menu, X, ArrowUpRight } from 'lucide-react';
 import Logo from './Logo.tsx';
@@ -32,7 +31,7 @@ const Navbar: React.FC<NavbarProps> = ({ onNavigate, currentPage }) => {
             onClick={() => onNavigate('home')}
           >
             <Logo size={52} />
-            <span className="font-display font-bold text-xl tracking-widest hidden sm:inline-block transition-colors group-hover:text-blue-400">
+            <span className="font-display font-bold text-xl tracking-widest hidden sm:inline-block transition-colors group-hover:text-blue-400 uppercase">
               WORLD <span className="shimmer-text">AI</span> FORCE
             </span>
           </div>
