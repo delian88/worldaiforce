@@ -112,7 +112,7 @@ const App: React.FC = () => {
                                  { icon: <Dna />, name: "Digital LAB", desc: "Investment" },
                                  { icon: <ShoppingBag />, name: "Market", desc: "AI Products" },
                                  { icon: <MessageSquare />, name: "Forum", desc: "Global Topics" },
-                                 { icon: <BarChart3 />, name: "Ad-Manager", desc: "Campaigns" },
+                                 { icon: <BarChart3 />, name: "BarChart3", desc: "Ad-Manager" },
                                  { icon: <Rocket />, name: "Boosting", desc: "Go Viral" },
                                  { icon: <Layers />, name: "Circles", desc: "Pro Groups" },
                                  { icon: <GraduationCap />, name: "Courses", desc: "Education" }
@@ -310,7 +310,7 @@ const App: React.FC = () => {
                 </span>
               </div>
               <p className="text-slate-400 leading-relaxed mb-6 font-light">
-                Democratizing intelligence through an ethical, decentralized framework. Ensuring global participation for all underserved communities.
+                Democratizing Ai intelligence through an ethical, decentralized framework. Ensuring global participation for all underserved communities.
               </p>
               <div className="space-y-2 mb-6 text-sm text-slate-500">
                 <p className="flex items-center gap-2"><Phone className="w-4 h-4" /> +1-240-813-0308</p>

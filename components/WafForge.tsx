@@ -29,6 +29,9 @@ const WafForge: React.FC = () => {
 
   useEffect(() => {
     checkKeyStatus();
+    if (!process.env.API_KEY) {
+      addLog('> WARN: API_KEY_NOT_FOUND_IN_ENV');
+    }
   }, []);
 
   const addLog = (msg: string) => {
@@ -65,12 +68,17 @@ const WafForge: React.FC = () => {
     addLog('> INITIATING_VISION_FORGE');
     const start = Date.now();
     try {
+      if (!process.env.API_KEY) throw new Error("API Key Missing");
+      
       const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
       const response = await ai.models.generateContent({
         model: 'gemini-2.5-flash-image',
-        contents: { parts: [{ text: `${prompt}, cinematic masterpiece, ultra-detailed, professional digital art, 8k, realistic lighting` }] },
-        config: { imageConfig: { aspectRatio } }
+        contents: [{ parts: [{ text: `${prompt}, cinematic, masterpiece, highly detailed, 8k resolution` }] }],
+        config: { 
+          imageConfig: { aspectRatio } 
+        }
       });
+
       const part = response.candidates?.[0]?.content?.parts?.find(p => p.inlineData);
       if (part?.inlineData) {
         setResult({ 
@@ -81,12 +89,14 @@ const WafForge: React.FC = () => {
         setStatus('Vision forged.');
         addLog('> SYNTH_COMPLETE: VISION_ASSET');
       } else {
-        setStatus('Vision node returned empty.');
-        addLog('> ERROR: EMPTY_RESPONSE');
+        setStatus('Vision node returned text or empty.');
+        addLog('> ERROR: NO_IMAGE_DATA');
+        console.warn("API Response did not contain an image:", response);
       }
-    } catch (error) { 
+    } catch (error: any) { 
+      console.error("Forge Image Error:", error);
       setStatus('Transmission Interrupted.'); 
-      addLog('> CRITICAL_ERR: SYNAPTIC_FAIL');
+      addLog(`> CRITICAL_ERR: ${error.message || 'SYNAPTIC_FAIL'}`);
     } finally { setLoading(false); }
   };
 
@@ -96,22 +106,31 @@ const WafForge: React.FC = () => {
     addLog('> PARSING_LEXICON_SYNAPSES');
     const start = Date.now();
     try {
+      if (!process.env.API_KEY) throw new Error("API Key Missing");
+
       const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
       const response = await ai.models.generateContent({
         model: 'gemini-3-flash-preview',
-        contents: { parts: [{ text: prompt }] },
-        config: { systemInstruction: "WAF Lexicon Node. High-impact, professional, concise, and inspiring output." }
+        contents: prompt,
+        config: { 
+          systemInstruction: "You are the WAF Lexicon Node. Provide high-impact, professional, concise, and inspiring content based on the prompt.",
+          temperature: 0.8
+        }
       });
-      setResult({ 
-        type: 'content', 
-        text: response.text,
-        time: `${((Date.now() - start) / 1000).toFixed(1)}s`
-      });
-      setStatus('Lexicon forged.');
-      addLog('> SYNTH_COMPLETE: LEXICON_STREAM');
-    } catch (error) { 
+      
+      if (response.text) {
+        setResult({ 
+          type: 'content', 
+          text: response.text,
+          time: `${((Date.now() - start) / 1000).toFixed(1)}s`
+        });
+        setStatus('Lexicon forged.');
+        addLog('> SYNTH_COMPLETE: LEXICON_STREAM');
+      }
+    } catch (error: any) { 
+      console.error("Forge Content Error:", error);
       setStatus('Transmission Interrupted.'); 
-      addLog('> ERROR: LEXICON_OVERLOAD');
+      addLog(`> ERROR: ${error.message || 'LEXICON_OVERLOAD'}`);
     } finally { setLoading(false); }
   };
 
@@ -125,26 +144,31 @@ const WafForge: React.FC = () => {
     setStatus('Motion Sequence Initiated...');
     addLog('> TEMPORAL_SEQUENCE_START');
     try {
+      if (!process.env.API_KEY) throw new Error("API Key Missing");
+
       const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
       let operation = await ai.models.generateVideos({
         model: 'veo-3.1-fast-generate-preview',
         prompt: prompt,
         config: { numberOfVideos: 1, resolution: '720p', aspectRatio: '16:9' }
       });
+      
       while (!operation.done) {
         await new Promise(r => setTimeout(r, 8000));
-        addLog(`> RENDERING_FRAME_SET: ${Math.floor(Math.random() * 99)}%`);
+        addLog(`> RENDERING_FRAME_SET: ${Math.floor(Math.random() * 20 + 10 * Math.random())}%...`);
         operation = await ai.operations.getVideosOperation({ operation: operation });
       }
+      
       const downloadLink = operation.response?.generatedVideos?.[0]?.video?.uri;
       const response = await fetch(`${downloadLink}&key=${process.env.API_KEY}`);
       const blob = await response.blob();
       setResult({ type: 'video', url: URL.createObjectURL(blob) });
       setStatus('Motion sequence forged.');
       addLog('> SYNTH_COMPLETE: MOTION_ASSET');
-    } catch (error) { 
+    } catch (error: any) { 
+      console.error("Forge Video Error:", error);
       setStatus('Motion Error.'); 
-      addLog('> ERROR: TEMPORAL_BREAK');
+      addLog(`> ERROR: ${error.message || 'TEMPORAL_BREAK'}`);
     } finally { setLoading(false); }
   };
 
@@ -203,7 +227,6 @@ const WafForge: React.FC = () => {
                {logMessages.map((log, i) => (
                  <div key={i} className={i === 0 ? 'text-blue-400' : ''}>{log}</div>
                ))}
-               {/* Fixed syntax error by escaping the ">" character */}
                {!logMessages.length && <div>&gt; AWAITING_INPUT...</div>}
             </div>
 
@@ -251,7 +274,7 @@ const WafForge: React.FC = () => {
                 <div className="w-full h-full animate-in fade-in zoom-in-95 relative p-6 flex items-center justify-center">
                   {result.type === 'image' && <img src={result.url} className="max-w-full max-h-[400px] object-contain rounded-2xl shadow-2xl border border-white/10" alt="Forged vision" />}
                   {result.type === 'content' && (
-                    <div className="p-10 text-slate-300 font-light leading-relaxed prose prose-invert max-w-none overflow-y-auto max-h-[400px] custom-scrollbar selection:bg-blue-600/30">
+                    <div className="p-10 text-slate-300 font-light leading-relaxed prose prose-invert max-w-none overflow-y-auto max-h-[400px] custom-scrollbar selection:bg-blue-600/30 whitespace-pre-wrap">
                       {result.text}
                     </div>
                   )}
