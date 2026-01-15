@@ -1,0 +1,17 @@
+# World AI Force - cPanel Configuration
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  RewriteBase /
+  
+  # Treat .tsx files as Javascript modules for the browser
+  AddType application/javascript .tsx
+
+  # Redirect all requests to index.html for SPA routing
+  RewriteRule ^index\.html$ - [L]
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond %{REQUEST_FILENAME} !-d
+  RewriteRule . /index.html [L]
+</IfModule>
+
+# Ensure directory listing is disabled for security
+Options -Indexes
