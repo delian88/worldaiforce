@@ -5,6 +5,12 @@ export interface EcosystemTool {
   description: string;
   icon: string;
   category: 'Research' | 'Education' | 'Community' | 'Development';
+  details?: {
+    fullTitle: string;
+    purpose: string;
+    functions: string[];
+    participants: string;
+  };
 }
 
 export interface ChatMessage {

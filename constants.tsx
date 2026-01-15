@@ -27,6 +27,24 @@ export const ECOSYSTEM_TOOLS: EcosystemTool[] = [
     category: 'Development'
   },
   {
+    id: 'waf-assembly',
+    name: 'WAF Assembly',
+    description: 'The governance, dialogue, and representation arm of the initiative.',
+    icon: 'Users',
+    category: 'Community',
+    details: {
+      fullTitle: "World AI Force Assembly",
+      purpose: "To serve as a global forum for AI stakeholders to deliberate, collaborate, and shape the future of AI policy, ethics, and implementation.",
+      functions: [
+        "Global and regional AI summits and assemblies",
+        "Policy dialogue and consensus-building",
+        "Ethical oversight and advisory councils",
+        "Stakeholder representation across sectors"
+      ],
+      participants: "The Assembly brings together technologists, governments, private sector leaders, civil society, educators, and youth voices to ensure inclusive AI decision-making."
+    }
+  },
+  {
     id: 'waf-academy',
     name: 'WAF Academy',
     description: 'Democratized AI education and global certification platform. Coming soon.',
