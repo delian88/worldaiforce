@@ -61,26 +61,6 @@ const App: React.FC = () => {
           <>
             <Hero onNavigate={navigate} />
             
-            {/* Neural Forge Terminal */}
-            <section className="py-24 bg-transparent relative overflow-hidden">
-              <div className="absolute inset-0 bg-blue-600/5 -z-10 blur-[120px]"></div>
-              <div className="max-w-7xl mx-auto px-4">
-                 <div className="text-center mb-16 reveal-on-scroll">
-                    <div className="inline-flex items-center gap-2 px-4 py-1 rounded-full bg-blue-500/10 border border-blue-500/20 text-blue-400 text-[10px] font-black uppercase tracking-widest mb-6">
-                      <Zap className="w-3 h-3" /> System Status: Online
-                    </div>
-                    <h2 className="text-5xl md:text-7xl font-display font-bold mb-4 tracking-tight">Neural <span className="shimmer-text">Forge</span> Terminal</h2>
-                    <p className="text-slate-500 max-w-2xl mx-auto font-light leading-relaxed">
-                      Instant synaptic access to the WAF generation engine. Envision visuals, synthesize lexicon, and initiate motion sequences directly from the global hub.
-                    </p>
-                 </div>
-                 
-                 <div className="reveal-on-scroll">
-                    <WafForge />
-                 </div>
-              </div>
-            </section>
-
             {/* PodOre REGISTRATION SECTION */}
             <section className="py-32 bg-transparent relative overflow-hidden">
                <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(59,130,246,0.1)_0%,transparent_70%)]"></div>
@@ -154,6 +134,26 @@ const App: React.FC = () => {
                      </div>
                   </div>
                </div>
+            </section>
+
+            {/* Neural Forge Terminal */}
+            <section className="py-24 bg-transparent relative overflow-hidden">
+              <div className="absolute inset-0 bg-blue-600/5 -z-10 blur-[120px]"></div>
+              <div className="max-w-7xl mx-auto px-4">
+                 <div className="text-center mb-16 reveal-on-scroll">
+                    <div className="inline-flex items-center gap-2 px-4 py-1 rounded-full bg-blue-500/10 border border-blue-500/20 text-blue-400 text-[10px] font-black uppercase tracking-widest mb-6">
+                      <Zap className="w-3 h-3" /> System Status: Online
+                    </div>
+                    <h2 className="text-5xl md:text-7xl font-display font-bold mb-4 tracking-tight">Neural <span className="shimmer-text">Forge</span> Terminal</h2>
+                    <p className="text-slate-500 max-w-2xl mx-auto font-light leading-relaxed">
+                      Instant synaptic access to the WAF generation engine. Envision visuals, synthesize lexicon, and initiate motion sequences directly from the global hub.
+                    </p>
+                 </div>
+                 
+                 <div className="reveal-on-scroll">
+                    <WafForge />
+                 </div>
+              </div>
             </section>
           </>
         );
