@@ -9,7 +9,7 @@ interface HeroProps {
 const Hero: React.FC<HeroProps> = ({ onNavigate }) => {
   const [displayText, setDisplayText] = useState('');
   const [isFinished, setIsFinished] = useState(false);
-  const fullText = "Global AI digital Integration for all";
+  const fullText = "Global AI Digital Integration for all";
   
   const typeText = useCallback(() => {
     let currentIdx = 0;
@@ -63,7 +63,7 @@ const Hero: React.FC<HeroProps> = ({ onNavigate }) => {
               ) : (
                 <>
                   <span className="text-white block">Global AI</span>
-                  <span className="text-blue-400 block lg:inline shimmer-text">digital Integration</span>
+                  <span className="text-blue-400 block lg:inline shimmer-text">Digital Integration</span>
                 </>
               )}
               <span className={`inline-block w-[6px] h-[0.85em] bg-blue-500 ml-3 align-middle shadow-[0_0_20px_rgba(59,130,246,0.8)] ${!isFinished ? 'animate-[blink_0.8s_infinite]' : 'opacity-0'}`}></span>

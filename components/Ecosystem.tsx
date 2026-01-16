@@ -1,14 +1,27 @@
-
 import React, { useState } from 'react';
 import { ECOSYSTEM_TOOLS } from '../constants.tsx';
 import { EcosystemTool } from '../types.ts';
 import * as Icons from 'lucide-react';
 import { X, CheckCircle2, Globe2 } from 'lucide-react';
 
-const Ecosystem: React.FC = () => {
+interface EcosystemProps {
+  onNavigate?: (page: any) => void;
+}
+
+const Ecosystem: React.FC<EcosystemProps> = ({ onNavigate }) => {
   const [selectedTool, setSelectedTool] = useState<EcosystemTool | null>(null);
 
   const closeModal = () => setSelectedTool(null);
+
+  const handleToolClick = (tool: EcosystemTool) => {
+    if (tool.id === 'house-of-ai' && onNavigate) {
+      onNavigate('house-of-ai');
+      return;
+    }
+    if (tool.details) {
+      setSelectedTool(tool);
+    }
+  };
 
   return (
     <section id="ecosystem" className="py-32 bg-transparent relative">
@@ -24,18 +37,19 @@ const Ecosystem: React.FC = () => {
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
           {ECOSYSTEM_TOOLS.map((tool, index) => {
             const IconComponent = (Icons as any)[tool.icon] || Icons.Cpu;
-            const isSpecial = tool.id === 'podore-core';
+            const isSpecial = tool.id === 'podore-core' || tool.id === 'house-of-ai';
             
             return (
               <div 
                 key={tool.id} 
-                onClick={() => tool.details && setSelectedTool(tool)}
+                onClick={() => handleToolClick(tool)}
                 className={`group p-10 rounded-[3rem] glass border-white/10 hover:border-blue-500/30 transition-all hover:translate-y-[-10px] shadow-lg flex flex-col h-full cursor-pointer
-                  ${isSpecial ? 'md:col-span-2 lg:col-span-1 bg-blue-600/5 border-blue-500/20' : ''}`}
+                  ${tool.id === 'podore-core' ? 'md:col-span-2 lg:col-span-1 bg-blue-600/5 border-blue-500/20' : ''}
+                  ${tool.id === 'house-of-ai' ? 'bg-purple-600/5 border-purple-500/20' : ''}`}
               >
                 <div className="flex justify-between items-start mb-10">
                   <div className={`w-16 h-16 rounded-2xl flex items-center justify-center transition-all duration-500
-                    ${isSpecial ? 'bg-blue-600 text-white shadow-3xl shadow-blue-500/40' : 'bg-blue-500/10 text-blue-400 group-hover:bg-blue-600 group-hover:text-white'}`}>
+                    ${tool.id === 'house-of-ai' ? 'bg-purple-600 text-white' : (isSpecial ? 'bg-blue-600 text-white shadow-3xl shadow-blue-500/40' : 'bg-blue-500/10 text-blue-400 group-hover:bg-blue-600 group-hover:text-white')}`}>
                     <IconComponent className="w-8 h-8" />
                   </div>
                   <span className="text-[40px] font-display font-bold text-white/5 group-hover:text-blue-500/10 transition-colors">
@@ -43,7 +57,7 @@ const Ecosystem: React.FC = () => {
                   </span>
                 </div>
                 
-                <h3 className="font-display text-2xl font-bold mb-4 group-hover:text-blue-400 transition-colors">
+                <h3 className={`font-display text-2xl font-bold mb-4 transition-colors ${tool.id === 'house-of-ai' ? 'text-purple-400' : 'group-hover:text-blue-400'}`}>
                   {tool.name}
                 </h3>
                 
@@ -55,8 +69,8 @@ const Ecosystem: React.FC = () => {
                   <div className="inline-block px-4 py-1.5 rounded-full bg-slate-900 border border-white/5 text-[9px] font-black text-slate-500 uppercase tracking-[0.2em]">
                     {tool.category}
                   </div>
-                  {tool.details && (
-                    <span className="text-[10px] font-black text-blue-400 uppercase tracking-widest flex items-center gap-2">
+                  {(tool.details || tool.id === 'house-of-ai') && (
+                    <span className={`text-[10px] font-black uppercase tracking-widest flex items-center gap-2 ${tool.id === 'house-of-ai' ? 'text-purple-400' : 'text-blue-400'}`}>
                        View Details <Icons.ChevronRight className="w-3 h-3" />
                     </span>
                   )}
