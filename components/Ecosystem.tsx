@@ -14,8 +14,8 @@ const Ecosystem: React.FC<EcosystemProps> = ({ onNavigate }) => {
   const closeModal = () => setSelectedTool(null);
 
   const handleToolClick = (tool: EcosystemTool) => {
-    if (tool.id === 'house-of-ai' && onNavigate) {
-      onNavigate('house-of-ai');
+    if ((tool.id === 'house-of-ai' || tool.id === 'creaitube') && onNavigate) {
+      onNavigate(tool.id);
       return;
     }
     if (tool.details) {
@@ -37,7 +37,7 @@ const Ecosystem: React.FC<EcosystemProps> = ({ onNavigate }) => {
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
           {ECOSYSTEM_TOOLS.map((tool, index) => {
             const IconComponent = (Icons as any)[tool.icon] || Icons.Cpu;
-            const isSpecial = tool.id === 'podore-core' || tool.id === 'house-of-ai';
+            const isSpecial = tool.id === 'podore-core' || tool.id === 'house-of-ai' || tool.id === 'creaitube';
             
             return (
               <div 
@@ -45,7 +45,8 @@ const Ecosystem: React.FC<EcosystemProps> = ({ onNavigate }) => {
                 onClick={() => handleToolClick(tool)}
                 className={`group p-10 rounded-[3rem] glass border-white/10 hover:border-blue-500/30 transition-all hover:translate-y-[-10px] shadow-lg flex flex-col h-full cursor-pointer
                   ${tool.id === 'podore-core' ? 'md:col-span-2 lg:col-span-1 bg-blue-600/5 border-blue-500/20' : ''}
-                  ${tool.id === 'house-of-ai' ? 'bg-purple-600/5 border-purple-500/20' : ''}`}
+                  ${tool.id === 'house-of-ai' ? 'bg-purple-600/5 border-purple-500/20' : ''}
+                  ${tool.id === 'creaitube' ? 'bg-blue-600/5 border-blue-500/20' : ''}`}
               >
                 <div className="flex justify-between items-start mb-10">
                   <div className={`w-16 h-16 rounded-2xl flex items-center justify-center transition-all duration-500
@@ -69,7 +70,7 @@ const Ecosystem: React.FC<EcosystemProps> = ({ onNavigate }) => {
                   <div className="inline-block px-4 py-1.5 rounded-full bg-slate-900 border border-white/5 text-[9px] font-black text-slate-500 uppercase tracking-[0.2em]">
                     {tool.category}
                   </div>
-                  {(tool.details || tool.id === 'house-of-ai') && (
+                  {(tool.details || tool.id === 'house-of-ai' || tool.id === 'creaitube') && (
                     <span className={`text-[10px] font-black uppercase tracking-widest flex items-center gap-2 ${tool.id === 'house-of-ai' ? 'text-purple-400' : 'text-blue-400'}`}>
                        View Details <Icons.ChevronRight className="w-3 h-3" />
                     </span>

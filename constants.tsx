@@ -14,13 +14,21 @@ import {
   Network,
   BarChart3,
   Landmark,
-  Home
+  Home,
+  Play
 } from 'lucide-react';
 import { EcosystemTool } from './types.ts';
 
 export const PODORE_LAUNCH_DATE = new Date('2026-01-25T00:00:00');
 
 export const ECOSYSTEM_TOOLS: EcosystemTool[] = [
+  {
+    id: 'creaitube',
+    name: 'CreAItube',
+    description: 'Decentralized AI video production and distribution network. Empowering creators with synthetic motion tools.',
+    icon: 'Play',
+    category: 'Development'
+  },
   {
     id: 'house-of-ai',
     name: 'HOUSE OF AI',
