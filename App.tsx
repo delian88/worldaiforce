@@ -181,8 +181,8 @@ const App: React.FC = () => {
                <div className="grid lg:grid-cols-2 gap-20 items-center">
                   <div className="reveal-on-scroll">
                     <h1 className="text-6xl md:text-8xl font-display font-bold mb-8 tracking-tight">About <span className="shimmer-text">WAF</span></h1>
-                    <p className="text-slate-400 text-lg font-light leading-relaxed mb-6">
-                      World AI Force is a decentralized global intelligence ecosystem. We believe the power of AI should belong to the people, not just a handful of corporations.
+                    <p className="text-slate-400 text-lg font-light leading-relaxed mb-8">
+                      World AI Force is a global digital ecosystem integrating innovation, education, economic inclusion, governance, and ethical AI into one platform designed to ensure that AI creates opportunity for everyone, everywhere.
                     </p>
                     <p className="text-slate-500 text-base font-light leading-relaxed">
                       Our PodOre platform represents the culmination of decentralized development, designed for the "AI for Good" global movement. Anything outside the scope of ethical, human-centric development is automatically filtered by our AI Global Ranking System.

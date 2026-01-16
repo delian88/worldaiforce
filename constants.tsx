@@ -12,7 +12,8 @@ import {
   Scale,
   Wand2,
   Network,
-  BarChart3
+  BarChart3,
+  Landmark
 } from 'lucide-react';
 import { EcosystemTool } from './types.ts';
 
@@ -28,9 +29,9 @@ export const ECOSYSTEM_TOOLS: EcosystemTool[] = [
   },
   {
     id: 'waf-assembly',
-    name: 'WAF Assembly',
+    name: 'World AI Force Assembly',
     description: 'The governance, dialogue, and representation arm of the initiative.',
-    icon: 'Users',
+    icon: 'Landmark',
     category: 'Community',
     details: {
       fullTitle: "World AI Force Assembly",
@@ -39,7 +40,7 @@ export const ECOSYSTEM_TOOLS: EcosystemTool[] = [
         "Global and regional AI summits and assemblies",
         "Policy dialogue and consensus-building",
         "Ethical oversight and advisory councils",
-        "Stakeholder representation across sectors"
+        "Stakeholder representation across technologists, governments, and civil society"
       ],
       participants: "The Assembly brings together technologists, governments, private sector leaders, civil society, educators, and youth voices to ensure inclusive AI decision-making."
     }
@@ -47,19 +48,19 @@ export const ECOSYSTEM_TOOLS: EcosystemTool[] = [
   {
     id: 'waf-wax',
     name: 'World AI Exchange (WAX)',
-    description: 'A secure, ethical, AI-powered stock market system for listing and trading PodOre AI assets.',
+    description: 'Secure, ethical AI-powered stock market for listing and trading PodOre AI assets.',
     icon: 'BarChart3',
     category: 'Research',
     details: {
       fullTitle: "World AI Exchange (WAX)",
-      purpose: "To transform innovation into opportunity by allowing AI products developed on World AI Force PodOre to be digitally listed, governed, and traded within a secure, ethical, AI-powered stock market system.",
+      purpose: "Transforms innovation into opportunity by allowing AI products developed on World AI Force PodOre to be digitally listed, governed, and traded within a secure, ethical, AI-powered stock market system designed for the future of global digital finance.",
       functions: [
         "Digital listing of AI products developed on PodOre",
-        "Governance and decentralized trading mechanisms",
-        "AI-powered market analysis and valuation",
-        "Secure, ethical digital finance infrastructure"
+        "Governed and decentralized asset trading",
+        "AI-powered predictive analytics for asset valuation",
+        "Ethical financial infrastructure for global digital assets"
       ],
-      participants: "Designed for global innovators, investors, and community members participating in the future of global digital finance."
+      participants: "Empowering innovators and investors globally to participate in a transparent and secure digital economy."
     }
   },
   {

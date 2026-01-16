@@ -71,9 +71,8 @@ const Hero: React.FC<HeroProps> = ({ onNavigate }) => {
             </h1>
 
             <div className={`transition-all duration-1000 delay-500 ${isFinished ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
-              <p className="text-slate-400 text-lg md:text-2xl leading-relaxed mb-12 max-w-2xl font-light">
-                World AI Force is building the infrastructure for a more equitable digital future. 
-                Universal intelligence is a basic right.
+              <p className="text-slate-400 text-lg md:text-xl leading-relaxed mb-12 max-w-2xl font-light">
+                World AI Force is a global digital ecosystem integrating innovation, education, economic inclusion, governance, and ethical AI into one platform designed to ensure that AI creates opportunity for everyone, everywhere.
               </p>
 
               <div className="flex flex-col sm:flex-row gap-6">
