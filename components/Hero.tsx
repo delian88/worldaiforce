@@ -52,7 +52,7 @@ const Hero: React.FC<HeroProps> = ({ onNavigate }) => {
           <div className="lg:w-3/5 text-left z-10 order-2 lg:order-1">
             <div className="inline-flex items-center gap-3 px-5 py-2 rounded-full glass border-white/10 text-[11px] font-black uppercase tracking-[0.4em] text-blue-400 mb-6">
               <ShieldCheck className="w-4 h-4 text-blue-500" />
-              <span>Universal Access Protocol</span>
+              <span>SHARED GLOBAL COLLABORATION</span>
             </div>
 
             <h1 className="font-display text-5xl md:text-7xl lg:text-8xl font-bold tracking-tight mb-8 leading-[1] min-h-[3.3em] md:min-h-[2.2em]">
