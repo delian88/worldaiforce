@@ -27,10 +27,10 @@ const Ecosystem: React.FC<EcosystemProps> = ({ onNavigate }) => {
     <section id="ecosystem" className="py-32 bg-transparent relative">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-20">
-          <span className="text-blue-500 text-[10px] font-black uppercase tracking-[0.6em] mb-4 block">Unified Framework</span>
+          <span className="text-blue-500 text-[10px] font-black uppercase tracking-[0.6em] mb-4 block">WAF GLOBAL ECOSYSTEM</span>
           <h2 className="font-display text-4xl md:text-7xl font-bold mb-6">Global <span className="shimmer-text">Ecosystem</span></h2>
           <p className="text-slate-400 max-w-2xl mx-auto font-light leading-relaxed">
-            Our multi-division architecture is designed to host the next generation of decentralized intelligence tools, empowering every community node.
+            A unified set of divisions designed to advance innovation, digital inclusion, workforce readiness, and responsible AI development worldwide.
           </p>
         </div>
 
@@ -117,7 +117,7 @@ const Ecosystem: React.FC<EcosystemProps> = ({ onNavigate }) => {
 
               <div className="grid md:grid-cols-2 gap-12">
                 <section className="space-y-6">
-                  <h4 className="text-xs font-black text-blue-500 uppercase tracking-[0.6em]">Primary Functions</h4>
+                  <h4 className="text-xs font-black text-blue-500 uppercase tracking-[0.6em]">{selectedTool.id === 'podore-core' ? 'System Features' : 'Primary Functions'}</h4>
                   <ul className="space-y-4">
                     {selectedTool.details.functions.map((func, i) => (
                       <li key={i} className="flex items-start gap-4 group">

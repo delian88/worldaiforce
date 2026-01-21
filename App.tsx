@@ -75,7 +75,7 @@ const App: React.FC = () => {
                               <div className="w-14 h-14 rounded-2xl bg-blue-600/20 border border-blue-500/30 flex items-center justify-center text-blue-400">
                                  <KeyRound className="w-7 h-7" />
                               </div>
-                              <span className="text-blue-500 text-[11px] font-black uppercase tracking-[0.7em]">PodOre GLOBAL NETWORK v2.0</span>
+                              <span className="text-blue-500 text-[11px] font-black uppercase tracking-[0.7em]">PodOre GLOBAL NETWORK v1.0</span>
                            </div>
                            
                            <h2 className="text-5xl md:text-8xl font-display font-bold mb-8 leading-[1] tracking-tighter">
@@ -126,7 +126,7 @@ const App: React.FC = () => {
                                  <div className="w-full space-y-3 pt-12 border-t border-white/5">
                                     <div className="flex justify-between text-[8px] font-black text-slate-500 uppercase tracking-widest">
                                        <span>Node: World-AI-Force-Mainnet</span>
-                                       <span>v2.0.1</span>
+                                       <span>v1.0.1</span>
                                     </div>
                                  </div>
                               </div>
@@ -136,6 +136,8 @@ const App: React.FC = () => {
                   </div>
                </div>
             </section>
+
+            <Ecosystem onNavigate={navigate} />
 
             {/* World AI Force Forge Terminal */}
             <section className="py-24 bg-transparent relative overflow-hidden">
@@ -162,9 +164,9 @@ const App: React.FC = () => {
         return (
           <section className="pt-40 pb-32 min-h-screen bg-transparent">
             <div className="max-w-4xl mx-auto px-4 text-center">
-              <h1 className="text-6xl md:text-8xl font-display font-bold mb-12 tracking-tight">The <span className="shimmer-text">Mission</span></h1>
-              <div className="glass p-12 md:p-20 rounded-[4rem] border-white/10">
-                <p className="text-3xl md:text-4xl text-white font-display font-light leading-relaxed">
+              <h1 className="text-6xl md:text-8xl font-display font-bold mb-12 tracking-tight uppercase">The <span className="shimmer-text">Mission</span></h1>
+              <div className="glass p-12 md:p-20 rounded-[4rem] border-white/10 reveal-on-scroll active">
+                <p className="text-3xl md:text-5xl text-white font-display font-bold leading-tight tracking-tight">
                   "To ensure equitable access to AI tools, education, economic opportunities, and global participation for underserved communities transforming AI into a force for inclusion, safety, and shared prosperity."
                 </p>
               </div>
@@ -226,23 +228,99 @@ const App: React.FC = () => {
                  <div className="inline-flex items-center gap-3 px-5 py-2 rounded-full glass border-white/10 text-[11px] font-black uppercase tracking-[0.4em] text-blue-400 mb-6">
                     <Lock className="w-4 h-4" /> Legal Trust Framework
                  </div>
-                 <h1 className="text-6xl md:text-8xl font-display font-bold mb-8 tracking-tight">World AI Force™ <br/><span className="shimmer-text">Privacy Policy</span></h1>
+                 <h1 className="text-6xl md:text-8xl font-display font-bold mb-8 tracking-tight uppercase">World AI Force™ <br/><span className="shimmer-text">Privacy Policy</span></h1>
                  <p className="text-slate-500 text-xs font-black uppercase tracking-widest mb-12">Effective Date: October 2024</p>
               </div>
 
               <div className="glass p-10 md:p-20 rounded-[4rem] border-white/10 font-light leading-relaxed text-slate-300">
-                <div className="max-w-4xl mx-auto space-y-12">
+                <div className="max-w-4xl mx-auto space-y-12 text-sm md:text-base">
                   <section className="space-y-6">
-                    <p className="text-lg leading-relaxed">World AI Force (“WAF,” “we,” “our,” or “us”) is committed to protecting your privacy and ensuring that your personal data is handled lawfully, transparently, and securely. This Privacy Policy explains how we collect, use, store, share, and protect your data when you sign up for or use our platform, including our digital boardrooms, developer tools, AI product marketplace, news syndication systems, and any related services.</p>
-                    <p className="font-bold text-white">By using World AI Force, you agree to the practices described in this Privacy Policy.</p>
+                    <p className="text-lg leading-relaxed text-slate-200">World AI Force (“WAF,” “we,” “our,” or “us”) is committed to protecting your privacy and ensuring that your personal data is handled lawfully, transparently, and securely. This Privacy Policy explains how we collect, use, store, share, and protect your data when you sign up for or use our platform, including our digital boardrooms, developer tools, AI product marketplace, news syndication systems, and any related services.</p>
+                    <p className="font-bold text-white border-l-4 border-blue-600 pl-6 py-2 bg-blue-600/5">By using World AI Force, you agree to the practices described in this Privacy Policy.</p>
+                  </section>
+
+                  <section className="space-y-8">
+                    <div className="space-y-4">
+                      <h2 className="text-3xl font-display font-bold text-blue-400 uppercase tracking-tight">1. Information We Collect</h2>
+                      <h3 className="font-bold text-white uppercase text-xs tracking-widest mt-6">1.1 Personal Information Provided by You</h3>
+                      <p>We may collect the following types of information when you sign up, create a profile, or use our services: Full name, Email address, Phone number (optional depending on region), Password (encrypted), Profile information (e.g., skills, portfolio links, organization), Developer or product details, Payment information (processed through third-party secure processors).</p>
+                    </div>
+
+                    <div className="space-y-4">
+                      <h3 className="font-bold text-white uppercase text-xs tracking-widest mt-6">1.2 Automatically Collected Information</h3>
+                      <p>When you interact with WAF, we automatically collect: Device information (browser, OS, device type), IP address and location approximation, Usage patterns (pages visited, time spent, interactions), Cookies and similar technologies, Activity within digital boardrooms or project spaces, Error logs and performance metrics.</p>
+                    </div>
+
+                    <div className="space-y-4">
+                      <h3 className="font-bold text-white uppercase text-xs tracking-widest mt-6">1.3 AI Product & Developer Data</h3>
+                      <p>For creators and developers, we may collect: Submitted products, Product metadata, Compliance documents, Evaluation data, Ranking and market analytics.</p>
+                    </div>
+
+                    <div className="space-y-4">
+                      <h3 className="font-bold text-white uppercase text-xs tracking-widest mt-6">1.4 Community Laissez-Passer Verification Data</h3>
+                      <p>If you apply for or use the World AI Force Community Laissez-Passer, we may collect: Identity verification documents, Professional verification details, Community reputation signals.</p>
+                    </div>
                   </section>
 
                   <section className="space-y-6">
-                    <h2 className="text-3xl font-display font-bold text-blue-400">1. Information We Collect</h2>
-                    <h3 className="font-bold text-white uppercase text-xs tracking-widest">1.1 Personal Information Provided by You</h3>
-                    <p className="text-sm">We may collect: Full name, Email address, Phone number, Password (encrypted), Profile information, Developer details, Payment information.</p>
-                    <h3 className="font-bold text-white uppercase text-xs tracking-widest">1.2 Automatically Collected Information</h3>
-                    <p className="text-sm">Device info, IP address, Usage patterns, Cookies, Activity within spaces, Error logs.</p>
+                    <h2 className="text-3xl font-display font-bold text-blue-400 uppercase tracking-tight">2. How We Use Your Information</h2>
+                    <p>We use your information to provide and improve services, facilitate digital boardroom meetings, provide AI-powered tools, deliver product evaluations, enable news syndication, and for security, trust, and compliance purposes.</p>
+                    <p className="font-bold text-white uppercase text-[10px] tracking-widest">We do not sell your personal data.</p>
+                  </section>
+
+                  <section className="space-y-6">
+                    <h2 className="text-3xl font-display font-bold text-blue-400 uppercase tracking-tight">3. How We Share Information</h2>
+                    <p>We only share information with trusted service providers, within community features, for compliance and legal requirements, or with your explicit consent.</p>
+                  </section>
+
+                  <section className="space-y-6">
+                    <h2 className="text-3xl font-display font-bold text-blue-400 uppercase tracking-tight">4. Cookies and Tracking</h2>
+                    <p>WAF uses cookies and similar technologies to maintain login sessions, personalize the platform, improve security, and provide analytics. You can manage cookie preferences in your browser settings.</p>
+                  </section>
+
+                  <section className="space-y-6">
+                    <h2 className="text-3xl font-display font-bold text-blue-400 uppercase tracking-tight">5. Data Retention</h2>
+                    <p>We retain personal data only as long as necessary for account functionality, legal compliance, security obligations, and integrity of product evaluation and ranking systems. You may request deletion at any time (unless restricted by law or security policies).</p>
+                  </section>
+
+                  <section className="space-y-6">
+                    <h2 className="text-3xl font-display font-bold text-blue-400 uppercase tracking-tight">6. Your Rights</h2>
+                    <p>Depending on your region (GDPR, CCPA, global data rights), you may: Access your data, Correct your data, Delete your data, Request data portability, Restrict or object to processing, Withdraw consent.</p>
+                    <p className="font-bold text-white">To exercise these rights, contact: privacy@worldaiforce.org</p>
+                  </section>
+
+                  <section className="space-y-6">
+                    <h2 className="text-3xl font-display font-bold text-blue-400 uppercase tracking-tight">7. Children’s Privacy</h2>
+                    <p>WAF is not intended for individuals under the age of 16. We do not knowingly collect children’s data.</p>
+                  </section>
+
+                  <section className="space-y-6">
+                    <h2 className="text-3xl font-display font-bold text-blue-400 uppercase tracking-tight">8. How We Protect Your Information</h2>
+                    <p>We use advanced security systems including strong encryption, multi-layered authentication, secure server architecture, access controls, and continuous monitoring.</p>
+                  </section>
+
+                  <section className="space-y-6">
+                    <h2 className="text-3xl font-display font-bold text-blue-400 uppercase tracking-tight">9. International Users</h2>
+                    <p>Your data may be stored or processed in multiple countries with strong privacy protections. We ensure cross-border transfers comply with international law.</p>
+                  </section>
+
+                  <section className="space-y-6">
+                    <h2 className="text-3xl font-display font-bold text-blue-400 uppercase tracking-tight">10. Changes to This Privacy Policy</h2>
+                    <p>We may update this Privacy Policy as our platform evolves. Users will be notified of significant changes.</p>
+                  </section>
+
+                  <section className="space-y-6 pt-12 border-t border-white/5">
+                    <h2 className="text-3xl font-display font-bold text-white uppercase tracking-tight">11. Contact Us</h2>
+                    <div className="flex flex-col md:flex-row gap-10">
+                      <div>
+                        <p className="text-blue-500 font-black uppercase text-[10px] tracking-[0.4em] mb-2">Email Synapse</p>
+                        <p className="text-xl font-bold">privacy@worldaiforce.org</p>
+                      </div>
+                      <div>
+                        <p className="text-blue-500 font-black uppercase text-[10px] tracking-[0.4em] mb-2">Global Web</p>
+                        <p className="text-xl font-bold">www.worldaiforce.org</p>
+                      </div>
+                    </div>
                   </section>
                 </div>
               </div>

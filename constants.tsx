@@ -14,15 +14,27 @@ export const PODORE_LAUNCH_DATE = new Date('2026-01-25T00:00:00');
 export const ECOSYSTEM_TOOLS: EcosystemTool[] = [
   {
     id: 'podore-core',
-    name: 'PodOre',
-    description: 'The master digital hub and unified platform. Launching Jan 25, 2026. The neural center for the World AI Force.',
+    name: 'Global Digital Hub & Platform',
+    description: 'A secure, multilingual, cloud-based ecosystem hosting all WAF programs and communities.',
     icon: 'Network',
-    category: 'Community'
+    category: 'Community',
+    details: {
+      fullTitle: "Global Digital Hub & Platform",
+      purpose: "A secure, multilingual, cloud-based ecosystem hosting all WAF programs and communities.",
+      functions: [
+        "Multi-language interface",
+        "Strong cybersecurity and data protection",
+        "Accessibility-first design",
+        "Built-in AI assistant",
+        "Scalable for governments, enterprises & developers"
+      ],
+      participants: "Designed to host all WAF programs and global communities with maximum accessibility and security."
+    }
   },
   {
     id: 'waf-assembly',
     name: 'WAF Assembly',
-    description: 'The governance, dialogue, and representation arm of the initiative. Shaping global AI policy.',
+    description: 'The governance, dialogue, and representation arm of the initiative. Shaping global AI policy through inclusive stakeholder deliberation.',
     icon: 'Landmark',
     category: 'Community',
     details: {
@@ -40,7 +52,7 @@ export const ECOSYSTEM_TOOLS: EcosystemTool[] = [
   {
     id: 'waf-forge',
     name: 'Forge',
-    description: 'Real-time World AI Force synthesis engine for image, video, content, and audio generation.',
+    description: 'Real-time World AI Force synthesis engine for image, video, content, and audio generation. Synaptic access to WAF intelligence.',
     icon: 'Wand2',
     category: 'Development'
   }
