@@ -11,17 +11,29 @@ import {
   Terminal, 
   Radio,
   Volume2,
-  Play as PlayIcon
+  Play as PlayIcon,
+  Film,
+  Camera,
+  Ghost
 } from 'lucide-react';
 import Logo from './Logo.tsx';
 
 type ToolType = 'image' | 'content' | 'video' | 'audio';
 type AspectRatio = '1:1' | '16:9' | '9:16' | '4:3' | '3:4';
+type VideoStyle = 'none' | 'cinematic' | 'documentary' | 'animation';
+
+const VIDEO_STYLES = [
+  { id: 'none', label: 'Standard', icon: <Activity className="w-3 h-3" />, prompt: '' },
+  { id: 'cinematic', label: 'Cinematic', icon: <Film className="w-3 h-3" />, prompt: 'cinematic style, high production value, dramatic lighting, 8k, master-quality cinematography' },
+  { id: 'documentary', label: 'Documentary', icon: <Camera className="w-3 h-3" />, prompt: 'documentary style, raw footage, handheld camera, realistic, natural lighting' },
+  { id: 'animation', label: 'Animation', icon: <Ghost className="w-3 h-3" />, prompt: '3d animation style, vibrant colors, stylized characters, high quality render, unreal engine 5 style' }
+];
 
 const WafForge: React.FC = () => {
   const [activeTool, setActiveTool] = useState<ToolType>('image');
   const [prompt, setPrompt] = useState('');
   const [aspectRatio, setAspectRatio] = useState<AspectRatio>('1:1');
+  const [videoStyle, setVideoStyle] = useState<VideoStyle>('none');
   const [loading, setLoading] = useState(false);
   const [result, setResult] = useState<{ type: ToolType; url?: string; text?: string; time?: string; audioData?: string } | null>(null);
   const [status, setStatus] = useState('');
@@ -236,9 +248,13 @@ const WafForge: React.FC = () => {
       if (!process.env.API_KEY) throw new Error("API Key Missing");
 
       const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
+      
+      const selectedStyle = VIDEO_STYLES.find(s => s.id === videoStyle);
+      const finalPrompt = selectedStyle?.prompt ? `${prompt}. ${selectedStyle.prompt}` : prompt;
+
       let operation = await ai.models.generateVideos({
         model: 'veo-3.1-fast-generate-preview',
-        prompt: prompt,
+        prompt: finalPrompt,
         config: { numberOfVideos: 1, resolution: '720p', aspectRatio: '16:9' }
       });
       
@@ -311,6 +327,27 @@ const WafForge: React.FC = () => {
                  <span className="text-[8px] font-black text-blue-500 uppercase tracking-widest">Signal: Established</span>
               </div>
             </div>
+
+            {activeTool === 'video' && (
+              <div className="space-y-4 animate-in fade-in slide-in-from-top-2 duration-500">
+                <p className="text-[10px] font-black uppercase tracking-[0.5em] text-slate-500 ml-4">Temporal Presets</p>
+                <div className="flex flex-wrap gap-3">
+                  {VIDEO_STYLES.map((style) => (
+                    <button
+                      key={style.id}
+                      onClick={() => setVideoStyle(style.id as VideoStyle)}
+                      className={`flex items-center gap-2 px-6 py-3 rounded-full text-[10px] font-black uppercase tracking-widest transition-all border
+                        ${videoStyle === style.id 
+                          ? 'bg-blue-600/20 border-blue-500 text-blue-400 shadow-lg shadow-blue-500/10' 
+                          : 'bg-white/5 border-white/10 text-slate-500 hover:border-white/20'}`}
+                    >
+                      {style.icon}
+                      {style.label}
+                    </button>
+                  ))}
+                </div>
+              </div>
+            )}
 
             <div className="p-6 rounded-3xl bg-slate-950 border border-white/5 font-mono text-[9px] text-slate-500 h-32 overflow-hidden flex flex-col justify-end">
                {logMessages.map((log, i) => (
