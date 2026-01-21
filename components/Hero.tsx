@@ -9,6 +9,7 @@ interface HeroProps {
 const Hero: React.FC<HeroProps> = ({ onNavigate }) => {
   const [displayText, setDisplayText] = useState('');
   const [isFinished, setIsFinished] = useState(false);
+  const [logoSize, setLogoSize] = useState(window.innerWidth < 768 ? 280 : 420);
   const fullText = "Global AI Digital Integration for all";
   
   const typeText = useCallback(() => {
@@ -37,7 +38,16 @@ const Hero: React.FC<HeroProps> = ({ onNavigate }) => {
 
   useEffect(() => {
     const cleanup = typeText();
-    return cleanup;
+    
+    const handleResize = () => {
+      setLogoSize(window.innerWidth < 768 ? 280 : 420);
+    };
+    
+    window.addEventListener('resize', handleResize);
+    return () => {
+      cleanup();
+      window.removeEventListener('resize', handleResize);
+    };
   }, [typeText]);
 
   return (
@@ -91,7 +101,7 @@ const Hero: React.FC<HeroProps> = ({ onNavigate }) => {
               <div className="absolute inset-0 bg-blue-500/10 rounded-full blur-[120px] group-hover:bg-blue-500/20 transition-all duration-1000 animate-pulse"></div>
               <div className="absolute inset-[-80px] rounded-full border border-dashed border-white/5 animate-[spin_60s_linear_infinite] opacity-30"></div>
               <div className="relative z-10">
-                <Logo size={420} className="drop-shadow-[0_0_60px_rgba(59,130,246,0.4)]" />
+                <Logo size={logoSize} className="drop-shadow-[0_0_60px_rgba(59,130,246,0.4)]" />
               </div>
             </div>
           </div>

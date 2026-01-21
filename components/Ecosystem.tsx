@@ -110,7 +110,7 @@ const Ecosystem: React.FC<EcosystemProps> = ({ onNavigate }) => {
             <div className="flex-1 overflow-y-auto p-8 md:p-12 space-y-12">
               <section className="space-y-4">
                 <h4 className="text-xs font-black text-blue-500 uppercase tracking-[0.6em]">Core Purpose</h4>
-                <p className="text-2xl md:text-3xl font-display italic text-slate-200 leading-relaxed">
+                <p className="text-2xl md:text-3xl font-display font-semibold text-slate-200 leading-relaxed">
                   "{selectedTool.details.purpose}"
                 </p>
               </section>

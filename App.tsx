@@ -210,7 +210,7 @@ const App: React.FC = () => {
                <div className="glass p-12 md:p-20 rounded-[4rem] border-white/10 reveal-on-scroll active text-center">
                   <h2 className="text-5xl font-display font-bold mb-8 uppercase">Establishing <span className="shimmer-text">Contact</span></h2>
                   <div className="space-y-4 mb-12">
-                     <p className="text-white font-display font-bold text-4xl">contact@worldaiforce.com</p>
+                     <p className="text-white font-display font-bold text-2xl sm:text-3xl md:text-5xl break-all px-4">contact@worldaiforce.com</p>
                      <p className="text-blue-500 font-black tracking-[0.5em] uppercase text-sm">+1-240-813-0308</p>
                   </div>
                   <div className="flex justify-center gap-4">
@@ -380,7 +380,6 @@ const App: React.FC = () => {
               &copy; 2026 World AI Force. All rights reserved.
             </p>
             <div className="flex gap-8">
-              <button onClick={() => navigate('privacy')} className="text-slate-600 hover:text-white text-[10px] uppercase tracking-[0.3em]">Policy</button>
               <a href="#" className="text-slate-600 hover:text-white text-[10px] uppercase tracking-[0.3em]">Ethics</a>
             </div>
           </div>
