@@ -5,6 +5,7 @@ import Ecosystem from './components/Ecosystem.tsx';
 import WafForge from './components/WafForge.tsx';
 import WafAssistant from './components/WafAssistant.tsx';
 import LoadingScreen from './components/LoadingScreen.tsx';
+import ScrollToTop from './components/ScrollToTop.tsx';
 import Logo from './components/Logo.tsx';
 import { playWelcomeGreeting } from './services/voiceService.ts';
 import { 
@@ -49,6 +50,10 @@ const App: React.FC = () => {
 
   const openPodOre = () => {
     window.open('https://worldaiforce.org/', '_blank');
+  };
+
+  const handleEstablishLink = () => {
+    window.location.href = 'mailto:contact@worldaiforce.com?subject=WAF%20Synaptic%20Inquiry';
   };
 
   if (!appReady) {
@@ -208,13 +213,18 @@ const App: React.FC = () => {
           <section className="pt-40 pb-32 bg-transparent">
             <div className="max-w-5xl mx-auto px-4">
                <div className="glass p-12 md:p-20 rounded-[4rem] border-white/10 reveal-on-scroll active text-center">
-                  <h2 className="text-5xl font-display font-bold mb-8 uppercase">Establishing <span className="shimmer-text">Contact</span></h2>
+                  <h2 className="text-4xl md:text-5xl font-display font-bold mb-8 uppercase">Establishing <span className="shimmer-text">Contact</span></h2>
                   <div className="space-y-4 mb-12">
-                     <p className="text-white font-display font-bold text-2xl sm:text-3xl md:text-5xl break-all px-4">contact@worldaiforce.com</p>
-                     <p className="text-blue-500 font-black tracking-[0.5em] uppercase text-sm">+1-240-813-0308</p>
+                     <p className="text-white font-display font-bold text-xl sm:text-2xl md:text-3xl lg:text-5xl break-all px-4 tracking-tight">contact@worldaiforce.com</p>
+                     <p className="text-blue-500 font-black tracking-[0.5em] uppercase text-xs md:text-sm">+1-240-813-0308</p>
                   </div>
                   <div className="flex justify-center gap-4">
-                     <button className="px-12 py-5 bg-blue-600 rounded-full font-black uppercase text-xs tracking-widest hover:bg-blue-500 transition-all">Establish Link</button>
+                     <button 
+                        onClick={handleEstablishLink}
+                        className="px-12 py-5 bg-blue-600 rounded-full font-black uppercase text-xs tracking-widest hover:bg-blue-500 transition-all shadow-xl shadow-blue-500/20 active:scale-95"
+                     >
+                        Establish Link
+                     </button>
                   </div>
                </div>
             </div>
@@ -386,6 +396,7 @@ const App: React.FC = () => {
         </div>
       </footer>
       <WafAssistant />
+      <ScrollToTop />
     </div>
   );
 };
