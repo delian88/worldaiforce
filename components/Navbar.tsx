@@ -52,7 +52,7 @@ const Navbar: React.FC<NavbarProps> = ({ onNavigate, currentPage }) => {
                 onClick={handleJoinNetwork}
                 className="bg-blue-600 hover:bg-blue-500 text-white px-8 py-3 rounded-full text-sm font-black uppercase tracking-widest transition-all transform hover:scale-105 shadow-xl shadow-blue-500/20 flex items-center gap-2"
               >
-                Join Network <ArrowUpRight className="w-4 h-4" />
+                Join PodOre <ArrowUpRight className="w-4 h-4" />
               </button>
             </div>
           </div>
@@ -82,7 +82,7 @@ const Navbar: React.FC<NavbarProps> = ({ onNavigate, currentPage }) => {
             onClick={handleJoinNetwork}
             className="w-full bg-blue-600 text-white py-4 rounded-2xl font-black uppercase tracking-widest shadow-xl shadow-blue-500/10 flex justify-center items-center gap-2"
           >
-            Join Network <ArrowUpRight className="w-5 h-5" />
+            Join PodOre <ArrowUpRight className="w-5 h-5" />
           </button>
         </div>
       )}

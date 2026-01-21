@@ -121,7 +121,7 @@ const App: React.FC = () => {
                                        <Fingerprint className="w-12 h-12 text-blue-500" />
                                     </div>
                                     <div className="text-[10px] font-black text-blue-400 uppercase tracking-[0.6em] mb-3">World AI Force Core Verified</div>
-                                    <div className="text-3xl font-display font-bold text-white tracking-tighter uppercase">Global Node</div>
+                                    <div className="text-3xl font-display font-bold text-white tracking-tighter uppercase">Global Mesh</div>
                                  </div>
                                  <div className="w-full space-y-3 pt-12 border-t border-white/5">
                                     <div className="flex justify-between text-[8px] font-black text-slate-500 uppercase tracking-widest">
