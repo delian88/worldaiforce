@@ -278,7 +278,7 @@ const App: React.FC = () => {
             
             <div className="grid grid-cols-2 md:grid-cols-3 gap-12 md:gap-24">
               <div>
-                <h4 className="font-bold mb-6 text-white uppercase text-[10px] tracking-[0.4em]">Nodes</h4>
+                <h4 className="font-bold mb-6 text-white uppercase text-[10px] tracking-[0.4em]">Quick Links</h4>
                 <ul className="space-y-3 text-slate-500 text-sm">
                   <li><button onClick={() => navigate('home')} className="hover:text-blue-400 transition-colors">Home</button></li>
                   <li><button onClick={() => navigate('mission')} className="hover:text-blue-400 transition-colors">Mission</button></li>
@@ -287,7 +287,7 @@ const App: React.FC = () => {
                 </ul>
               </div>
               <div>
-                <h4 className="font-bold mb-6 text-white uppercase text-[10px] tracking-[0.4em]">Grid</h4>
+                <h4 className="font-bold mb-6 text-white uppercase text-[10px] tracking-[0.4em]">Social Handles</h4>
                 <ul className="space-y-3 text-slate-500 text-sm">
                   <li><a href="#" className="hover:text-blue-400 transition-colors">Twitter X</a></li>
                   <li><a href="#" className="hover:text-blue-400 transition-colors">LinkedIn</a></li>
