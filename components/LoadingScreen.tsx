@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import Logo from './Logo.tsx';
 import { Shield, Power, Loader2 } from 'lucide-react';
@@ -47,7 +46,7 @@ const LoadingScreen: React.FC<LoadingScreenProps> = ({ onComplete }) => {
       <div className="w-full max-w-sm text-center">
         <div className="flex items-center justify-center gap-3 mb-4">
           <Shield className="w-4 h-4 text-blue-500 animate-pulse" />
-          <span className="text-[10px] font-black uppercase tracking-[0.4em] text-blue-400">System Linkage</span>
+          <span className="text-[10px] font-black uppercase tracking-[0.4em] text-blue-400">World AI Force Linkage</span>
         </div>
         
         <h2 className="font-display text-2xl font-bold mb-8 tracking-tighter shimmer-text">
@@ -63,7 +62,7 @@ const LoadingScreen: React.FC<LoadingScreenProps> = ({ onComplete }) => {
               ></div>
             </div>
             <p className="text-[10px] text-slate-500 uppercase tracking-widest font-black">
-              Synthesizing Neural Pathways... {loadingProgress}%
+              Synthesizing World AI Force Pathways... {loadingProgress}%
             </p>
           </div>
         ) : (

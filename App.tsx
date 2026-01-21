@@ -120,12 +120,12 @@ const App: React.FC = () => {
                                        <div className="absolute inset-0 border-2 border-blue-500/20 rounded-full animate-ping"></div>
                                        <Fingerprint className="w-12 h-12 text-blue-500" />
                                     </div>
-                                    <div className="text-[10px] font-black text-blue-400 uppercase tracking-[0.6em] mb-3">Neural Core Verified</div>
+                                    <div className="text-[10px] font-black text-blue-400 uppercase tracking-[0.6em] mb-3">World AI Force Core Verified</div>
                                     <div className="text-3xl font-display font-bold text-white tracking-tighter uppercase">Global Node</div>
                                  </div>
                                  <div className="w-full space-y-3 pt-12 border-t border-white/5">
                                     <div className="flex justify-between text-[8px] font-black text-slate-500 uppercase tracking-widest">
-                                       <span>Node: PodOre-Mainnet</span>
+                                       <span>Node: World-AI-Force-Mainnet</span>
                                        <span>v2.0.1</span>
                                     </div>
                                  </div>
@@ -137,7 +137,7 @@ const App: React.FC = () => {
                </div>
             </section>
 
-            {/* Neural Forge Terminal */}
+            {/* World AI Force Forge Terminal */}
             <section className="py-24 bg-transparent relative overflow-hidden">
               <div className="absolute inset-0 bg-blue-600/5 -z-10 blur-[120px]"></div>
               <div className="max-w-7xl mx-auto px-4">
@@ -145,7 +145,7 @@ const App: React.FC = () => {
                     <div className="inline-flex items-center gap-2 px-4 py-1 rounded-full bg-blue-500/10 border border-blue-500/20 text-blue-400 text-[10px] font-black uppercase tracking-widest mb-6">
                       <Zap className="w-3 h-3" /> System Status: Online
                     </div>
-                    <h2 className="text-5xl md:text-7xl font-display font-bold mb-4 tracking-tight">Neural <span className="shimmer-text">Forge</span> Terminal</h2>
+                    <h2 className="text-5xl md:text-7xl font-display font-bold mb-4 tracking-tight">World AI Force <span className="shimmer-text">Forge</span> Terminal</h2>
                     <p className="text-slate-500 max-w-2xl mx-auto font-light leading-relaxed">
                       Instant synaptic access to the WAF generation engine. Envision visuals, synthesize lexicon, and initiate motion sequences directly from the global hub.
                     </p>
@@ -164,7 +164,7 @@ const App: React.FC = () => {
              <div className="max-w-7xl mx-auto px-6">
                 <div className="text-center mb-24 reveal-on-scroll">
                    <div className="inline-flex items-center gap-3 px-5 py-2 rounded-full bg-blue-600/10 border border-blue-500/20 text-[11px] font-black uppercase tracking-[0.4em] text-blue-400 mb-8">
-                      <Play className="w-4 h-4" /> Neural Motion Stream
+                      <Play className="w-4 h-4" /> World AI Force Motion Stream
                    </div>
                    <h1 className="text-6xl md:text-9xl font-display font-bold mb-6 tracking-tight uppercase">Cre<span className="shimmer-text">AI</span>tube</h1>
                    <p className="text-2xl md:text-3xl text-slate-400 font-display font-light mb-12">The Future of Decentralized Synthetic Media</p>
@@ -178,7 +178,7 @@ const App: React.FC = () => {
                       </div>
                       <h2 className="text-3xl font-display font-bold text-white mb-6">Autonomous Broadcasting</h2>
                       <p className="text-slate-400 leading-relaxed font-light">
-                         CreAItube leverages decentralized nodes to power AI-driven video synthesis, allowing creators to generate high-fidelity motion content directly from lexicon prompts. No massive server farms—just pure neural power.
+                         CreAItube leverages decentralized nodes to power World AI Force video synthesis, allowing creators to generate high-fidelity motion content directly from lexicon prompts. No massive server farms—just pure World AI Force power.
                       </p>
                    </div>
                    <div className="glass p-12 rounded-[4rem] border-white/10 reveal-on-scroll">
@@ -402,7 +402,7 @@ const App: React.FC = () => {
                       World AI Force is a global digital ecosystem integrating innovation, education, economic inclusion, governance, and ethical AI into one platform designed to ensure that AI creates opportunity for everyone, everywhere.
                     </p>
                     <p className="text-slate-500 text-base font-light leading-relaxed">
-                      Our PodOre platform represents the culmination of decentralized development, designed for the "AI for Good" global movement. Anything outside the scope of ethical, human-centric development is automatically filtered by our AI Global Ranking System.
+                      Our PodOre platform represents the culmination of decentralized development, designed for the "AI for Good" global movement. Anything outside the scope of ethical, human-centric development is automatically filtered by our World AI Force Global Ranking System.
                     </p>
                   </div>
                   <div className="relative reveal-on-scroll">
@@ -410,7 +410,7 @@ const App: React.FC = () => {
                     <img 
                       src="https://images.unsplash.com/photo-1677442136019-21780ecad995?auto=format&fit=crop&q=80&w=2000" 
                       className="rounded-[4rem] border border-white/10 shadow-3xl" 
-                      alt="WAF Neural Technology Visual" 
+                      alt="WAF Technology Visual" 
                     />
                   </div>
                </div>
@@ -422,7 +422,7 @@ const App: React.FC = () => {
           <section className="pt-40 pb-32 bg-transparent">
             <div className="max-w-5xl mx-auto px-4">
                <div className="glass p-12 md:p-20 rounded-[4rem] border-white/10 reveal-on-scroll active text-center">
-                  <h2 className="text-5xl font-display font-bold mb-8 uppercase">Synaptic <span className="shimmer-text">Contact</span></h2>
+                  <h2 className="text-5xl font-display font-bold mb-8 uppercase">Establishing <span className="shimmer-text">Contact</span></h2>
                   <div className="space-y-4 mb-12">
                      <p className="text-white font-display font-bold text-4xl">contact@worldaiforce.com</p>
                      <p className="text-blue-500 font-black tracking-[0.5em] uppercase text-sm">+1-240-813-0308</p>

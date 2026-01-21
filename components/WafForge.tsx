@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { GoogleGenAI } from "@google/genai";
 import { 
@@ -54,7 +53,7 @@ const WafForge: React.FC = () => {
         // @ts-ignore
         await window.aistudio.openSelectKey();
         setHasPersonalKey(true);
-        setStatus('Neural Link Synchronized.');
+        setStatus('World AI Force Link Synchronized.');
         addLog('> AUTH_SUCCESS: GRID_LINKED');
       } catch (e) {
         console.error("Link failed", e);
@@ -64,7 +63,7 @@ const WafForge: React.FC = () => {
 
   const forgeImage = async () => {
     setLoading(true);
-    setStatus('Transmitting Visionary Request...');
+    setStatus('Transmitting World AI Force Request...');
     addLog('> INITIATING_VISION_FORGE');
     const start = Date.now();
     try {
@@ -89,7 +88,7 @@ const WafForge: React.FC = () => {
         setStatus('Vision forged.');
         addLog('> SYNTH_COMPLETE: VISION_ASSET');
       } else {
-        setStatus('Vision node returned text or empty.');
+        setStatus('World AI Force node returned text or empty.');
         addLog('> ERROR: NO_IMAGE_DATA');
         console.warn("API Response did not contain an image:", response);
       }
@@ -136,7 +135,7 @@ const WafForge: React.FC = () => {
 
   const forgeVideo = async () => {
     if (!hasPersonalKey) { 
-      setStatus('Sync required for Motion Synthesis.'); 
+      setStatus('Sync required for World AI Force Synthesis.'); 
       addLog('> ERR: KEY_NOT_FOUND');
       return; 
     }
@@ -214,7 +213,7 @@ const WafForge: React.FC = () => {
                <textarea
                 value={prompt}
                 onChange={(e) => setPrompt(e.target.value)}
-                placeholder={`Describe your ${activeTool} synaptic output...`}
+                placeholder={`Describe your World AI Force synaptic output...`}
                 className="w-full bg-slate-950/70 border border-white/10 rounded-[2.5rem] p-10 h-72 focus:border-blue-500/50 outline-none transition-all text-white text-lg font-light resize-none shadow-inner"
               />
               <div className="absolute bottom-6 left-10 flex gap-2">
@@ -244,7 +243,7 @@ const WafForge: React.FC = () => {
                 onClick={handleSyncGrid}
                 className="w-full flex items-center justify-center gap-2 text-[10px] font-black text-blue-400 uppercase tracking-widest hover:text-white transition-colors"
               >
-                <Terminal className="w-4 h-4" /> Resolve Neural Link Status
+                <Terminal className="w-4 h-4" /> Resolve World AI Force Link Status
               </button>
             )}
           </div>

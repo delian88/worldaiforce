@@ -96,7 +96,7 @@ const Ecosystem: React.FC<EcosystemProps> = ({ onNavigate }) => {
                 </div>
                 <div>
                   <h3 className="text-4xl md:text-5xl font-display font-bold text-white tracking-tight">{selectedTool.details.fullTitle}</h3>
-                  <p className="text-blue-400 text-xs font-black uppercase tracking-[0.4em] mt-2">Neural Node: {selectedTool.id.toUpperCase()}</p>
+                  <p className="text-blue-400 text-xs font-black uppercase tracking-[0.4em] mt-2">World AI Force Node: {selectedTool.id.toUpperCase()}</p>
                 </div>
               </div>
               <button 
