@@ -147,7 +147,7 @@ const App: React.FC = () => {
                     </div>
                     <h2 className="text-5xl md:text-7xl font-display font-bold mb-4 tracking-tight">World AI Force <span className="shimmer-text">Forge</span> Terminal</h2>
                     <p className="text-slate-500 max-w-2xl mx-auto font-light leading-relaxed">
-                      Instant synaptic access to the WAF generation engine. Envision visuals, synthesize lexicon, and initiate motion sequences directly from the global hub.
+                      Instant synaptic access to the WAF generation engine. Forge images, synthesize content, generate audio, and initiate video sequences directly from the global hub.
                     </p>
                  </div>
                  

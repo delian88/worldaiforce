@@ -9,11 +9,13 @@ import {
   Layers, 
   Activity, 
   Terminal, 
-  Radio 
+  Radio,
+  Volume2,
+  Play as PlayIcon
 } from 'lucide-react';
 import Logo from './Logo.tsx';
 
-type ToolType = 'image' | 'content' | 'video';
+type ToolType = 'image' | 'content' | 'video' | 'audio';
 type AspectRatio = '1:1' | '16:9' | '9:16' | '4:3' | '3:4';
 
 const WafForge: React.FC = () => {
@@ -21,10 +23,11 @@ const WafForge: React.FC = () => {
   const [prompt, setPrompt] = useState('');
   const [aspectRatio, setAspectRatio] = useState<AspectRatio>('1:1');
   const [loading, setLoading] = useState(false);
-  const [result, setResult] = useState<{ type: ToolType; url?: string; text?: string; time?: string } | null>(null);
+  const [result, setResult] = useState<{ type: ToolType; url?: string; text?: string; time?: string; audioData?: string } | null>(null);
   const [status, setStatus] = useState('');
   const [hasPersonalKey, setHasPersonalKey] = useState(false);
   const [logMessages, setLogMessages] = useState<string[]>([]);
+  const [isPlaying, setIsPlaying] = useState(false);
 
   useEffect(() => {
     checkKeyStatus();
@@ -61,10 +64,62 @@ const WafForge: React.FC = () => {
     }
   };
 
+  // Audio decoding helpers for headerless PCM
+  function decode(base64: string) {
+    const binaryString = atob(base64);
+    const len = binaryString.length;
+    const bytes = new Uint8Array(len);
+    for (let i = 0; i < len; i++) {
+      bytes[i] = binaryString.charCodeAt(i);
+    }
+    return bytes;
+  }
+
+  async function decodeAudioData(
+    data: Uint8Array,
+    ctx: AudioContext,
+    sampleRate: number,
+    numChannels: number,
+  ): Promise<AudioBuffer> {
+    const dataInt16 = new Int16Array(data.buffer);
+    const frameCount = dataInt16.length / numChannels;
+    const buffer = ctx.createBuffer(numChannels, frameCount, sampleRate);
+
+    for (let channel = 0; channel < numChannels; channel++) {
+      const channelData = buffer.getChannelData(channel);
+      for (let i = 0; i < frameCount; i++) {
+        channelData[i] = dataInt16[i * numChannels + channel] / 32768.0;
+      }
+    }
+    return buffer;
+  }
+
+  const playForgedAudio = async (base64Data: string) => {
+    if (isPlaying) return;
+    setIsPlaying(true);
+    try {
+      const outputAudioContext = new (window.AudioContext || (window as any).webkitAudioContext)({ sampleRate: 24000 });
+      const audioBuffer = await decodeAudioData(
+        decode(base64Data),
+        outputAudioContext,
+        24000,
+        1,
+      );
+      const source = outputAudioContext.createBufferSource();
+      source.buffer = audioBuffer;
+      source.connect(outputAudioContext.destination);
+      source.onended = () => setIsPlaying(false);
+      source.start();
+    } catch (error) {
+      console.error("Audio playback error:", error);
+      setIsPlaying(false);
+    }
+  };
+
   const forgeImage = async () => {
     setLoading(true);
     setStatus('Transmitting World AI Force Request...');
-    addLog('> INITIATING_VISION_FORGE');
+    addLog('> INITIATING_IMAGE_FORGE');
     const start = Date.now();
     try {
       if (!process.env.API_KEY) throw new Error("API Key Missing");
@@ -85,15 +140,13 @@ const WafForge: React.FC = () => {
           url: `data:${part.inlineData.mimeType};base64,${part.inlineData.data}`,
           time: `${((Date.now() - start) / 1000).toFixed(1)}s`
         });
-        setStatus('Vision forged.');
-        addLog('> SYNTH_COMPLETE: VISION_ASSET');
+        setStatus('Image forged.');
+        addLog('> SYNTH_COMPLETE: IMAGE_ASSET');
       } else {
         setStatus('World AI Force node returned text or empty.');
         addLog('> ERROR: NO_IMAGE_DATA');
-        console.warn("API Response did not contain an image:", response);
       }
     } catch (error: any) { 
-      console.error("Forge Image Error:", error);
       setStatus('Transmission Interrupted.'); 
       addLog(`> CRITICAL_ERR: ${error.message || 'SYNAPTIC_FAIL'}`);
     } finally { setLoading(false); }
@@ -101,8 +154,8 @@ const WafForge: React.FC = () => {
 
   const forgeContent = async () => {
     setLoading(true);
-    setStatus('Synthesizing Lexicon...');
-    addLog('> PARSING_LEXICON_SYNAPSES');
+    setStatus('Synthesizing Content...');
+    addLog('> PARSING_CONTENT_SYNAPSES');
     const start = Date.now();
     try {
       if (!process.env.API_KEY) throw new Error("API Key Missing");
@@ -112,7 +165,7 @@ const WafForge: React.FC = () => {
         model: 'gemini-3-flash-preview',
         contents: prompt,
         config: { 
-          systemInstruction: "You are the WAF Lexicon Node. Provide high-impact, professional, concise, and inspiring content based on the prompt.",
+          systemInstruction: "You are the WAF Content Node. Provide high-impact, professional, concise, and inspiring content based on the prompt.",
           temperature: 0.8
         }
       });
@@ -123,13 +176,50 @@ const WafForge: React.FC = () => {
           text: response.text,
           time: `${((Date.now() - start) / 1000).toFixed(1)}s`
         });
-        setStatus('Lexicon forged.');
-        addLog('> SYNTH_COMPLETE: LEXICON_STREAM');
+        setStatus('Content forged.');
+        addLog('> SYNTH_COMPLETE: CONTENT_STREAM');
       }
     } catch (error: any) { 
-      console.error("Forge Content Error:", error);
       setStatus('Transmission Interrupted.'); 
-      addLog(`> ERROR: ${error.message || 'LEXICON_OVERLOAD'}`);
+      addLog(`> ERROR: ${error.message || 'CONTENT_OVERLOAD'}`);
+    } finally { setLoading(false); }
+  };
+
+  const forgeAudio = async () => {
+    setLoading(true);
+    setStatus('Synthesizing Audio...');
+    addLog('> INITIATING_AUDIO_SYNAPSES');
+    const start = Date.now();
+    try {
+      if (!process.env.API_KEY) throw new Error("API Key Missing");
+      const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
+      const response = await ai.models.generateContent({
+        model: "gemini-2.5-flash-preview-tts",
+        contents: [{ parts: [{ text: `Say with power and clarity: ${prompt}` }] }],
+        config: {
+          // @ts-ignore - Modality mapping
+          responseModalities: ["AUDIO"],
+          speechConfig: {
+            voiceConfig: {
+              prebuiltVoiceConfig: { voiceName: 'Kore' },
+            },
+          },
+        },
+      });
+
+      const base64Audio = response.candidates?.[0]?.content?.parts?.[0]?.inlineData?.data;
+      if (base64Audio) {
+        setResult({ 
+          type: 'audio', 
+          audioData: base64Audio,
+          time: `${((Date.now() - start) / 1000).toFixed(1)}s`
+        });
+        setStatus('Audio forged.');
+        addLog('> SYNTH_COMPLETE: AUDIO_STREAM');
+      }
+    } catch (error: any) {
+      setStatus('Audio Synthesis Failed.');
+      addLog(`> ERROR: ${error.message || 'AUDIO_FAIL'}`);
     } finally { setLoading(false); }
   };
 
@@ -140,8 +230,8 @@ const WafForge: React.FC = () => {
       return; 
     }
     setLoading(true);
-    setStatus('Motion Sequence Initiated...');
-    addLog('> TEMPORAL_SEQUENCE_START');
+    setStatus('Video Sequence Initiated...');
+    addLog('> TEMPORAL_VIDEO_START');
     try {
       if (!process.env.API_KEY) throw new Error("API Key Missing");
 
@@ -162,11 +252,10 @@ const WafForge: React.FC = () => {
       const response = await fetch(`${downloadLink}&key=${process.env.API_KEY}`);
       const blob = await response.blob();
       setResult({ type: 'video', url: URL.createObjectURL(blob) });
-      setStatus('Motion sequence forged.');
-      addLog('> SYNTH_COMPLETE: MOTION_ASSET');
+      setStatus('Video sequence forged.');
+      addLog('> SYNTH_COMPLETE: VIDEO_ASSET');
     } catch (error: any) { 
-      console.error("Forge Video Error:", error);
-      setStatus('Motion Error.'); 
+      setStatus('Video Synthesis Error.'); 
       addLog(`> ERROR: ${error.message || 'TEMPORAL_BREAK'}`);
     } finally { setLoading(false); }
   };
@@ -177,20 +266,21 @@ const WafForge: React.FC = () => {
     if (activeTool === 'image') forgeImage();
     if (activeTool === 'content') forgeContent();
     if (activeTool === 'video') forgeVideo();
+    if (activeTool === 'audio') forgeAudio();
   };
 
   return (
     <div className="glass rounded-[4rem] border-white/10 p-1 relative shadow-3xl bg-slate-900/40 overflow-hidden reveal-on-scroll active">
-      {/* High-Tech Grid Overlays */}
       <div className="absolute inset-0 pointer-events-none opacity-[0.03]">
         <div className="absolute top-0 left-0 w-full h-full" style={{ backgroundImage: 'linear-gradient(90deg, #fff 1px, transparent 0), linear-gradient(#fff 1px, transparent 0)', backgroundSize: '40px 40px' }}></div>
       </div>
 
       <div className="flex flex-wrap items-center justify-center gap-4 p-8 border-b border-white/5 bg-white/5 relative z-10">
         {[
-          { id: 'image', icon: <ImageIcon className="w-5 h-5" />, label: 'Vision' },
-          { id: 'content', icon: <FileText className="w-5 h-5" />, label: 'Lexicon' },
-          { id: 'video', icon: <VideoIcon className="w-5 h-5" />, label: 'Motion' }
+          { id: 'image', icon: <ImageIcon className="w-5 h-5" />, label: 'Image' },
+          { id: 'content', icon: <FileText className="w-5 h-5" />, label: 'Content' },
+          { id: 'audio', icon: <Volume2 className="w-5 h-5" />, label: 'Audio' },
+          { id: 'video', icon: <VideoIcon className="w-5 h-5" />, label: 'Video' }
         ].map((tool) => (
           <button
             key={tool.id}
@@ -235,7 +325,7 @@ const WafForge: React.FC = () => {
               className="w-full py-8 bg-blue-600 text-white rounded-[2rem] font-black uppercase tracking-[0.4em] hover:bg-blue-500 transition-all flex items-center justify-center gap-5 text-sm shadow-2xl group active:scale-95"
             >
               {loading ? <Loader2 className="w-5 h-5 animate-spin" /> : <Sparkles className="w-5 h-5 group-hover:scale-125 transition-transform" />}
-              {loading ? 'Synthesizing...' : 'Forging Asset'}
+              {loading ? 'Synthesizing...' : `Forge ${activeTool.charAt(0).toUpperCase() + activeTool.slice(1)}`}
             </button>
 
             {status && !loading && status.includes('Sync') && (
@@ -250,7 +340,6 @@ const WafForge: React.FC = () => {
 
           <div className="lg:w-1/2">
             <div className="h-full min-h-[450px] bg-slate-950/50 rounded-[3rem] border border-white/10 flex items-center justify-center overflow-hidden relative shadow-2xl group">
-              {/* Scanline Animation Effect */}
               <div className="absolute inset-0 pointer-events-none z-30 opacity-20 overflow-hidden">
                 <div className="w-full h-1 bg-blue-500/50 blur-sm animate-[scan_3s_linear_infinite]"></div>
               </div>
@@ -271,17 +360,31 @@ const WafForge: React.FC = () => {
               
               {result && !loading && (
                 <div className="w-full h-full animate-in fade-in zoom-in-95 relative p-6 flex items-center justify-center">
-                  {result.type === 'image' && <img src={result.url} className="max-w-full max-h-[400px] object-contain rounded-2xl shadow-2xl border border-white/10" alt="Forged vision" />}
+                  {result.type === 'image' && <img src={result.url} className="max-w-full max-h-[400px] object-contain rounded-2xl shadow-2xl border border-white/10" alt="Forged image" />}
                   {result.type === 'content' && (
                     <div className="p-10 text-slate-300 font-light leading-relaxed prose prose-invert max-w-none overflow-y-auto max-h-[400px] custom-scrollbar selection:bg-blue-600/30 whitespace-pre-wrap">
                       {result.text}
                     </div>
                   )}
                   {result.type === 'video' && <video src={result.url} className="max-w-full max-h-[400px] object-contain rounded-2xl shadow-2xl border border-white/10" controls autoPlay loop />}
+                  {result.type === 'audio' && result.audioData && (
+                    <div className="flex flex-col items-center gap-8">
+                       <div className="w-32 h-32 rounded-full bg-blue-600/20 border border-blue-500/30 flex items-center justify-center">
+                          <Volume2 className={`w-12 h-12 text-blue-500 ${isPlaying ? 'animate-pulse' : ''}`} />
+                       </div>
+                       <button 
+                         onClick={() => playForgedAudio(result.audioData!)}
+                         className={`px-12 py-5 rounded-full font-black uppercase tracking-widest text-xs flex items-center gap-3 transition-all ${isPlaying ? 'bg-slate-800 text-slate-500 cursor-not-allowed' : 'bg-blue-600 text-white hover:bg-blue-500'}`}
+                        >
+                         {isPlaying ? <Loader2 className="w-4 h-4 animate-spin" /> : <PlayIcon className="w-4 h-4 fill-current" />}
+                         {isPlaying ? 'Streaming...' : 'Play Forged Audio'}
+                       </button>
+                    </div>
+                  )}
                   
                   <div className="absolute top-10 right-10 flex gap-2">
                      <div className="px-4 py-2 bg-slate-900/90 backdrop-blur-md rounded-full border border-white/10 text-[9px] font-black uppercase tracking-widest text-blue-400">Node_ID: {Math.random().toString(36).substr(2, 6).toUpperCase()}</div>
-                     <button onClick={() => { setResult(null); addLog('> CACHE_CLEARED'); }} className="p-2 bg-red-600/20 hover:bg-red-600/40 rounded-full text-red-500 transition-colors">
+                     <button onClick={() => { setResult(null); addLog('> CACHE_CLEARED'); setIsPlaying(false); }} className="p-2 bg-red-600/20 hover:bg-red-600/40 rounded-full text-red-500 transition-colors">
                         <Radio className="w-3 h-3 rotate-45" />
                      </button>
                   </div>
