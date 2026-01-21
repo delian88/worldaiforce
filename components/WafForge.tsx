@@ -19,7 +19,8 @@ import {
   X,
   Info,
   Command,
-  Zap
+  Zap,
+  PlayCircle
 } from 'lucide-react';
 import Logo from './Logo.tsx';
 
@@ -46,6 +47,7 @@ const WafForge: React.FC = () => {
   const [logMessages, setLogMessages] = useState<string[]>([]);
   const [isPlaying, setIsPlaying] = useState(false);
   const [showHelp, setShowHelp] = useState(false);
+  const [showTutorialVideo, setShowTutorialVideo] = useState(false);
 
   useEffect(() => {
     checkKeyStatus();
@@ -292,13 +294,13 @@ const WafForge: React.FC = () => {
   };
 
   return (
-    <div className="glass rounded-[4rem] border-white/10 p-1 relative shadow-3xl bg-slate-900/40 overflow-hidden reveal-on-scroll active">
+    <div className="glass rounded-[2rem] md:rounded-[4rem] border-white/10 p-1 relative shadow-3xl bg-slate-900/40 overflow-hidden reveal-on-scroll active">
       <div className="absolute inset-0 pointer-events-none opacity-[0.03]">
         <div className="absolute top-0 left-0 w-full h-full" style={{ backgroundImage: 'linear-gradient(90deg, #fff 1px, transparent 0), linear-gradient(#fff 1px, transparent 0)', backgroundSize: '40px 40px' }}></div>
       </div>
 
-      <div className="flex flex-wrap items-center justify-between p-8 border-b border-white/5 bg-white/5 relative z-10">
-        <div className="flex flex-wrap gap-4 flex-1 justify-center">
+      <div className="flex flex-wrap items-center justify-between p-6 md:p-8 border-b border-white/5 bg-white/5 relative z-10">
+        <div className="flex flex-wrap gap-2 md:gap-4 flex-1 justify-center">
           {[
             { id: 'image', icon: <ImageIcon className="w-5 h-5" />, label: 'Image' },
             { id: 'content', icon: <FileText className="w-5 h-5" />, label: 'Content' },
@@ -308,7 +310,7 @@ const WafForge: React.FC = () => {
             <button
               key={tool.id}
               onClick={() => { setActiveTool(tool.id as ToolType); setResult(null); setStatus(''); }}
-              className={`flex items-center gap-4 px-8 md:px-10 py-5 rounded-[2rem] font-black uppercase tracking-[0.3em] text-[10px] transition-all relative group
+              className={`flex items-center gap-3 md:gap-4 px-6 md:px-10 py-4 md:py-5 rounded-[1.5rem] md:rounded-[2rem] font-black uppercase tracking-[0.2em] md:tracking-[0.3em] text-[9px] md:text-[10px] transition-all relative group
                 ${activeTool === tool.id 
                   ? 'bg-blue-600 text-white shadow-3xl' 
                   : 'bg-white/5 text-slate-500 hover:bg-white/10'}`}
@@ -319,80 +321,145 @@ const WafForge: React.FC = () => {
           ))}
         </div>
         
-        <button 
-          onClick={() => setShowHelp(true)}
-          className="ml-4 p-4 rounded-full bg-white/5 text-blue-400 hover:bg-white/10 transition-all border border-white/5 group"
-        >
-          <HelpCircle className="w-6 h-6 group-hover:scale-110 transition-transform" />
-        </button>
+        <div className="flex gap-2">
+           <button 
+            onClick={() => setShowTutorialVideo(true)}
+            className="p-3 md:p-4 rounded-full bg-blue-600/10 text-blue-400 hover:bg-blue-600/20 transition-all border border-blue-500/20 group flex items-center gap-2"
+          >
+            <PlayCircle className="w-5 h-5 md:w-6 md:h-6 group-hover:scale-110 transition-transform" />
+            <span className="hidden md:inline text-[9px] font-black uppercase tracking-widest pr-2">Watch Tutorial</span>
+          </button>
+          <button 
+            onClick={() => setShowHelp(true)}
+            className="p-3 md:p-4 rounded-full bg-white/5 text-slate-400 hover:bg-white/10 transition-all border border-white/5 group"
+          >
+            <HelpCircle className="w-5 h-5 md:w-6 md:h-6 group-hover:scale-110 transition-transform" />
+          </button>
+        </div>
       </div>
+
+      {/* Tutorial Video Overlay */}
+      {showTutorialVideo && (
+        <div className="absolute inset-0 z-[60] bg-slate-950/95 backdrop-blur-2xl flex flex-col p-6 md:p-12 animate-in fade-in zoom-in-95 duration-500 overflow-hidden">
+           <div className="flex justify-between items-center mb-8">
+            <div className="flex items-center gap-4">
+              <Film className="w-6 h-6 md:w-8 md:h-8 text-blue-500" />
+              <h3 className="text-xl md:text-3xl font-display font-bold uppercase tracking-tight">Forge <span className="shimmer-text">Instructional Guide</span></h3>
+            </div>
+            <button 
+              onClick={() => setShowTutorialVideo(false)}
+              className="p-3 bg-white/5 hover:bg-white/10 rounded-full text-slate-400 transition-colors"
+            >
+              <X className="w-6 h-6 md:w-8 md:h-8" />
+            </button>
+          </div>
+          <div className="flex-1 bg-black rounded-3xl border border-white/10 overflow-hidden relative shadow-inner">
+             <div className="absolute inset-0 flex flex-col items-center justify-center text-center p-12 space-y-8 bg-slate-900/50">
+                <div className="relative">
+                  <div className="absolute inset-0 bg-blue-600/20 rounded-full blur-3xl animate-pulse"></div>
+                  <Sparkles className="w-20 h-20 text-blue-500 relative z-10 animate-[bounce_3s_infinite]" />
+                </div>
+                <div className="max-w-2xl">
+                   <h4 className="text-2xl md:text-4xl font-display font-bold text-white mb-6">Synaptic Forge Tutorial</h4>
+                   <p className="text-slate-400 font-light text-lg mb-8 leading-relaxed">This guide demonstrates how to interact with the WAF Core to forge high-fidelity intelligence assets. Observe the process of matrix synthesis below.</p>
+                   <div className="flex justify-center gap-4">
+                      <div className="w-32 h-1 bg-blue-600/30 rounded-full overflow-hidden">
+                        <div className="w-full h-full bg-blue-500 animate-[loading_4s_linear_infinite]"></div>
+                      </div>
+                   </div>
+                </div>
+                <div className="w-full h-full absolute inset-0 opacity-20 pointer-events-none">
+                   <div className="grid grid-cols-12 h-full">
+                      {Array.from({length: 48}).map((_, i) => (
+                        <div key={i} className="border-[0.5px] border-blue-500/20"></div>
+                      ))}
+                   </div>
+                </div>
+             </div>
+             {/* Simulated Animation Video / Tutorial Visual */}
+             <div className="absolute inset-0 pointer-events-none flex items-center justify-center">
+                <div className="w-[80%] h-[60%] border-2 border-blue-500/30 rounded-[3rem] animate-[pulse_2s_infinite] flex items-center justify-center">
+                   <div className="text-[120px] font-display font-black text-blue-500/10 select-none uppercase tracking-[0.2em]">Matrix v2.5</div>
+                </div>
+             </div>
+          </div>
+          <div className="mt-8 flex justify-center">
+             <button 
+              onClick={() => setShowTutorialVideo(false)}
+              className="px-16 py-6 bg-blue-600 text-white rounded-full font-black uppercase tracking-[0.4em] hover:bg-blue-500 transition-all text-xs shadow-2xl"
+             >
+               Return to Terminal
+             </button>
+          </div>
+        </div>
+      )}
 
       {/* Tutorial Overlay */}
       {showHelp && (
         <div className="absolute inset-0 z-50 bg-slate-950/90 backdrop-blur-2xl flex flex-col p-8 md:p-16 animate-in fade-in zoom-in-95 duration-500 overflow-y-auto">
-          <div className="flex justify-between items-center mb-12">
+          <div className="flex justify-between items-center mb-10 md:mb-12">
             <div className="flex items-center gap-4">
-              <Command className="w-8 h-8 text-blue-500" />
-              <h3 className="text-3xl font-display font-bold uppercase tracking-tight">WAF Forge <span className="shimmer-text">Protocol</span></h3>
+              <Command className="w-6 h-6 md:w-8 md:h-8 text-blue-500" />
+              <h3 className="text-2xl md:text-3xl font-display font-bold uppercase tracking-tight">Forge <span className="shimmer-text">Protocol</span></h3>
             </div>
             <button 
               onClick={() => setShowHelp(false)}
-              className="p-4 bg-white/5 hover:bg-white/10 rounded-full text-slate-400 transition-colors"
+              className="p-3 bg-white/5 hover:bg-white/10 rounded-full text-slate-400 transition-colors"
             >
-              <X className="w-8 h-8" />
+              <X className="w-6 h-6 md:w-8 md:h-8" />
             </button>
           </div>
 
-          <div className="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto">
+          <div className="grid md:grid-cols-2 gap-6 md:gap-8 max-w-5xl mx-auto">
             <div className="space-y-6">
-              <div className="p-8 rounded-[2rem] bg-white/5 border border-white/10 group hover:border-blue-500/30 transition-all">
-                <div className="flex items-center gap-4 mb-4">
-                  <ImageIcon className="w-6 h-6 text-blue-500" />
-                  <h4 className="font-black uppercase tracking-widest text-xs">Image Forge</h4>
+              <div className="p-6 md:p-8 rounded-[1.5rem] md:rounded-[2rem] bg-white/5 border border-white/10 group hover:border-blue-500/30 transition-all">
+                <div className="flex items-center gap-4 mb-3 md:mb-4">
+                  <ImageIcon className="w-5 h-5 md:w-6 md:h-6 text-blue-500" />
+                  <h4 className="font-black uppercase tracking-widest text-[9px] md:text-[10px]">Image Forge</h4>
                 </div>
-                <p className="text-slate-400 text-sm font-light leading-relaxed">
-                  Generate masterpiece visual assets. Use descriptive prompts like "Sovereign AI core floating in a nebula, cinematic lighting, 8k". Supports multiple aspect ratios.
+                <p className="text-slate-400 text-xs md:text-sm font-light leading-relaxed">
+                  Generate visual assets. Use descriptive prompts like "Sovereign AI core floating in a nebula, cinematic lighting, 8k".
                 </p>
               </div>
 
-              <div className="p-8 rounded-[2rem] bg-white/5 border border-white/10 group hover:border-blue-500/30 transition-all">
-                <div className="flex items-center gap-4 mb-4">
-                  <FileText className="w-6 h-6 text-blue-500" />
-                  <h4 className="font-black uppercase tracking-widest text-xs">Content Forge</h4>
+              <div className="p-6 md:p-8 rounded-[1.5rem] md:rounded-[2rem] bg-white/5 border border-white/10 group hover:border-blue-500/30 transition-all">
+                <div className="flex items-center gap-4 mb-3 md:mb-4">
+                  <FileText className="w-5 h-5 md:w-6 md:h-6 text-blue-500" />
+                  <h4 className="font-black uppercase tracking-widest text-[9px] md:text-[10px]">Content Forge</h4>
                 </div>
-                <p className="text-slate-400 text-sm font-light leading-relaxed">
-                  Synthesize high-impact professional text. Optimized for WAF manifestos, technical documentation, or global policy drafts.
+                <p className="text-slate-400 text-xs md:text-sm font-light leading-relaxed">
+                  Synthesize high-impact professional text. Optimized for WAF manifestos and technical documentation.
                 </p>
               </div>
             </div>
 
             <div className="space-y-6">
-              <div className="p-8 rounded-[2rem] bg-white/5 border border-white/10 group hover:border-blue-500/30 transition-all">
-                <div className="flex items-center gap-4 mb-4">
-                  <Volume2 className="w-6 h-6 text-blue-500" />
-                  <h4 className="font-black uppercase tracking-widest text-xs">Audio Forge</h4>
+              <div className="p-6 md:p-8 rounded-[1.5rem] md:rounded-[2rem] bg-white/5 border border-white/10 group hover:border-blue-500/30 transition-all">
+                <div className="flex items-center gap-4 mb-3 md:mb-4">
+                  <Volume2 className="w-5 h-5 md:w-6 md:h-6 text-blue-500" />
+                  <h4 className="font-black uppercase tracking-widest text-[9px] md:text-[10px]">Audio Forge</h4>
                 </div>
-                <p className="text-slate-400 text-sm font-light leading-relaxed">
-                  Convert text into authoritative voice streams. Uses the Kore-v2.5 engine for maximum clarity and warmth. Perfect for community announcements.
+                <p className="text-slate-400 text-xs md:text-sm font-light leading-relaxed">
+                  Convert text into authoritative voice streams. Perfect for community announcements and global messaging.
                 </p>
               </div>
 
-              <div className="p-8 rounded-[2rem] bg-white/5 border border-white/10 group hover:border-blue-500/30 transition-all">
-                <div className="flex items-center gap-4 mb-4">
-                  <VideoIcon className="w-6 h-6 text-blue-500" />
-                  <h4 className="font-black uppercase tracking-widest text-xs">Video Forge</h4>
+              <div className="p-6 md:p-8 rounded-[1.5rem] md:rounded-[2rem] bg-white/5 border border-white/10 group hover:border-blue-500/30 transition-all">
+                <div className="flex items-center gap-4 mb-3 md:mb-4">
+                  <VideoIcon className="w-5 h-5 md:w-6 md:h-6 text-blue-500" />
+                  <h4 className="font-black uppercase tracking-widest text-[9px] md:text-[10px]">Video Forge</h4>
                 </div>
-                <p className="text-slate-400 text-sm font-light leading-relaxed">
-                  <span className="text-blue-400 font-bold">Personal API Link required.</span> Choose between Cinematic, Documentary, or Animation presets to guide the temporal synthesis.
+                <p className="text-slate-400 text-xs md:text-sm font-light leading-relaxed">
+                   Personal API Link required. Choose between Cinematic, Documentary, or Animation presets.
                 </p>
               </div>
             </div>
           </div>
 
-          <div className="mt-16 text-center">
+          <div className="mt-12 md:mt-16 text-center">
              <button 
               onClick={() => setShowHelp(false)}
-              className="px-16 py-6 bg-blue-600 text-white rounded-full font-black uppercase tracking-[0.4em] hover:bg-blue-500 transition-all text-[10px]"
+              className="px-12 md:px-16 py-5 md:py-6 bg-blue-600 text-white rounded-full font-black uppercase tracking-[0.3em] md:tracking-[0.4em] hover:bg-blue-500 transition-all text-[9px] md:text-[10px]"
              >
                Initialize Synapse
              </button>
@@ -400,34 +467,34 @@ const WafForge: React.FC = () => {
         </div>
       )}
 
-      <div className="p-8 lg:p-16 relative z-10">
-        <div className="flex flex-col lg:flex-row gap-12">
-          <div className="lg:w-1/2 space-y-10">
+      <div className="p-6 md:p-12 lg:p-16 relative z-10">
+        <div className="flex flex-col lg:flex-row gap-10 md:gap-12">
+          <div className="lg:w-1/2 space-y-8 md:space-y-10">
             <div className="relative">
                <textarea
                 value={prompt}
                 onChange={(e) => setPrompt(e.target.value)}
                 placeholder={`Describe your World AI Force synaptic output...`}
-                className="w-full bg-slate-950/70 border border-white/10 rounded-[2.5rem] p-10 h-72 focus:border-blue-500/50 outline-none transition-all text-white text-lg font-light resize-none shadow-inner"
+                className="w-full bg-slate-950/70 border border-white/10 rounded-[1.5rem] md:rounded-[2.5rem] p-6 md:p-10 h-48 md:h-72 focus:border-blue-500/50 outline-none transition-all text-white text-base md:text-lg font-light resize-none shadow-inner"
               />
-              <div className="absolute bottom-6 left-10 flex gap-2">
-                 <Radio className="w-4 h-4 text-blue-500 animate-pulse" />
-                 <span className="text-[8px] font-black text-blue-500 uppercase tracking-widest">Signal: Established</span>
+              <div className="absolute bottom-4 md:bottom-6 left-6 md:left-10 flex gap-2">
+                 <Radio className="w-3 h-3 md:w-4 md:h-4 text-blue-500 animate-pulse" />
+                 <span className="text-[7px] md:text-[8px] font-black text-blue-500 uppercase tracking-widest">Signal: Active</span>
               </div>
             </div>
 
             {activeTool === 'video' && (
               <div className="space-y-4 animate-in fade-in slide-in-from-top-2 duration-500">
                 <div className="flex items-center gap-2 ml-4">
-                  <p className="text-[10px] font-black uppercase tracking-[0.5em] text-slate-500">Temporal Presets</p>
+                  <p className="text-[9px] md:text-[10px] font-black uppercase tracking-[0.4em] text-slate-500">Temporal Presets</p>
                   <Info className="w-3 h-3 text-slate-600" />
                 </div>
-                <div className="flex flex-wrap gap-3">
+                <div className="flex flex-wrap gap-2 md:gap-3">
                   {VIDEO_STYLES.map((style) => (
                     <button
                       key={style.id}
                       onClick={() => setVideoStyle(style.id as VideoStyle)}
-                      className={`flex items-center gap-2 px-6 py-3 rounded-full text-[10px] font-black uppercase tracking-widest transition-all border
+                      className={`flex items-center gap-2 px-4 md:px-6 py-2 md:py-3 rounded-full text-[9px] md:text-[10px] font-black uppercase tracking-widest transition-all border
                         ${videoStyle === style.id 
                           ? 'bg-blue-600/20 border-blue-500 text-blue-400 shadow-lg shadow-blue-500/10' 
                           : 'bg-white/5 border-white/10 text-slate-500 hover:border-white/20'}`}
@@ -440,83 +507,83 @@ const WafForge: React.FC = () => {
               </div>
             )}
 
-            <div className="p-6 rounded-3xl bg-slate-950 border border-white/5 font-mono text-[9px] text-slate-500 h-32 overflow-hidden flex flex-col justify-end">
+            <div className="p-4 md:p-6 rounded-2xl md:rounded-3xl bg-slate-950 border border-white/5 font-mono text-[8px] md:text-[9px] text-slate-500 h-24 md:h-32 overflow-hidden flex flex-col justify-end">
                {logMessages.map((log, i) => (
                  <div key={i} className={i === 0 ? 'text-blue-400' : ''}>{log}</div>
                ))}
-               {!logMessages.length && <div>&gt; AWAITING_INPUT...</div>}
+               {!logMessages.length && <div>&gt; AWAITING_SYNAPSE_INPUT...</div>}
             </div>
 
             <button 
               onClick={handleForge} 
               disabled={loading || !prompt.trim()} 
-              className="w-full py-8 bg-blue-600 text-white rounded-[2rem] font-black uppercase tracking-[0.4em] hover:bg-blue-500 transition-all flex items-center justify-center gap-5 text-sm shadow-2xl group active:scale-95"
+              className="w-full py-6 md:py-8 bg-blue-600 text-white rounded-[1.5rem] md:rounded-[2rem] font-black uppercase tracking-[0.3em] md:tracking-[0.4em] hover:bg-blue-500 transition-all flex items-center justify-center gap-5 text-[11px] md:text-sm shadow-2xl group active:scale-95"
             >
-              {loading ? <Loader2 className="w-5 h-5 animate-spin" /> : <Sparkles className="w-5 h-5 group-hover:scale-125 transition-transform" />}
+              {loading ? <Loader2 className="w-4 h-4 md:w-5 md:h-5 animate-spin" /> : <Sparkles className="w-4 h-4 md:w-5 md:h-5 group-hover:scale-125 transition-transform" />}
               {loading ? 'Synthesizing...' : `Forge ${activeTool.charAt(0).toUpperCase() + activeTool.slice(1)}`}
             </button>
 
             {status && !loading && status.includes('Sync') && (
               <button 
                 onClick={handleSyncGrid}
-                className="w-full flex items-center justify-center gap-2 text-[10px] font-black text-blue-400 uppercase tracking-widest hover:text-white transition-colors"
+                className="w-full flex items-center justify-center gap-2 text-[8px] md:text-[10px] font-black text-blue-400 uppercase tracking-widest hover:text-white transition-colors"
               >
-                <Terminal className="w-4 h-4" /> Resolve World AI Force Link Status
+                <Terminal className="w-3 h-3 md:w-4 md:h-4" /> Resolve Global Link Status
               </button>
             )}
           </div>
 
           <div className="lg:w-1/2">
-            <div className="h-full min-h-[450px] bg-slate-950/50 rounded-[3rem] border border-white/10 flex items-center justify-center overflow-hidden relative shadow-2xl group">
+            <div className="h-full min-h-[350px] md:min-h-[450px] bg-slate-950/50 rounded-[1.5rem] md:rounded-[3rem] border border-white/10 flex items-center justify-center overflow-hidden relative shadow-2xl group">
               <div className="absolute inset-0 pointer-events-none z-30 opacity-20 overflow-hidden">
                 <div className="w-full h-1 bg-blue-500/50 blur-sm animate-[scan_3s_linear_infinite]"></div>
               </div>
 
               {!result && !loading && (
                 <div className="text-center opacity-10 group-hover:opacity-20 transition-opacity">
-                  <Logo size={150} />
-                  <p className="mt-6 font-black text-[10px] uppercase tracking-[0.8em]">Awaiting Synapse</p>
+                  <Logo size={100} mdSize={150} />
+                  <p className="mt-6 font-black text-[8px] md:text-[10px] uppercase tracking-[0.8em]">Awaiting Synapse</p>
                 </div>
               )}
               
               {loading && (
-                <div className="text-center relative z-40">
+                <div className="text-center relative z-40 p-6">
                   <div className="relative mb-6">
-                    <Loader2 className="w-16 h-16 animate-spin text-blue-500 mx-auto shadow-[0_0_20px_rgba(59,130,246,0.3)]" />
-                    <Zap className="absolute inset-0 m-auto w-6 h-6 text-blue-400 animate-pulse" />
+                    <Loader2 className="w-12 h-12 md:w-16 md:h-16 animate-spin text-blue-500 mx-auto shadow-[0_0_20px_rgba(59,130,246,0.3)]" />
+                    <Zap className="absolute inset-0 m-auto w-5 h-5 md:w-6 md:h-6 text-blue-400 animate-pulse" />
                   </div>
-                  <p className="text-slate-500 text-[10px] font-black uppercase tracking-[0.5em] animate-pulse">Computing Matrix...</p>
+                  <p className="text-slate-500 text-[9px] md:text-[10px] font-black uppercase tracking-[0.4em] md:tracking-[0.5em] animate-pulse">Computing Matrix...</p>
                 </div>
               )}
               
               {result && !loading && (
-                <div className="w-full h-full animate-in fade-in zoom-in-95 relative p-6 flex items-center justify-center">
-                  {result.type === 'image' && <img src={result.url} className="max-w-full max-h-[400px] object-contain rounded-2xl shadow-2xl border border-white/10" alt="Forged image" />}
+                <div className="w-full h-full animate-in fade-in zoom-in-95 relative p-4 md:p-6 flex items-center justify-center">
+                  {result.type === 'image' && <img src={result.url} className="max-w-full max-h-[300px] md:max-h-[400px] object-contain rounded-2xl shadow-2xl border border-white/10" alt="Forged image" />}
                   {result.type === 'content' && (
-                    <div className="p-10 text-slate-300 font-light leading-relaxed prose prose-invert max-w-none overflow-y-auto max-h-[400px] custom-scrollbar selection:bg-blue-600/30 whitespace-pre-wrap">
+                    <div className="p-6 md:p-10 text-slate-300 font-light leading-relaxed prose prose-invert max-w-none overflow-y-auto max-h-[300px] md:max-h-[400px] custom-scrollbar selection:bg-blue-600/30 whitespace-pre-wrap text-sm md:text-base">
                       {result.text}
                     </div>
                   )}
-                  {result.type === 'video' && <video src={result.url} className="max-w-full max-h-[400px] object-contain rounded-2xl shadow-2xl border border-white/10" controls autoPlay loop />}
+                  {result.type === 'video' && <video src={result.url} className="max-w-full max-h-[300px] md:max-h-[400px] object-contain rounded-2xl shadow-2xl border border-white/10" controls autoPlay loop />}
                   {result.type === 'audio' && result.audioData && (
-                    <div className="flex flex-col items-center gap-8">
-                       <div className="w-32 h-32 rounded-full bg-blue-600/20 border border-blue-500/30 flex items-center justify-center">
-                          <Volume2 className={`w-12 h-12 text-blue-500 ${isPlaying ? 'animate-pulse' : ''}`} />
+                    <div className="flex flex-col items-center gap-6 md:gap-8">
+                       <div className="w-24 h-24 md:w-32 md:h-32 rounded-full bg-blue-600/20 border border-blue-500/30 flex items-center justify-center">
+                          <Volume2 className={`w-10 h-10 md:w-12 md:h-12 text-blue-500 ${isPlaying ? 'animate-pulse' : ''}`} />
                        </div>
                        <button 
                          onClick={() => playForgedAudio(result.audioData!)}
-                         className={`px-12 py-5 rounded-full font-black uppercase tracking-widest text-xs flex items-center gap-3 transition-all ${isPlaying ? 'bg-slate-800 text-slate-500 cursor-not-allowed' : 'bg-blue-600 text-white hover:bg-blue-500'}`}
+                         className={`px-8 md:px-12 py-4 md:py-5 rounded-full font-black uppercase tracking-widest text-[10px] md:text-xs flex items-center gap-3 transition-all ${isPlaying ? 'bg-slate-800 text-slate-500 cursor-not-allowed' : 'bg-blue-600 text-white hover:bg-blue-500'}`}
                         >
                          {isPlaying ? <Loader2 className="w-4 h-4 animate-spin" /> : <PlayIcon className="w-4 h-4 fill-current" />}
-                         {isPlaying ? 'Streaming...' : 'Play Forged Audio'}
+                         {isPlaying ? 'Streaming...' : 'Play Audio'}
                        </button>
                     </div>
                   )}
                   
-                  <div className="absolute top-10 right-10 flex gap-2">
-                     <div className="px-4 py-2 bg-slate-900/90 backdrop-blur-md rounded-full border border-white/10 text-[9px] font-black uppercase tracking-widest text-blue-400">Node_ID: {Math.random().toString(36).substr(2, 6).toUpperCase()}</div>
+                  <div className="absolute top-4 md:top-10 right-4 md:right-10 flex gap-2">
+                     <div className="px-3 md:px-4 py-1.5 md:py-2 bg-slate-900/90 backdrop-blur-md rounded-full border border-white/10 text-[7px] md:text-[9px] font-black uppercase tracking-widest text-blue-400">Node_{Math.random().toString(36).substr(2, 4).toUpperCase()}</div>
                      <button onClick={() => { setResult(null); addLog('> CACHE_CLEARED'); setIsPlaying(false); }} className="p-2 bg-red-600/20 hover:bg-red-600/40 rounded-full text-red-500 transition-colors">
-                        <Radio className="w-3 h-3 rotate-45" />
+                        <X className="w-3 h-3 md:w-4 md:h-4" />
                      </button>
                   </div>
                 </div>
@@ -529,6 +596,10 @@ const WafForge: React.FC = () => {
         @keyframes scan {
           0% { top: -10%; }
           100% { top: 110%; }
+        }
+        @keyframes loading {
+          0% { transform: translateX(-100%); }
+          100% { transform: translateX(100%); }
         }
         .custom-scrollbar::-webkit-scrollbar { width: 4px; }
         .custom-scrollbar::-webkit-scrollbar-thumb { background: rgba(59, 130, 246, 0.2); border-radius: 10px; }

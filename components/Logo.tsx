@@ -1,16 +1,18 @@
-
 import React from 'react';
 
 interface LogoProps {
   className?: string;
   size?: number;
+  mdSize?: number;
 }
 
-const Logo: React.FC<LogoProps> = ({ className = "", size = 40 }) => {
+const Logo: React.FC<LogoProps> = ({ className = "", size = 40, mdSize }) => {
+  const currentSize = mdSize && typeof window !== 'undefined' && window.innerWidth >= 768 ? mdSize : size;
+  
   return (
     <div 
       className={`relative inline-block select-none group ${className}`}
-      style={{ width: size, height: size }}
+      style={{ width: currentSize, height: currentSize }}
     >
       {/* Background Glow Depth */}
       <div className="absolute inset-0 bg-blue-500/10 rounded-full blur-[40px] -z-10 group-hover:bg-blue-400/20 transition-all duration-1000 animate-pulse"></div>
