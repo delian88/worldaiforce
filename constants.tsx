@@ -1,21 +1,11 @@
 import React from 'react';
 import { 
-  Zap, 
   ShieldCheck, 
-  Users, 
   Globe, 
-  Cpu, 
-  BookOpen, 
-  Code,
-  TrendingUp,
-  Calculator,
-  Scale,
+  Zap, 
   Wand2,
   Network,
-  BarChart3,
-  Landmark,
-  Home,
-  Play
+  Landmark
 } from 'lucide-react';
 import { EcosystemTool } from './types.ts';
 
@@ -23,30 +13,16 @@ export const PODORE_LAUNCH_DATE = new Date('2026-01-25T00:00:00');
 
 export const ECOSYSTEM_TOOLS: EcosystemTool[] = [
   {
-    id: 'creaitube',
-    name: 'CreAItube',
-    description: 'Decentralized AI video production and distribution network. Empowering creators with synthetic motion tools.',
-    icon: 'Play',
-    category: 'Development'
-  },
-  {
-    id: 'house-of-ai',
-    name: 'HOUSE OF AI',
-    description: 'Flagship global innovation program and reality-based technology series demonstrating AI for good.',
-    icon: 'Home',
+    id: 'podore-core',
+    name: 'PodOre',
+    description: 'The master digital hub and unified platform. Launching Jan 25, 2026. The neural center for the World AI Force.',
+    icon: 'Network',
     category: 'Community'
   },
   {
-    id: 'waf-forge',
-    name: 'WAF Forge',
-    description: 'Real-time neural synthesis engine for image, motion, and lexicon generation.',
-    icon: 'Wand2',
-    category: 'Development'
-  },
-  {
     id: 'waf-assembly',
-    name: 'World AI Force Assembly',
-    description: 'The governance, dialogue, and representation arm of the initiative.',
+    name: 'WAF Assembly',
+    description: 'The governance, dialogue, and representation arm of the initiative. Shaping global AI policy.',
     icon: 'Landmark',
     category: 'Community',
     details: {
@@ -62,43 +38,11 @@ export const ECOSYSTEM_TOOLS: EcosystemTool[] = [
     }
   },
   {
-    id: 'waf-wax',
-    name: 'World AI Exchange (WAX)',
-    description: 'Secure, ethical AI-powered stock market for listing and trading PodOre AI assets.',
-    icon: 'BarChart3',
-    category: 'Research',
-    details: {
-      fullTitle: "World AI Exchange (WAX)",
-      purpose: "Transforms innovation into opportunity by allowing AI products developed on World AI Force PodOre to be digitally listed, governed, and traded within a secure, ethical, AI-powered stock market system designed for the future of global digital finance.",
-      functions: [
-        "Digital listing of AI products developed on PodOre",
-        "Governed and decentralized asset trading",
-        "AI-powered predictive analytics for asset valuation",
-        "Ethical financial infrastructure for global digital assets"
-      ],
-      participants: "Empowering innovators and investors globally to participate in a transparent and secure digital economy."
-    }
-  },
-  {
-    id: 'waf-academy',
-    name: 'WAF Academy',
-    description: 'Democratized AI education and global certification platform. Coming soon.',
-    icon: 'BookOpen',
-    category: 'Education'
-  },
-  {
-    id: 'waf-accounting',
-    name: 'AI Accounting',
-    description: 'Automated decentralized financial auditing and enterprise management. Coming soon.',
-    icon: 'Calculator',
+    id: 'waf-forge',
+    name: 'Forge',
+    description: 'Real-time World AI Force synthesis engine for image, video, content, and audio generation.',
+    icon: 'Wand2',
     category: 'Development'
-  },
-  {
-    id: 'podore-core',
-    name: 'PodOre',
-    description: 'The master digital hub and unified platform. Launching Jan 25, 2026.',
-    icon: 'Network',
-    category: 'Community'
   }
 ];
 
