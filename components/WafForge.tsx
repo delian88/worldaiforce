@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { GoogleGenAI } from "@google/genai";
 import { 
   Image as ImageIcon, 
@@ -20,7 +20,11 @@ import {
   Info,
   Command,
   Zap,
-  PlayCircle
+  PlayCircle,
+  Monitor,
+  MousePointer2,
+  Download,
+  Share2
 } from 'lucide-react';
 import Logo from './Logo.tsx';
 
@@ -48,6 +52,17 @@ const WafForge: React.FC = () => {
   const [isPlaying, setIsPlaying] = useState(false);
   const [showHelp, setShowHelp] = useState(false);
   const [showTutorialVideo, setShowTutorialVideo] = useState(false);
+  const [tutorialStep, setTutorialStep] = useState(0);
+  const [tutorialProgress, setTutorialProgress] = useState(0);
+  const [tutorialTyping, setTutorialTyping] = useState('');
+
+  const tutorialMessages = [
+    "Initializing Neural Interface...",
+    "Node Selection: IMAGE_FORGE active.",
+    "Injecting Prompt Synapse...",
+    "Matrix Synthesis in progress...",
+    "Asset Successfully Forged."
+  ];
 
   useEffect(() => {
     checkKeyStatus();
@@ -55,6 +70,50 @@ const WafForge: React.FC = () => {
       addLog('> WARN: API_KEY_NOT_FOUND_IN_ENV');
     }
   }, []);
+
+  // Tutorial Logic: Step Sequencer
+  useEffect(() => {
+    let interval: any;
+    let typingInterval: any;
+
+    if (showTutorialVideo) {
+      // Step Timer
+      interval = setInterval(() => {
+        setTutorialStep(prev => (prev + 1) % 4);
+        setTutorialProgress(0);
+      }, 6000);
+
+      // Progress bar within step
+      const progInterval = setInterval(() => {
+        setTutorialProgress(prev => Math.min(prev + 1.6, 100));
+      }, 100);
+
+      // Typing simulation for Step 2
+      if (tutorialStep === 1) {
+        const fullText = "Sovereign AI core floating in a nebula, 8k master-quality";
+        let charIdx = 0;
+        setTutorialTyping('');
+        typingInterval = setInterval(() => {
+          if (charIdx < fullText.length) {
+            setTutorialTyping(fullText.substring(0, charIdx + 1));
+            charIdx++;
+          } else {
+            clearInterval(typingInterval);
+          }
+        }, 50);
+      }
+
+      return () => {
+        clearInterval(interval);
+        clearInterval(progInterval);
+        clearInterval(typingInterval);
+      };
+    } else {
+      setTutorialStep(0);
+      setTutorialProgress(0);
+      setTutorialTyping('');
+    }
+  }, [showTutorialVideo, tutorialStep]);
 
   const addLog = (msg: string) => {
     setLogMessages(prev => [msg, ...prev].slice(0, 5));
@@ -293,6 +352,13 @@ const WafForge: React.FC = () => {
     if (activeTool === 'audio') forgeAudio();
   };
 
+  const tutorialSteps = [
+    { title: "Select Node", desc: "Choose your output modality: Image, Content, Audio, or Video.", icon: <Monitor className="w-8 h-8" /> },
+    { title: "Input Prompt", desc: "Describe your vision with high specificity for maximum synaptic fidelity.", icon: <FileText className="w-8 h-8" /> },
+    { title: "Forge Asset", desc: "Initiate the WAF synthesis protocol to begin real-time asset generation.", icon: <Zap className="w-8 h-8" /> },
+    { title: "Deploy Output", desc: "Your intelligence asset is synthesized. Download or share with the global mesh.", icon: <Sparkles className="w-8 h-8" /> }
+  ];
+
   return (
     <div className="glass rounded-[2rem] md:rounded-[4rem] border-white/10 p-1 relative shadow-3xl bg-slate-900/40 overflow-hidden reveal-on-scroll active">
       <div className="absolute inset-0 pointer-events-none opacity-[0.03]">
@@ -338,13 +404,15 @@ const WafForge: React.FC = () => {
         </div>
       </div>
 
-      {/* Tutorial Video Overlay */}
+      {/* Tutorial Video Animation Overlay */}
       {showTutorialVideo && (
-        <div className="absolute inset-0 z-[60] bg-slate-950/95 backdrop-blur-2xl flex flex-col p-6 md:p-12 animate-in fade-in zoom-in-95 duration-500 overflow-hidden">
+        <div className="absolute inset-0 z-[120] bg-slate-950 flex flex-col p-6 md:p-12 animate-in fade-in duration-500 overflow-hidden">
            <div className="flex justify-between items-center mb-8">
             <div className="flex items-center gap-4">
-              <Film className="w-6 h-6 md:w-8 md:h-8 text-blue-500" />
-              <h3 className="text-xl md:text-3xl font-display font-bold uppercase tracking-tight">Forge <span className="shimmer-text">Instructional Guide</span></h3>
+              <div className="w-12 h-12 bg-blue-600/20 rounded-2xl flex items-center justify-center text-blue-500">
+                <Monitor className="w-6 h-6" />
+              </div>
+              <h3 className="text-xl md:text-3xl font-display font-bold uppercase tracking-tight">Forge <span className="shimmer-text">Induction Sequence</span></h3>
             </div>
             <button 
               onClick={() => setShowTutorialVideo(false)}
@@ -353,50 +421,136 @@ const WafForge: React.FC = () => {
               <X className="w-6 h-6 md:w-8 md:h-8" />
             </button>
           </div>
-          <div className="flex-1 bg-black rounded-3xl border border-white/10 overflow-hidden relative shadow-inner">
-             <div className="absolute inset-0 flex flex-col items-center justify-center text-center p-12 space-y-8 bg-slate-900/50">
-                <div className="relative">
-                  <div className="absolute inset-0 bg-blue-600/20 rounded-full blur-3xl animate-pulse"></div>
-                  <Sparkles className="w-20 h-20 text-blue-500 relative z-10 animate-[bounce_3s_infinite]" />
-                </div>
-                <div className="max-w-2xl">
-                   <h4 className="text-2xl md:text-4xl font-display font-bold text-white mb-6">Synaptic Forge Tutorial</h4>
-                   <p className="text-slate-400 font-light text-lg mb-8 leading-relaxed">This guide demonstrates how to interact with the WAF Core to forge high-fidelity intelligence assets. Observe the process of matrix synthesis below.</p>
-                   <div className="flex justify-center gap-4">
-                      <div className="w-32 h-1 bg-blue-600/30 rounded-full overflow-hidden">
-                        <div className="w-full h-full bg-blue-500 animate-[loading_4s_linear_infinite]"></div>
-                      </div>
-                   </div>
-                </div>
-                <div className="w-full h-full absolute inset-0 opacity-20 pointer-events-none">
-                   <div className="grid grid-cols-12 h-full">
-                      {Array.from({length: 48}).map((_, i) => (
-                        <div key={i} className="border-[0.5px] border-blue-500/20"></div>
-                      ))}
-                   </div>
-                </div>
-             </div>
-             {/* Simulated Animation Video / Tutorial Visual */}
-             <div className="absolute inset-0 pointer-events-none flex items-center justify-center">
-                <div className="w-[80%] h-[60%] border-2 border-blue-500/30 rounded-[3rem] animate-[pulse_2s_infinite] flex items-center justify-center">
-                   <div className="text-[120px] font-display font-black text-blue-500/10 select-none uppercase tracking-[0.2em]">Matrix v2.5</div>
-                </div>
-             </div>
+
+          <div className="flex-1 grid md:grid-cols-2 gap-12 items-center">
+            {/* "Animated Video" Simulation Component */}
+            <div className="relative aspect-video bg-black rounded-[3rem] border border-white/10 overflow-hidden shadow-3xl flex items-center justify-center group/vid">
+               <div className="absolute inset-0 bg-[linear-gradient(rgba(18,24,38,0)_0%,rgba(18,24,38,0.8)_100%)] z-10"></div>
+               
+               {/* High-Tech HUD Elements */}
+               <div className="absolute top-8 left-8 text-[9px] font-mono text-blue-500/50 uppercase tracking-widest z-20">
+                  <div className="flex items-center gap-2"><div className="w-1.5 h-1.5 bg-blue-500 rounded-full animate-pulse"></div> SIGNAL: ENCRYPTED</div>
+                  <div>COORD: 38.8951° N, 77.0364° W</div>
+               </div>
+
+               {/* Tutorial UI Mockup Animation */}
+               <div className="w-[85%] h-[80%] glass rounded-3xl border border-white/5 p-6 flex flex-col gap-4 relative z-0">
+                  <div className="flex items-center justify-between">
+                    <div className="flex gap-2">
+                       <div className={`w-3 h-3 rounded-full transition-colors duration-1000 ${tutorialStep === 0 ? 'bg-blue-600' : 'bg-white/10'}`}></div>
+                       <div className={`w-3 h-3 rounded-full transition-colors duration-1000 ${tutorialStep === 1 ? 'bg-blue-600' : 'bg-white/10'}`}></div>
+                       <div className={`w-3 h-3 rounded-full transition-colors duration-1000 ${tutorialStep === 2 ? 'bg-blue-600' : 'bg-white/10'}`}></div>
+                       <div className={`w-3 h-3 rounded-full transition-colors duration-1000 ${tutorialStep === 3 ? 'bg-blue-600' : 'bg-white/10'}`}></div>
+                    </div>
+                    <div className="text-[8px] font-mono text-slate-500">{tutorialMessages[tutorialStep]}</div>
+                  </div>
+
+                  <div className="flex-1 bg-white/5 rounded-2xl p-4 overflow-hidden relative border border-white/5">
+                     {tutorialStep === 0 && (
+                        <div className="absolute inset-0 flex items-center justify-center animate-in zoom-in-95 fade-in duration-1000">
+                           <div className="grid grid-cols-2 gap-6 scale-125">
+                              <div className="w-16 h-16 bg-blue-600/30 rounded-2xl border-2 border-blue-500/60 flex items-center justify-center shadow-2xl shadow-blue-500/20"><ImageIcon className="w-8 h-8 text-blue-400" /></div>
+                              <div className="w-16 h-16 bg-white/5 rounded-2xl border border-white/10"></div>
+                              <div className="w-16 h-16 bg-white/5 rounded-2xl border border-white/10"></div>
+                              <div className="w-16 h-16 bg-white/5 rounded-2xl border border-white/10"></div>
+                           </div>
+                           <MousePointer2 className="w-8 h-8 text-white absolute bottom-12 right-12 animate-bounce" />
+                        </div>
+                     )}
+                     {tutorialStep === 1 && (
+                        <div className="absolute inset-0 flex flex-col p-6 animate-in slide-in-from-left-4 duration-1000">
+                           <div className="p-4 bg-slate-900/50 rounded-xl border border-white/10 min-h-[100px] text-blue-400 font-mono text-sm leading-relaxed">
+                              {tutorialTyping}<span className="animate-pulse">|</span>
+                           </div>
+                           <div className="mt-auto flex justify-center">
+                              <div className="px-8 py-3 bg-blue-600/20 border border-blue-500 rounded-full text-[10px] font-bold text-blue-400 animate-pulse">
+                                 [ CLICK_FORGE ]
+                              </div>
+                           </div>
+                        </div>
+                     )}
+                     {tutorialStep === 2 && (
+                        <div className="absolute inset-0 flex items-center justify-center animate-in fade-in duration-1000">
+                           <div className="relative">
+                              <div className="absolute inset-0 bg-blue-500/20 rounded-full blur-3xl animate-ping"></div>
+                              <Loader2 className="w-24 h-24 text-blue-500 animate-spin" />
+                              <Zap className="w-10 h-10 text-blue-300 absolute inset-0 m-auto animate-pulse" />
+                           </div>
+                        </div>
+                     )}
+                     {tutorialStep === 3 && (
+                        <div className="absolute inset-0 flex items-center justify-center animate-in zoom-in-110 duration-1000 p-8">
+                           <div className="w-full h-full bg-blue-600/20 rounded-3xl border-2 border-blue-500/40 flex flex-col items-center justify-center shadow-3xl overflow-hidden relative">
+                              <Sparkles className="w-24 h-24 text-blue-400 mb-6 drop-shadow-[0_0_20px_rgba(59,130,246,0.6)]" />
+                              <div className="flex gap-4">
+                                <div className="p-2 bg-white/10 rounded-lg"><Download className="w-4 h-4 text-blue-400" /></div>
+                                <div className="p-2 bg-white/10 rounded-lg"><Share2 className="w-4 h-4 text-blue-400" /></div>
+                              </div>
+                              <div className="absolute bottom-0 left-0 w-full h-1 bg-blue-500 animate-[loading_2s_infinite]"></div>
+                           </div>
+                        </div>
+                     )}
+                  </div>
+               </div>
+               
+               {/* Scanning Line */}
+               <div className="absolute inset-0 pointer-events-none z-30 opacity-20 overflow-hidden">
+                <div className="w-full h-1 bg-blue-500/50 blur-sm animate-[scan_3s_linear_infinite]"></div>
+               </div>
+
+               {/* Grid Overlay */}
+               <div className="absolute inset-0 opacity-10 pointer-events-none z-20" style={{ backgroundImage: 'linear-gradient(90deg, #fff 1px, transparent 0), linear-gradient(#fff 1px, transparent 0)', backgroundSize: '40px 40px' }}></div>
+            </div>
+
+            <div className="space-y-8">
+               <div className="inline-flex items-center gap-3 px-4 py-2 rounded-full bg-blue-500/10 border border-blue-500/20 text-blue-400 text-[10px] md:text-[11px] font-black uppercase tracking-widest">
+                  <span className="animate-pulse">●</span> PHRASE {tutorialStep + 1}
+               </div>
+               <div className="animate-in slide-in-from-bottom-4 duration-700" key={tutorialStep}>
+                  <h4 className="text-4xl md:text-6xl font-display font-bold text-white mb-6 flex items-center gap-6">
+                     <span className="text-blue-500">{tutorialSteps[tutorialStep].icon}</span>
+                     {tutorialSteps[tutorialStep].title}
+                  </h4>
+                  <p className="text-slate-400 text-lg md:text-2xl font-light leading-relaxed max-w-xl">
+                     {tutorialSteps[tutorialStep].desc}
+                  </p>
+               </div>
+               
+               <div className="relative h-1 w-full bg-white/5 rounded-full overflow-hidden">
+                  <div 
+                    className="absolute h-full bg-blue-600 shadow-[0_0_15px_rgba(59,130,246,0.8)] transition-all duration-100 ease-linear"
+                    style={{ width: `${tutorialProgress}%` }}
+                  ></div>
+               </div>
+
+               <div className="flex gap-2">
+                  {tutorialSteps.map((_, i) => (
+                     <div key={i} className={`h-1.5 flex-1 rounded-full transition-all duration-700 ${i <= tutorialStep ? 'bg-blue-600 shadow-[0_0_10px_rgba(59,130,246,0.5)]' : 'bg-white/10'}`}></div>
+                  ))}
+               </div>
+            </div>
           </div>
-          <div className="mt-8 flex justify-center">
+
+          <div className="mt-12 flex justify-center gap-6">
+             <button 
+              onClick={() => { setTutorialStep(0); setTutorialProgress(0); }}
+              className="px-8 py-5 glass border-white/10 text-slate-300 rounded-full font-black uppercase tracking-widest text-[10px] hover:bg-white/10 transition-all"
+             >
+               Restart Tutorial
+             </button>
              <button 
               onClick={() => setShowTutorialVideo(false)}
-              className="px-16 py-6 bg-blue-600 text-white rounded-full font-black uppercase tracking-[0.4em] hover:bg-blue-500 transition-all text-xs shadow-2xl"
+              className="px-12 py-5 bg-blue-600 text-white rounded-full font-black uppercase tracking-[0.4em] hover:bg-blue-500 transition-all text-[10px] shadow-2xl active:scale-95"
              >
-               Return to Terminal
+               Enter Terminal
              </button>
           </div>
         </div>
       )}
 
-      {/* Tutorial Overlay */}
+      {/* Help Modal */}
       {showHelp && (
-        <div className="absolute inset-0 z-50 bg-slate-950/90 backdrop-blur-2xl flex flex-col p-8 md:p-16 animate-in fade-in zoom-in-95 duration-500 overflow-y-auto">
+        <div className="absolute inset-0 z-[110] bg-slate-950/90 backdrop-blur-2xl flex flex-col p-8 md:p-16 animate-in fade-in zoom-in-95 duration-500 overflow-y-auto">
           <div className="flex justify-between items-center mb-10 md:mb-12">
             <div className="flex items-center gap-4">
               <Command className="w-6 h-6 md:w-8 md:h-8 text-blue-500" />
@@ -600,6 +754,11 @@ const WafForge: React.FC = () => {
         @keyframes loading {
           0% { transform: translateX(-100%); }
           100% { transform: translateX(100%); }
+        }
+        @keyframes move {
+          0% { transform: translate(0, 0); }
+          50% { transform: translate(120px, 60px); }
+          100% { transform: translate(0, 0); }
         }
         .custom-scrollbar::-webkit-scrollbar { width: 4px; }
         .custom-scrollbar::-webkit-scrollbar-thumb { background: rgba(59, 130, 246, 0.2); border-radius: 10px; }

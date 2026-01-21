@@ -215,7 +215,7 @@ const App: React.FC = () => {
                <div className="glass p-10 md:p-20 rounded-[3rem] md:rounded-[4rem] border-white/10 reveal-on-scroll active text-center">
                   <h2 className="text-3xl md:text-5xl font-display font-bold mb-8 uppercase tracking-tight">Establishing <span className="shimmer-text">Contact</span></h2>
                   <div className="space-y-4 mb-10 md:mb-12">
-                     <p className="text-white font-display font-bold text-lg sm:text-2xl md:text-3xl lg:text-4xl break-all px-4 tracking-tighter leading-tight">contact@worldaiforce.com</p>
+                     <p className="text-white font-display font-bold text-base sm:text-xl md:text-2xl lg:text-3xl break-all px-4 tracking-tighter leading-tight">contact@worldaiforce.com</p>
                      <p className="text-blue-500 font-black tracking-[0.4em] md:tracking-[0.5em] uppercase text-[10px] md:text-xs">+1-240-813-0308</p>
                   </div>
                   <div className="flex justify-center">
@@ -300,7 +300,7 @@ const App: React.FC = () => {
               </div>
               <div className="mt-8 pt-6 border-t border-white/5">
                 <a 
-                  href="https://azariahmgmt.com/" 
+                  href="https://www.azariahmg.com/" 
                   target="_blank" 
                   rel="noopener noreferrer"
                   className="inline-flex items-center gap-3 group"
@@ -318,7 +318,7 @@ const App: React.FC = () => {
                   <li><button onClick={() => navigate('home')} className="hover:text-blue-400 transition-colors">Home</button></li>
                   <li><button onClick={() => navigate('mission')} className="hover:text-blue-400 transition-colors">Mission</button></li>
                   <li><button onClick={() => navigate('forge')} className="hover:text-blue-400 transition-colors">Forge</button></li>
-                  <li><button onClick={() => navigate('privacy')} className={`transition-colors ${currentPage === 'privacy' ? 'text-blue-400' : 'hover:text-blue-400'}`}>Privacy</button></li>
+                  <li><button onClick={() => navigate('privacy')} className={`transition-colors ${currentPage === 'privacy' ? 'text-blue-400' : 'hover:text-blue-400'}`}>Privacy Policy</button></li>
                 </ul>
               </div>
               <div>
