@@ -97,7 +97,7 @@ const App: React.FC = () => {
                                  { icon: <Dna />, name: "Digital LAB", desc: "Investment" },
                                  { icon: <ShoppingBag />, name: "Market", desc: "AI Products" },
                                  { icon: <MessageSquare />, name: "Forum", desc: "Global Topics" },
-                                 { icon: <BarChart3 />, name: "Ad-Manager", desc: "Campaigns" },
+                                 { icon: <BarChart3 />, name: "BarChart", desc: "Campaigns" },
                                  { icon: <Rocket />, name: "Boosting", desc: "Go Viral" },
                                  { icon: <Layers />, name: "Circles", desc: "Pro Groups" },
                                  { icon: <GraduationCap />, name: "Courses", desc: "Education" }
@@ -215,7 +215,7 @@ const App: React.FC = () => {
                <div className="glass p-10 md:p-20 rounded-[3rem] md:rounded-[4rem] border-white/10 reveal-on-scroll active text-center">
                   <h2 className="text-3xl md:text-5xl font-display font-bold mb-8 uppercase tracking-tight">Establishing <span className="shimmer-text">Contact</span></h2>
                   <div className="space-y-4 mb-10 md:mb-12">
-                     <p className="text-white font-display font-bold text-base sm:text-xl md:text-2xl lg:text-3xl break-all px-4 tracking-tighter leading-tight">contact@worldaiforce.com</p>
+                     <p className="text-white font-display font-bold text-base sm:text-lg md:text-xl lg:text-2xl break-all px-4 tracking-tighter leading-tight">contact@worldaiforce.com</p>
                      <p className="text-blue-500 font-black tracking-[0.4em] md:tracking-[0.5em] uppercase text-[10px] md:text-xs">+1-240-813-0308</p>
                   </div>
                   <div className="flex justify-center">
