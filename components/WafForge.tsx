@@ -25,7 +25,8 @@ import {
   MousePointer2,
   Download,
   Share2,
-  Cpu
+  Cpu,
+  AlertCircle
 } from 'lucide-react';
 import Logo from './Logo.tsx';
 
@@ -87,7 +88,7 @@ const WafForge: React.FC = () => {
       }, 100);
 
       if (tutorialStep === 1) {
-        const fullText = "Design a futuristic AI city with clean energy and robots.";
+        const fullText = "Create an image of a futuristic boy and tell his story.";
         let charIdx = 0;
         setTutorialTyping('');
         typingInterval = setInterval(() => {
@@ -200,16 +201,16 @@ const WafForge: React.FC = () => {
       if (!process.env.API_KEY) throw new Error("API Key Missing");
       const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
 
-      // Step 1: Content + Image/Audio Prompt Generation
       setStatus('Parsing Synaptic Data...');
       const response = await ai.models.generateContent({
         model: 'gemini-3-flash-preview',
-        contents: `Analyze this user request: "${prompt}". Generate a unified intelligence package.
-        Return 3 parts: 
-        1. A 3-sentence professional summary/idea.
-        2. A descriptive image generation prompt (max 50 words).
-        3. A short script for an audio voiceover (max 30 words).
-        Use clear labels: [CONTENT], [IMAGE_PROMPT], [AUDIO_SCRIPT].`,
+        contents: `Analyze this user request: "${prompt}". 
+        Create a multi-modal intelligence package.
+        Return 3 components clearly labeled:
+        [CONTENT]: A short, high-impact description or story related to the request.
+        [IMAGE_PROMPT]: A professional, detailed prompt for image generation based on the request.
+        [AUDIO_SCRIPT]: A short sentence for voice synthesis.
+        Return nothing else.`,
       });
 
       const textOutput = response.text || "";
@@ -217,19 +218,18 @@ const WafForge: React.FC = () => {
       const imagePrompt = textOutput.match(/\[IMAGE_PROMPT\]([\s\S]*?)\[/)?.[1]?.trim() || textOutput.match(/\[IMAGE_PROMPT\]([\s\S]*)$/)?.[1]?.trim() || prompt;
       const audioScript = textOutput.match(/\[AUDIO_SCRIPT\]([\s\S]*)$/)?.[1]?.trim() || prompt;
 
-      // Step 2: Parallel Forging
       setStatus('Forging Visual & Auditory Assets...');
       addLog('> GENERATING_MODALITIES');
       
       const imageTask = ai.models.generateContent({
         model: 'gemini-2.5-flash-image',
-        contents: [{ parts: [{ text: `${imagePrompt}, futuristic, cinematic, high fidelity, 8k` }] }],
+        contents: [{ parts: [{ text: `${imagePrompt}, cinematic, hyper-realistic, 8k, detailed` }] }],
         config: { imageConfig: { aspectRatio } }
       });
 
       const audioTask = ai.models.generateContent({
         model: "gemini-2.5-flash-preview-tts",
-        contents: [{ parts: [{ text: `Say with authority: ${audioScript}` }] }],
+        contents: [{ parts: [{ text: audioScript }] }],
         config: {
           // @ts-ignore
           responseModalities: ["AUDIO"],
@@ -237,10 +237,16 @@ const WafForge: React.FC = () => {
         },
       });
 
-      const [imageRes, audioRes] = await Promise.all([imageTask, audioTask]);
+      const [imageRes, audioRes] = await Promise.all([imageTask.catch(e => {
+        addLog(`> IMAGE_QUOTA_EXCEEDED: ${e.message}`);
+        return null;
+      }), audioTask.catch(e => {
+        addLog(`> AUDIO_QUOTA_EXCEEDED: ${e.message}`);
+        return null;
+      })]);
 
-      const imagePart = imageRes.candidates?.[0]?.content?.parts?.find(p => p.inlineData);
-      const audioData = audioRes.candidates?.[0]?.content?.parts?.[0]?.inlineData?.data;
+      const imagePart = imageRes?.candidates?.[0]?.content?.parts?.find(p => p.inlineData);
+      const audioData = audioRes?.candidates?.[0]?.content?.parts?.[0]?.inlineData?.data;
 
       setResult({
         type: 'omni',
@@ -256,6 +262,9 @@ const WafForge: React.FC = () => {
     } catch (error: any) {
       setStatus('Synthesis Interrupted.');
       addLog(`> ERR: ${error.message}`);
+      if (error.message.includes('429')) {
+        addLog('> ADVISORY: Free tier quota reached. Please retry in 60s.');
+      }
     } finally {
       setLoading(false);
     }
@@ -277,8 +286,15 @@ const WafForge: React.FC = () => {
       if (part?.inlineData) {
         setResult({ type: 'image', url: `data:${part.inlineData.mimeType};base64,${part.inlineData.data}`, time: `${((Date.now() - start) / 1000).toFixed(1)}s` });
         setStatus('Visual Forge Complete.');
+        addLog('> SYNTH_COMPLETE: IMAGE_ASSET');
       }
-    } catch (e) { setStatus('Forge Failed.'); } finally { setLoading(false); }
+    } catch (error: any) { 
+      setStatus('Forge Failed.'); 
+      addLog(`> ERR: ${error.message}`);
+      if (error.message.includes('429')) {
+        addLog('> ADVISORY: Free tier quota reached. Please retry in 60s.');
+      }
+    } finally { setLoading(false); }
   };
 
   const handleForge = () => {
@@ -286,7 +302,7 @@ const WafForge: React.FC = () => {
     setResult(null);
     if (activeTool === 'omni') forgeOmni();
     else if (activeTool === 'image') forgeImage();
-    // other specific tools can be called here if needed...
+    // Add logic for individual content/audio/video if user selects them specifically
   };
 
   const tutorialSteps = [
@@ -331,7 +347,7 @@ const WafForge: React.FC = () => {
             className="p-3 md:p-4 rounded-full bg-blue-600/10 text-blue-400 hover:bg-blue-600/20 transition-all border border-blue-500/20 group flex items-center gap-2"
           >
             <PlayCircle className="w-5 h-5 md:w-6 md:h-6 group-hover:scale-110 transition-transform" />
-            <span className="hidden md:inline text-[9px] font-black uppercase tracking-widest pr-2">Induction Guide</span>
+            <span className="hidden md:inline text-[9px] font-black uppercase tracking-widest pr-2">Watch Tutorial</span>
           </button>
           <button 
             onClick={() => setShowHelp(true)}
@@ -417,7 +433,7 @@ const WafForge: React.FC = () => {
                <textarea
                 value={prompt}
                 onChange={(e) => setPrompt(e.target.value)}
-                placeholder={`Describe your vision for World AI Force intelligence...`}
+                placeholder={`Describe your vision for World AI Force intelligence... (e.g., "A story of a future boy with a robot friend")`}
                 className="w-full bg-slate-950/70 border border-white/10 rounded-[1.5rem] md:rounded-[2.5rem] p-6 md:p-10 h-48 md:h-72 focus:border-blue-500/50 outline-none transition-all text-white text-base md:text-lg font-light resize-none shadow-inner"
               />
               <div className="absolute bottom-4 left-6 flex gap-2">
@@ -466,14 +482,19 @@ const WafForge: React.FC = () => {
                         <p className="text-slate-300 font-light leading-relaxed italic border-l-2 border-blue-500/30 pl-6 text-lg">"{result.multiResults.content}"</p>
                       </div>
 
-                      {result.multiResults.imageUrl && (
+                      {result.multiResults.imageUrl ? (
                         <div className="space-y-4">
                            <p className="text-xs font-black uppercase tracking-widest text-slate-500">Visual Reconstruction</p>
                            <img src={result.multiResults.imageUrl} className="w-full rounded-3xl shadow-2xl border border-white/10 hover:scale-[1.02] transition-transform" alt="Omni forge" />
                         </div>
+                      ) : (
+                        <div className="p-8 bg-red-600/5 rounded-3xl border border-red-500/20 flex items-center gap-4">
+                           <AlertCircle className="w-6 h-6 text-red-500" />
+                           <span className="text-[10px] font-black uppercase tracking-widest text-red-400">Visual Reconstruction Quota Reached</span>
+                        </div>
                       )}
 
-                      {result.multiResults.audioData && (
+                      {result.multiResults.audioData ? (
                         <div className="p-8 bg-blue-600/5 rounded-3xl border border-blue-500/20 flex items-center justify-between group">
                           <div className="flex items-center gap-4">
                             <Volume2 className={`w-8 h-8 text-blue-500 ${isPlaying ? 'animate-pulse' : ''}`} />
@@ -482,6 +503,11 @@ const WafForge: React.FC = () => {
                           <button onClick={() => playForgedAudio(result.multiResults.audioData)} className="p-4 bg-blue-600 rounded-full text-white hover:scale-110 transition-transform">
                             {isPlaying ? <Loader2 className="w-4 h-4 animate-spin" /> : <PlayIcon className="w-4 h-4 fill-current" />}
                           </button>
+                        </div>
+                      ) : (
+                        <div className="p-8 bg-red-600/5 rounded-3xl border border-red-500/20 flex items-center gap-4">
+                           <AlertCircle className="w-6 h-6 text-red-500" />
+                           <span className="text-[10px] font-black uppercase tracking-widest text-red-400">Vocal Synapse Quota Reached</span>
                         </div>
                       )}
                     </div>
