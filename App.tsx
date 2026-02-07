@@ -169,9 +169,9 @@ const App: React.FC = () => {
         return (
           <section className="pt-40 pb-32 min-h-screen bg-transparent">
             <div className="max-w-4xl mx-auto px-4 text-center">
-              <h1 className="text-5xl md:text-7xl lg:text-8xl font-display font-bold mb-12 tracking-tight uppercase">The <span className="shimmer-text">Mission</span></h1>
+              <h1 className="text-4xl md:text-6xl lg:text-7xl font-display font-bold mb-12 tracking-tight uppercase">The <span className="shimmer-text">Mission</span></h1>
               <div className="glass p-10 md:p-20 rounded-[3rem] md:rounded-[4rem] border-white/10 reveal-on-scroll active">
-                <p className="text-2xl md:text-4xl lg:text-5xl text-white font-display font-bold leading-tight tracking-tight">
+                <p className="text-xl md:text-2xl lg:text-3xl text-white font-display font-bold leading-tight tracking-tight">
                   "To ensure equitable access to AI tools, education, economic opportunities, and global participation for underserved communities transforming AI into a force for inclusion, safety, and shared prosperity."
                 </p>
               </div>
