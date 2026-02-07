@@ -13,7 +13,7 @@ import {
   KeyRound, UserPlus, Newspaper, Wallet, Users, Video, Dna, 
   Briefcase, ShoppingBag, MessageSquare, TrendingUp, BarChart3, 
   Layers, Rocket, GraduationCap, ArrowRight, Home, Cpu, Scale, BrainCircuit, HeartHandshake, Eye, Sparkles,
-  CheckCircle2, ExternalLink
+  CheckCircle2, ExternalLink, BookOpen, FlaskConical, Target, Award, Compass, Globe2, Shield, Network
 } from 'lucide-react';
 
 type Page = 'home' | 'mission' | 'forge' | 'ecosystem' | 'about' | 'contact' | 'privacy';
@@ -168,12 +168,42 @@ const App: React.FC = () => {
       case 'mission':
         return (
           <section className="pt-40 pb-32 min-h-screen bg-transparent">
-            <div className="max-w-4xl mx-auto px-4 text-center">
-              <h1 className="text-4xl md:text-6xl lg:text-7xl font-display font-bold mb-12 tracking-tight uppercase">The <span className="shimmer-text">Mission</span></h1>
-              <div className="glass p-10 md:p-20 rounded-[3rem] md:rounded-[4rem] border-white/10 reveal-on-scroll active">
-                <p className="text-xl md:text-2xl lg:text-3xl text-white font-display font-bold leading-tight tracking-tight">
-                  "To ensure equitable access to AI tools, education, economic opportunities, and global participation for underserved communities transforming AI into a force for inclusion, safety, and shared prosperity."
+            <div className="max-w-5xl mx-auto px-4 text-center">
+              <div className="inline-flex items-center gap-3 px-5 py-2 rounded-full glass border-white/10 text-[10px] font-black uppercase tracking-[0.4em] text-blue-400 mb-8 reveal-on-scroll active">
+                <Globe className="w-4 h-4" /> Global Purpose Framework
+              </div>
+              <h1 className="text-5xl md:text-7xl lg:text-8xl font-display font-bold mb-12 tracking-tighter uppercase reveal-on-scroll active">
+                The <span className="shimmer-text">Mission</span>
+              </h1>
+              
+              <div className="glass p-10 md:p-24 rounded-[3.5rem] md:rounded-[5rem] border-white/10 reveal-on-scroll active shadow-3xl mb-20">
+                <p className="text-xl md:text-3xl lg:text-4xl text-white font-display font-bold leading-tight tracking-tight mb-12">
+                  "To build a globally accessible AI ecosystem that educates, connects, equips, and represents individuals and institutions in the ethical development, deployment, and governance of artificial intelligence."
                 </p>
+                <div className="w-24 h-1 bg-blue-600 mx-auto mb-10 rounded-full shadow-[0_0_15px_rgba(37,99,235,0.8)]"></div>
+                <div className="space-y-4">
+                  <p className="text-blue-500 font-black tracking-[0.6em] uppercase text-xs md:text-sm">Motto</p>
+                  <p className="text-2xl md:text-4xl font-display italic font-light shimmer-text">“One World. One Intelligence. Shared Good.”</p>
+                </div>
+              </div>
+
+              <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 reveal-on-scroll active">
+                {[
+                  { icon: <GraduationCap />, title: "Democratize Education", desc: "Equitable access to AI literacy and future-ready skills for underserved communities." },
+                  { icon: <ShieldCheck />, title: "Ethical Frameworks", desc: "Ensuring AI serves humanity through transparency, accountability, and shared prosperity." },
+                  { icon: <Users />, title: "Inclusive Governance", desc: "A global forum for stakeholders to shape AI policy and ethical oversight collectively." },
+                  { icon: <Zap />, title: "Economic Inclusion", desc: "Empowering individuals and nations to benefit from the AI-driven economy." },
+                  { icon: <Compass />, title: "Human Centric", desc: "Positioning technology as a global public good guided by human values." },
+                  { icon: <Sparkles />, title: "Reduced Inequality", desc: "Closing the gap between technical elites and communities through structured deployment." }
+                ].map((obj, i) => (
+                  <div key={i} className="glass p-8 md:p-10 rounded-[2.5rem] border border-white/5 hover:border-blue-500/30 transition-all group text-left">
+                    <div className="w-12 h-12 bg-blue-600/10 rounded-2xl flex items-center justify-center text-blue-500 mb-6 group-hover:scale-110 transition-transform">
+                      {obj.icon}
+                    </div>
+                    <h3 className="text-lg md:text-xl font-display font-bold text-white mb-3 group-hover:text-blue-400 transition-colors">{obj.title}</h3>
+                    <p className="text-slate-500 text-sm font-light leading-relaxed">{obj.desc}</p>
+                  </div>
+                ))}
               </div>
             </div>
           </section>
@@ -185,24 +215,147 @@ const App: React.FC = () => {
       case 'about':
         return (
           <section className="pt-40 pb-32 bg-transparent">
-            <div className="max-w-7xl mx-auto px-4">
-               <div className="grid lg:grid-cols-2 gap-12 md:gap-20 items-center">
-                  <div className="reveal-on-scroll">
-                    <h1 className="text-5xl md:text-7xl font-display font-bold mb-8 tracking-tight">About <span className="shimmer-text">WAF</span></h1>
-                    <p className="text-slate-400 text-base md:text-lg font-light leading-relaxed mb-8">
-                      World AI Force is a global digital ecosystem integrating innovation, education, economic inclusion, governance, and ethical AI into one platform designed to ensure that AI creates opportunity for everyone, everywhere.
-                    </p>
-                    <p className="text-slate-500 text-sm md:text-base font-light leading-relaxed">
-                      Our PodOre platform represents the culmination of decentralized development, designed for the "AI for Good" global movement. Anything outside the scope of ethical, human-centric development is automatically filtered by our World AI Force Global Ranking System.
-                    </p>
+            <div className="max-w-7xl mx-auto px-6">
+               <div className="text-center mb-24 reveal-on-scroll active">
+                  <div className="inline-flex items-center gap-3 px-5 py-2 rounded-full glass border-white/10 text-[10px] font-black uppercase tracking-[0.4em] text-blue-400 mb-8">
+                    <Award className="w-4 h-4" /> Comprehensive Concept Note
                   </div>
-                  <div className="relative reveal-on-scroll">
-                    <div className="absolute inset-0 bg-blue-500/20 rounded-[3rem] md:rounded-[4rem] blur-[60px] animate-pulse -z-10"></div>
-                    <img 
-                      src="https://images.unsplash.com/photo-1677442136019-21780ecad995?auto=format&fit=crop&q=80&w=2000" 
-                      className="rounded-[3rem] md:rounded-[4rem] border border-white/10 shadow-3xl" 
-                      alt="WAF Technology Visual" 
-                    />
+                  <h1 className="text-5xl md:text-8xl font-display font-bold mb-8 tracking-tighter uppercase">
+                    World <span className="shimmer-text">AI</span> Force
+                  </h1>
+                  <p className="text-slate-400 text-lg md:text-xl font-light max-w-3xl mx-auto leading-relaxed">
+                    A global, mission-driven artificial intelligence ecosystem designed to democratize access to AI knowledge, tools, governance, and economic opportunity.
+                  </p>
+               </div>
+
+               <div className="grid lg:grid-cols-12 gap-16 items-start">
+                  {/* Left Column: Nav/Overview */}
+                  <div className="lg:col-span-4 space-y-12 reveal-on-scroll active lg:sticky lg:top-32">
+                    <div className="glass p-10 rounded-[3rem] border-white/10">
+                      <h3 className="text-blue-500 font-black uppercase tracking-[0.4em] text-[10px] mb-8">Founding Visionaries</h3>
+                      <div className="space-y-8">
+                        <div>
+                          <p className="text-white font-display font-bold text-2xl">Chiffon Watkins</p>
+                          <p className="text-slate-500 text-xs font-black uppercase tracking-widest">Co-Founder</p>
+                        </div>
+                        <div className="w-12 h-[1px] bg-white/10"></div>
+                        <div>
+                          <p className="text-white font-display font-bold text-2xl">Joseph Ibeh</p>
+                          <p className="text-slate-500 text-xs font-black uppercase tracking-widest">Co-Founder</p>
+                        </div>
+                        <div className="w-12 h-[1px] bg-white/10"></div>
+                        <div>
+                          <p className="text-white font-display font-bold text-2xl">Taiwo Oladele</p>
+                          <p className="text-slate-500 text-xs font-black uppercase tracking-widest">Co-Founder</p>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="p-8 space-y-4">
+                      <p className="text-slate-500 font-black tracking-widest text-[9px] uppercase">Official websites</p>
+                      <ul className="space-y-2 text-blue-400 font-bold text-sm">
+                        <li><a href="https://worldaiforce.com" className="hover:underline">worldaiforce.com</a></li>
+                        <li><a href="https://worldaiforce.org" className="hover:underline">worldaiforce.org</a></li>
+                      </ul>
+                    </div>
+                  </div>
+
+                  {/* Right Column: Content Sections */}
+                  <div className="lg:col-span-8 space-y-24 reveal-on-scroll active">
+                    <section className="space-y-8">
+                       <h2 className="text-4xl md:text-5xl font-display font-bold text-white tracking-tight uppercase"><span className="shimmer-text">01.</span> Introduction</h2>
+                       <div className="glass p-10 md:p-12 rounded-[2.5rem] border-white/10 space-y-6">
+                         <p className="text-slate-300 text-lg font-light leading-relaxed">
+                           World AI Force (WAF) integrates technology, education, policy dialogue, and community participation into a single interoperable platform that empowers individuals, institutions, and nations to responsibly harness AI for sustainable development.
+                         </p>
+                         <p className="text-slate-400 text-base font-light leading-relaxed">
+                           Founded by Chiffon Watkins, Joseph Ibeh, and Taiwo Oladele, World AI Force is built on a shared vision of inclusive, ethical, and people-centered artificial intelligence that transcends borders, sectors, and socio-economic divides.
+                         </p>
+                       </div>
+                    </section>
+
+                    <section className="space-y-8">
+                       <h2 className="text-4xl md:text-5xl font-display font-bold text-white tracking-tight uppercase"><span className="shimmer-text">02.</span> Rationale</h2>
+                       <div className="space-y-8">
+                         <div className="flex gap-8 group">
+                            <div className="w-12 h-12 bg-blue-600/10 rounded-2xl flex items-center justify-center text-blue-500 shrink-0 group-hover:bg-blue-600 group-hover:text-white transition-all">
+                               <ShieldCheck />
+                            </div>
+                            <div className="space-y-3">
+                               <h4 className="text-xl font-display font-bold text-white">Foundational Infrastructure</h4>
+                               <p className="text-slate-400 font-light leading-relaxed">AI is no longer a frontier technology; it is foundational. WAF addresses the imbalance where benefits are concentrated within technical elites.</p>
+                            </div>
+                         </div>
+                         <div className="flex gap-8 group">
+                            <div className="w-12 h-12 bg-blue-600/10 rounded-2xl flex items-center justify-center text-blue-500 shrink-0 group-hover:bg-blue-600 group-hover:text-white transition-all">
+                               <Compass />
+                            </div>
+                            <div className="space-y-3">
+                               <h4 className="text-xl font-display font-bold text-white">Global Public Good</h4>
+                               <p className="text-slate-400 font-light leading-relaxed">WAF positions AI as a public good guided by human values, transparency, and accountability.</p>
+                            </div>
+                         </div>
+                       </div>
+                    </section>
+
+                    <section className="space-y-8">
+                       <h2 className="text-4xl md:text-5xl font-display font-bold text-white tracking-tight uppercase"><span className="shimmer-text">03.</span> Core Divisions</h2>
+                       <div className="grid sm:grid-cols-2 gap-6">
+                          <div className="glass p-8 rounded-[2rem] border-white/10 hover:border-blue-500/30 transition-all">
+                             <BookOpen className="w-10 h-10 text-blue-500 mb-6" />
+                             <h4 className="text-xl font-display font-bold text-white mb-4">WAF Academy</h4>
+                             <p className="text-slate-500 text-sm font-light leading-relaxed">Equipping learners with AI literacy, technical competence, and ethical awareness through certifications and mentorship.</p>
+                          </div>
+                          <div className="glass p-8 rounded-[2rem] border-white/10 hover:border-blue-500/30 transition-all">
+                             <Scale className="w-10 h-10 text-blue-500 mb-6" />
+                             <h4 className="text-xl font-display font-bold text-white mb-4">WAF Assembly</h4>
+                             <p className="text-slate-500 text-sm font-light leading-relaxed">A global forum for stakeholders to deliberate, collaborate, and shape the future of AI policy and ethics.</p>
+                          </div>
+                          <div className="glass p-8 rounded-[2rem] border-white/10 hover:border-blue-500/30 transition-all">
+                             <FlaskConical className="w-10 h-10 text-blue-500 mb-6" />
+                             <h4 className="text-xl font-display font-bold text-white mb-4">WAF Labs</h4>
+                             <p className="text-slate-500 text-sm font-light leading-relaxed">Physical, community-centered innovation spaces designed to bridge the gap between digital access and real-world impact.</p>
+                          </div>
+                          <div className="glass p-8 rounded-[2rem] border-white/10 hover:border-blue-500/30 transition-all">
+                             <Network className="w-10 h-10 text-blue-500 mb-6" />
+                             <h4 className="text-xl font-display font-bold text-white mb-4">Digital Hub</h4>
+                             <p className="text-slate-500 text-sm font-light leading-relaxed">Secure, cloud-based ecosystem hosting all WAF programs, research hubs, and innovation marketplaces.</p>
+                          </div>
+                       </div>
+                    </section>
+
+                    <section className="space-y-8">
+                       <h2 className="text-4xl md:text-5xl font-display font-bold text-white tracking-tight uppercase"><span className="shimmer-text">04.</span> Commitment to AI for Good</h2>
+                       <div className="glass p-10 md:p-12 rounded-[2.5rem] border-blue-500/20 bg-blue-600/5 relative overflow-hidden">
+                         <div className="absolute top-0 right-0 p-8 opacity-10">
+                            <HeartHandshake size={120} />
+                         </div>
+                         <div className="relative z-10 space-y-6">
+                            <p className="text-slate-200 text-lg font-light leading-relaxed">
+                               World AI Force is firmly anchored in the principles of AI for Good, ensuring that AI advances human well-being, social equity, and sustainable development.
+                            </p>
+                            <ul className="grid sm:grid-cols-2 gap-4">
+                               {[
+                                 "Prioritizing human-centered solutions",
+                                 "Aligning with UN SDGs",
+                                 "Continuous ethical oversight",
+                                 "Preventing biased use of technology"
+                               ].map((item, i) => (
+                                 <li key={i} className="flex items-center gap-3 text-slate-400 text-sm">
+                                   <div className="w-1.5 h-1.5 bg-blue-500 rounded-full shadow-[0_0_8px_rgba(59,130,246,0.8)]"></div>
+                                   {item}
+                                 </li>
+                               ))}
+                            </ul>
+                         </div>
+                       </div>
+                    </section>
+
+                    <footer className="pt-12 border-t border-white/5 opacity-50">
+                       <p className="text-[10px] font-black uppercase tracking-[0.5em] text-slate-500">
+                          © World AI Force. All rights reserved. Original intellectual work protected under copyright laws.
+                       </p>
+                    </footer>
                   </div>
                </div>
             </div>
